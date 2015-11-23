@@ -1,0 +1,24 @@
+{
+  "name": "activity-tracking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "SS",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "chai": "^3.4.1",
+    "cookie-parser": "^1.4.0",
+    "express": "^4.13.3",
+    "express-session": "^1.12.1",
+    "hbs": "^4.0.0",
+    "mocha": "^2.3.4",
+    "mongoose": "^4.2.7",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "passport-local-mongoose": "^3.1.0"
+  }
+}
