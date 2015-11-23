@@ -33,6 +33,9 @@ passport.deserializeUser(User.deserializeUser());
 // FUNCTIONS
 // Redirect to login page if user not signed-in
 function isAuthenticated(req, res, next) {
+    if (req.user){
+        return next();
+    }
     res.redirect('/login');
 }
 
@@ -43,7 +46,7 @@ app.get('/register', function (req, res) {
 });
 // POST - Register
 app.post('/register', function (req, res){
-  User.register(new User({ username: req.body.username }), req.body.password,
+  User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
     function (err, newUser) {
       passport.authenticate('local')(req, res, function() {
         res.redirect('/index');
@@ -64,7 +67,15 @@ app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
-
+// GET - Activity Index
+app.get('/index', function (req, res){
+    console.log(req.user);
+    res.render('index', req.user);
+});
+// GET - Activity Single
+app.get('/activity/:id', function (req, res){
+    app.get('activity');
+});
 
 
 

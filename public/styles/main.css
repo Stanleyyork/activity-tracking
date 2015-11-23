@@ -1,0 +1,21 @@
+#nav-title {
+	font-weight: bold;
+}
+
+.navbar {
+	height: 55px;
+}
+
+#nav-header {
+	margin-top: 15px;
+	margin-left: 20px;
+	font-size: 18px;
+}
+
+#account-button {
+	margin-top: 10px;
+}
+
+.dropdown-menu {
+	background-color: #fafafa;
+}
