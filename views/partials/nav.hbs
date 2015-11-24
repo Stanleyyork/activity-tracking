@@ -1,60 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- set viewport to device width to make site responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  <!-- bootstrap css -->
-  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-  <!-- custom styles -->
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
-  <meta charset="UTF-8">
-
-</head>
-<body>
-  
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <div clas="row">
-        
-        <div class="col-xs-6" id="nav-header">
-          <p id="nav-title">Activity Tracking</p>
-        </div>
-
-        <div class="col-xs-4" id="account-button">
-          <div class ="pull-right">
-
-              <ul class="nav nav-pills">
-                <li role="presentation" class="dropdown">
-                  <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Account<span class="caret"></span></a>
-                  <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
-                      <a href="/index"><li><p id="nav-activity">Activity</p></li></a>
-                      <a href="/logout"><li><p id="nav-logout">Logout</p></li></a>
-                  </ul>
-                </li>
-              </ul>
-
-          </div>
-        </div>
-
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div clas="row">
+      
+      <div class="col-xs-6" id="nav-header">
+        <p id="nav-title">Habit Tracking</p>
       </div>
-    </div>
-  </nav>
 
-  {{#if errorMessage}}
-    <div class="alert alert-danger">
-      <div class="container">
-        {{errorMessage}}
+      <div class="col-xs-5" id="account-button">
+        <div class ="pull-right">
+            <ul class="nav nav-pills">
+              <li role="presentation" class="dropdown">
+                <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                  {{#if user.username}}
+                    <li><a href="/index"><p id="nav-activity">Activity</p></a></li>
+                    <li><a href="/logout"><p id="nav-logout">Logout</p></a></li>
+                  {{else}}
+                    <li><a href="/login"><p id="nav-login">Login</p></a></li>
+                    <li><a href="/register"><p id="nav-register">Register</p></a></li>
+                  {{/if}}
+                </ul>
+              </li>
+            </ul>
+        </div>
       </div>
+
     </div>
-  {{/if}}
+  </div>
+</nav>
 
-  <!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+{{#if errorMessage}}
+  <div class="alert alert-danger">
+    <div class="container">
+      {{errorMessage}}
+    </div>
+  </div>
+{{/if}}
 
-
-</body>
-</html>

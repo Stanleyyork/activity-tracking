@@ -18,6 +18,9 @@
 
 .dropdown-menu {
 	background-color: #fafafa;
+    left: auto;
+    min-width: 125px;
+    max-width: 150px;
 }
 
 .dropdown-menu > a > li:hover  {
@@ -26,15 +29,26 @@
 }
 
 #nav-activity {
-	margin-left: 15px;
 	margin-top: 7px;
 }
 
 #nav-logout {
-	margin-left: 15px;
+	margin-top: 7px;
+}
+
+#nav-login {
+	margin-top: 7px;
+}
+
+#nav-register {
+	margin-top: 7px;
 }
 
 body {
 	margin-top: 75px;
 	margin-left: 50px;
+}
+
+.error {
+	color: red;
 }

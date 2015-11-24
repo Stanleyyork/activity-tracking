@@ -15,24 +15,27 @@
 </head>
 <body>
 
-	<div class="col-xs-3">
-	</div>
-	<center>
-		<div class="col-xs-6" id="reigster">
-			<h2>Log In</h2>
-			<br>
-			<form method="POST" action="/login">
-			  <div class="form-group">
-			    <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
-			  </div>
-			  <div class="form-group">
-			    <input type="password" name="password" class="form-control" placeholder="Password">
-			  </div>
-			  <div class="form-group">
-			    <input type="submit" class="btn btn-block btn-primary" value="Log In">
-			  </div>
-			</form>
+	{{> nav}}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-3" id="login">
+				<center><h2>Log In</h2></center>
+				<br>
+				<form method="POST" action="/login">
+				  <div class="form-group">
+				    <input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+				  </div>
+				  <div class="form-group">
+				    <input type="password" name="password" class="form-control" placeholder="Password">
+				  </div>
+				  <div class="form-group">
+				    <input type="submit" class="btn btn-block btn-primary" value="Log In">
+				  </div>
+				</form>
+			</div>
 		</div>
+	</div>
 
 	<!-- jquery -->
   	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
