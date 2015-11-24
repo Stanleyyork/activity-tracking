@@ -78,8 +78,7 @@ app.get('/index', isAuthenticated, function (req, res){
 });
 // GET - Activity Single
 app.get('/activity/:id', isAuthenticated, function (req, res){
-    var activityId = req.params.id;
-    var singleActivity = Activity.findOne({_id: activityId});
+    var singleActivity = Activity.findOne({_id: req.params.id});
     res.render('activity', {activity: singleActivity});
 });
 
