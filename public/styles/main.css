@@ -19,3 +19,22 @@
 .dropdown-menu {
 	background-color: #fafafa;
 }
+
+.dropdown-menu > a > li:hover  {
+	background-color: #e1e1e1;
+
+}
+
+#nav-activity {
+	margin-left: 15px;
+	margin-top: 7px;
+}
+
+#nav-logout {
+	margin-left: 15px;
+}
+
+body {
+	margin-top: 75px;
+	margin-left: 50px;
+}

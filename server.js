@@ -59,7 +59,7 @@ app.get('/login', function (req, res){
     res.render('login');
 });
 // POST - User Login
-app.get('/login', passport.authenticate('local'), function (req, res){
+app.post('/login', passport.authenticate('local'), function (req, res){
     res.redirect('/index');
 });
 // GET - User Log-out
@@ -67,14 +67,20 @@ app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
-// GET - Activity Index
-app.get('/index', function (req, res){
-    console.log(req.user);
-    res.render('index', req.user);
+// GET - Activity Index (Primary Dashboard View)
+app.get('/index', isAuthenticated, function (req, res){
+    var userId = req.user.id;
+    User.findOne({_id: userId})
+        .populate('activities')
+            .exec(function(err, singleUser){
+                res.render('index', {user: singleUser});
+            });
 });
 // GET - Activity Single
-app.get('/activity/:id', function (req, res){
-    app.get('activity');
+app.get('/activity/:id', isAuthenticated, function (req, res){
+    var activityId = req.params.id;
+    var singleActivity = Activity.findOne({_id: activityId});
+    res.render('activity', {activity: singleActivity});
 });
 
 
