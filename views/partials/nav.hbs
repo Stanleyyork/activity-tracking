@@ -42,6 +42,14 @@
     </div>
   </nav>
 
+  {{#if errorMessage}}
+    <div class="alert alert-danger">
+      <div class="container">
+        {{errorMessage}}
+      </div>
+    </div>
+  {{/if}}
+
   <!-- jquery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <!-- bootstrap js -->

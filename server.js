@@ -10,6 +10,7 @@ var express = require('express');
     Activity = require('./models/activity'),
     cookieParser = require('cookie-parser'),
     session = require('express-session'),
+    flash = require('express-flash'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
@@ -26,6 +27,9 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// Flash Messages
+app.use(flash());
+// Passport config
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -42,16 +46,25 @@ function isAuthenticated(req, res, next) {
 // ROUTES
 // GET - Register
 app.get('/register', function (req, res) {
-    res.render('register');
+    if(req.user){
+        res.redirect('/index');
+    } else {
+        res.render('register', {errorMessage: req.flash('registerError')});
+    }
 });
 // POST - Register
 app.post('/register', function (req, res){
   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
     function (err, newUser) {
-      passport.authenticate('local')(req, res, function() {
-        res.redirect('/index');
-      });
-    }
+          if (err){
+            req.flash('registerError', err.message);
+            res.redirect('/register');
+          } else {
+              passport.authenticate('local')(req, res, function() {
+                res.redirect('/index');
+              });
+          }
+      }
   );
 });
 // GET - User Login
