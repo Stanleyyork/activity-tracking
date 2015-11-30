@@ -14,11 +14,15 @@
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
+    "fast-csv": "^0.6.0",
     "hbs": "^4.0.0",
+    "jQuery": "^1.7.4",
+    "jsdom": "^7.0.2",
     "mocha": "^2.3.4",
     "mongoose": "^4.2.7",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^3.1.0"
+    "passport-local-mongoose": "^3.1.0",
+    "xmlhttprequest": "^1.8.0"
   }
 }

@@ -94,8 +94,33 @@ app.get('/activity/:id', isAuthenticated, function (req, res){
     var singleActivity = Activity.findOne({_id: req.params.id});
     res.render('activity', {activity: singleActivity});
 });
-
-
+// POST - Activity Single
+app.post('/api/activity', function (req, res){
+  var existingActivity = '';
+  Activity.findOne({originalId: req.body.originalId}, function(err, exisActivity){
+    if(err) {return console.error(err);}
+    else {
+      if (exisActivity === null){
+        var newActivity = new Activity(req.body);
+        var user_id = req.user._id;
+        newActivity.save(function(err, savedActivity){
+          if(err) {return console.error(err);}
+          else console.log(savedActivity);
+          User.findOne({_id: user_id}, function(err, foundUser){
+            if(err) {return console.error(err);}
+            else {
+              foundUser.activities.push(newActivity);
+              foundUser.save();
+            }
+          });
+          res.json(newActivity);
+        });
+      } else {
+        console.log("Activity exists");
+      }
+    }
+  });
+});
 
 
 // SERVER PORT

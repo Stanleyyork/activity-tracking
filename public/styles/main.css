@@ -23,32 +23,36 @@
     max-width: 150px;
 }
 
-.dropdown-menu > a > li:hover  {
-	background-color: #e1e1e1;
-
-}
-
-#nav-activity {
-	margin-top: 7px;
-}
-
-#nav-logout {
-	margin-top: 7px;
-}
-
-#nav-login {
-	margin-top: 7px;
-}
-
-#nav-register {
+.dropdown-menu > li > a > p {
 	margin-top: 7px;
 }
 
 body {
 	margin-top: 75px;
 	margin-left: 50px;
+	color: #3f3f3f;
+}
+
+#login {
+	max-width: 400px;
+}
+
+#register {
+	max-width: 400px;
 }
 
 .error {
 	color: red;
+}
+
+@media all and (max-width: 500px) { /* screen size until 500px */
+    body {
+    	margin-left: 5px;
+    }
+    #nav-title {
+        font-size: 0.8em; /* 0.8x default size */
+    }
+    #nav-header {
+		margin-top: 7px;
+	}
 }

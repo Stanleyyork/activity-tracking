@@ -1,7 +1,6 @@
 var csv = require("fast-csv");
 var allActivity = [];
 var filePath = "./coachData.csv";
-var Activity = require('../../../activity-tracking/models/activity');
 var activityAttr = ['Id', 'Habit', 'Date', 'Note', 'Check In Count', 'Days in Streak', 'Prop Count', 'Comment Count', 'URL'];
 
 function readCsv(filePath, callback){
@@ -14,8 +13,7 @@ function readCsv(filePath, callback){
 	     console.log("1: Done");
 	     callback();
 	 });
-	 
- }
+}
 
 function ensureCorrectHeaders() {
 	var correct = false;
@@ -33,7 +31,7 @@ function ensureCorrectHeaders() {
 function organizeEachEntry(data, callback){
 	var entry = data;
 		if(entry[0] !== activityAttr[0]){
-		var singleActivity = new Activity({
+		var singleActivity = {
 		    activityLabel: entry[1],
 			originalId: parseInt(entry[0]),
 			originalDate: entry[2],
@@ -44,8 +42,9 @@ function organizeEachEntry(data, callback){
 			quantityB: parseInt(entry[5]),
 			measurementC: "Note",
 			quantityC: entry[3],
-			link: entry[8]
-		});
+			link: entry[8],
+			user_id: 1
+		};
 		console.log("3: Done");
 		callback(singleActivity);
 	} else {
@@ -54,18 +53,17 @@ function organizeEachEntry(data, callback){
 }
 
 function saveEachEntryToDb(singleActivity){
-	console.log("saved!");
-	// $.ajax({
-	// 	type: "POST",
-	// 	url: '/api/activities',
-	// 	data: singleActivity,
-	// 	success: function (data) {
-	//         console.log("Added new activity");
-	//     },
-	//     error: function (error) {
-	//       console.error(error);
-	//     }
-	// });
+	$.ajax({
+		type: "POST",
+		url: '/api/activity',
+		data: singleActivity,
+		success: function (data) {
+	        console.log("Added new activity");
+	    },
+	    error: function (error) {
+	      console.error(error);
+	    }
+	});
 }
 
 readCsv(filePath, function(){

@@ -19,13 +19,26 @@
 
 	{{> nav}}
 	<h1>Index</h1>
-	Welcome, {{user.username}}!
-	{{user.activities}}
+  <div class="headline" data-id={{user._id}}>
+	Welcome, {{user.username}}! You have {{user.activities.length}} activities logged.
+  </div>
+
+  <script>
+  \{{#each activities}}
+    \{{activityLabel}}<br>
+  \{{/each}}
+  </script>
+	
+
+  <br><br>
+  <input type="file" name="filename" id="filename">
 	
 	<!-- jquery -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-    <!-- bootstrap js -->
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <!-- bootstrap js -->
+  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- index.js -->
+  <script type="text/javascript" src="/scripts/index.js"></script>
     
 </body>
 </html>
