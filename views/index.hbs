@@ -19,9 +19,11 @@
 
 	{{> nav}}
 	<h1>Index</h1>
-  <div class="headline" data-id={{user._id}}>
+  <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
 	Welcome, {{user.username}}! You have {{user.activities.length}} activities logged.
   </div>
+  <br>
+  <div id="totalCountBarChart"></div>
   <br>
   <div class="row" id="activities-list">
     <script id="activities-template" type="text/x-handlebars-template">
@@ -33,8 +35,12 @@
 	
 
   <br><br>
+  <div class="row" id="upload-body">
   <input type="file" name="filename" id="filename">
+  </div>
 	
+  <!-- plotly -->
+  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <!-- bootstrap js -->

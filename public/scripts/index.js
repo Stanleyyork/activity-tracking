@@ -3,10 +3,13 @@ $(function() {
 	console.log("index.js working");
 	var source = $('#activities-template').html(); // loads the html from .hbs
  	var template = Handlebars.compile(source);
- 	var user_id = $('.headline').attr("data-id");
+ 	var user_id = $('.headline').attr("user-id");
+ 	if($('.headline').attr("user-activity-count") > 0){
+ 		$('#upload-body').hide();
+ 	}
  	
- 	//getActivities(user_id);
  	getActivitiesCountByGroup(user_id);
+
 
 	$("#filename").change(function(e) {
 		console.log("inside filename change");
@@ -54,17 +57,6 @@ $(function() {
 		});
 	}
 
-	function getActivities(user_id){
-		$.get('/api/user/' + user_id + '/activity', function(data){
-			loadActivitiesOnPage(data);
-		});
-	}
-
-	function loadActivitiesOnPage(data){
-		var activitiesHtml = template({ activities: data.user.activities });
-		$('#activities-list').prepend(activitiesHtml);
-	}
-
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
 			loadActivitiesCountByGroupOnPage(data);
@@ -72,8 +64,23 @@ $(function() {
 	}
 
 	function loadActivitiesCountByGroupOnPage(data){
-		var activitiesHtml = template({ activitycountbygroup: data });
-		$('#activities-list').prepend(activitiesHtml);
-	}
+		// var activitiesHtml = template({ activitycountbygroup: data });
+		// $('#activities-list').prepend(activitiesHtml);
+		activityArray = [];
+		activityCountArray = [];
+		for(var i = 0; i < data.length; i++){
+			activityArray.push(data[i]._id);
+			activityCountArray.push(data[i].count);
+		}
+		var totalCountBarChart_data = [
+		  {
+		    x: activityArray,
+	    	y: activityCountArray,
+		    type: 'bar'
+		  }
+		];
+
+		Plotly.newPlot('totalCountBarChart', totalCountBarChart_data);
+		}
 
 });
