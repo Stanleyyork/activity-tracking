@@ -94,6 +94,15 @@ app.get('/activity/:id', isAuthenticated, function (req, res){
     var singleActivity = Activity.findOne({_id: req.params.id});
     res.render('activity', {activity: singleActivity});
 });
+// GET - All Activities
+app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
+     var userId = req.user.id;
+    User.findOne({_id: userId})
+        .populate('activities')
+            .exec(function(err, singleUser){
+                res.json({user: singleUser});
+            });
+});
 // POST - Activity Single
 app.post('/api/activity', function (req, res){
   var existingActivity = '';
@@ -121,7 +130,23 @@ app.post('/api/activity', function (req, res){
     }
   });
 });
-
+// GET - Activity Count by Grouping
+app.get('/api/user/:id/activitycountbygroup', function (req,res){
+  Activity.aggregate([
+        {
+            $group: {
+                _id: '$activityLabel',
+                count: {$sum: 1}
+            }
+        }
+    ], function (err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
 
 // SERVER PORT
 app.listen(3000, function(){

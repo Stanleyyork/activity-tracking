@@ -22,12 +22,14 @@
   <div class="headline" data-id={{user._id}}>
 	Welcome, {{user.username}}! You have {{user.activities.length}} activities logged.
   </div>
-
-  <script>
-  \{{#each activities}}
-    \{{activityLabel}}<br>
-  \{{/each}}
-  </script>
+  <br>
+  <div class="row" id="activities-list">
+    <script id="activities-template" type="text/x-handlebars-template">
+      \{{#each activitycountbygroup}}
+        \{{_id}}: \{{count}}<br>
+      \{{/each}}
+    </script>
+  </div>
 	
 
   <br><br>
@@ -37,6 +39,8 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <!-- bootstrap js -->
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  <!-- handlebars -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
   <!-- index.js -->
   <script type="text/javascript" src="/scripts/index.js"></script>
     

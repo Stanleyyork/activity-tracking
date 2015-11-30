@@ -1,12 +1,12 @@
 $(function() {
 
 	console.log("index.js working");
-
-	$('#upload-form').on('submit', function(){
-		console.log("inside upload-form");
-
-		//sendFileToServer(file);
-	});
+	var source = $('#activities-template').html(); // loads the html from .hbs
+ 	var template = Handlebars.compile(source);
+ 	var user_id = $('.headline').attr("data-id");
+ 	
+ 	//getActivities(user_id);
+ 	getActivitiesCountByGroup(user_id);
 
 	$("#filename").change(function(e) {
 		console.log("inside filename change");
@@ -52,6 +52,28 @@ $(function() {
 		      console.error(error);
 		    }
 		});
+	}
+
+	function getActivities(user_id){
+		$.get('/api/user/' + user_id + '/activity', function(data){
+			loadActivitiesOnPage(data);
+		});
+	}
+
+	function loadActivitiesOnPage(data){
+		var activitiesHtml = template({ activities: data.user.activities });
+		$('#activities-list').prepend(activitiesHtml);
+	}
+
+	function getActivitiesCountByGroup(user_id){
+		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
+			loadActivitiesCountByGroupOnPage(data);
+		});
+	}
+
+	function loadActivitiesCountByGroupOnPage(data){
+		var activitiesHtml = template({ activitycountbygroup: data });
+		$('#activities-list').prepend(activitiesHtml);
 	}
 
 });
