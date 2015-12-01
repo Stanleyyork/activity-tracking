@@ -18,12 +18,13 @@
 <body>
 
 	{{> nav}}
-	<h1>Index</h1>
   <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
 	Welcome, {{user.username}}! You have {{user.activities.length}} activities logged.
   </div>
   <br>
+  <div class="row" id="charts">
   <div id="totalCountBarChart"></div>
+  </div>
   <br>
   <div class="row" id="activities-list">
     <script id="activities-template" type="text/x-handlebars-template">

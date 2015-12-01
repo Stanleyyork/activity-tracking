@@ -45,6 +45,14 @@ body {
 	color: red;
 }
 
+#charts {
+	margin-left: -35px
+}
+
+.headline {
+	font-size: 20px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;

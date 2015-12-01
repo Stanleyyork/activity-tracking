@@ -135,7 +135,8 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
   Activity.aggregate([
         {
             $group: {
-                _id: '$activityLabel',
+                //_id: '$activityLabel',
+                _id : { originalYear: "$originalYear", activityLabel: "$activityLabel" },
                 count: {$sum: 1}
             }
         }
