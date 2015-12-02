@@ -17,7 +17,25 @@ $(function() {
  	
  	getActivitiesCountByGroup(user_id);
 
- 	
+ 	$(window).scroll(function(){
+
+		if($(window).scrollTop()>60){
+			$('.navbar').css("height", "80");
+			if($('#filter-tags > span')[0] === undefined){
+				for(var x = 2012; x<2016; x++){
+					$("#filter-tags").append('<span class="label label-default" id="habit-'+x+'">'+x+'</span>'+'  ');
+				}
+				yearFilterListeners('#filter-tags > span');
+			}
+			$("#filter-tags").show();
+		}
+
+		if($(window).scrollTop()<55){
+			$('.navbar').css("height", "55");
+			$("#filter-tags").hide();
+		}
+
+	});
 
 	$("#filename-nav").change(function(e) {
 		var ext = $("input#filename-nav").val().split(".").pop().toLowerCase();
@@ -128,20 +146,27 @@ $(function() {
 	function loadListOfActivities(){
 		var activitiesHtml = template({ activities: $.unique(activityArray['All']) });
 		$('#activities-list').append(activitiesHtml);
-		yearFilterListeners();
+		yearFilterListeners('#habit-filter > span');
 	}
 
-	function yearFilterListeners(){
-		$('#habit-filter > span').on('click', function(){
+	function yearFilterListeners(location){
+		$(location).on('click', function(){
  			var filter = $(this)[0].innerText;
+ 			var habitId = $(this)[0].id;
+ 			console.log($(this));
+ 			console.log($('#'+habitId));
  			if(yearArr.indexOf(filter) === -1){
  				yearArr.push(filter);
- 				$(this).removeClass('label label-default');
-    			$(this).addClass('label label-primary');
+ 				$('#'+habitId).removeClass('label label-default');
+ 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-default');
+    			$('#'+habitId).addClass('label label-primary');
+    			$('#habit-filter > span'+'#'+habitId).addClass('label label-primary');
  			} else {
  				yearArr.splice(yearArr.indexOf(filter), 1);
- 				$(this).removeClass('label label-primary');
-    			$(this).addClass('label label-default');
+ 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-primary');
+ 				$('#'+habitId).removeClass('label label-primary');
+    			$('#habit-filter > span'+'#'+habitId).addClass('label label-default');
+    			$('#'+habitId).addClass('label label-default');
  			}
  			loadAveragePerWeekActivities(yearArr);
  			loadTotalActivities(yearArr);
