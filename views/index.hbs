@@ -22,20 +22,18 @@
   <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
 	Welcome, {{user.username}}! You have {{user.activities.length}} daily activities logged.
   </div>
-  <br>
-  <input type="file" name="filename" id="filename-body">
+  
+  <span class="btn btn-primary btn-file" id="filename-span">
+    Browse<input type="file" name="filename" id="filename-body">
+  </span>
   <br>
 
   <div class="thumbnail" id="activities-list">
     <script id="activities-template" type="text/x-handlebars-template">    
     <div class="row" id="habit-filter">
     \{{#each activities}}
-      <span class="label label-default">\{{this}}</span>
+      <span class="label label-default" id="habit-\{{this}}">\{{this}}</span>
     \{{/each}}
-      <span class="label label-default" id="habit-2012">2012</span>
-      <span class="label label-default" id="habit-2013">2013</span>
-      <span class="label label-default" id="habit-2014">2014</span>
-      <span class="label label-default" id="habit-2015">2015</span>
     </div>
     </script>
   </div>

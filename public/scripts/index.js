@@ -1,38 +1,35 @@
 $(function() {
 
 	console.log("index.js working");
+	
 	var source = $('#activities-template').html(); // loads the html from .hbs
  	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
  	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
 	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
 	var activityAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
-	var yearArr = [];
+	var filterArr = [];
 
+	getActivitiesCountByGroup(user_id);
+
+	// Determine which content to have based on whether data exists
  	if($('.headline').attr("user-activity-count") > 0){
- 		$('#filename-body').hide();
+ 		$('#filename-span').hide();
  		$("#filter-tags").hide();
  	} else {
  		$('#charts').hide();
  	}
 
+ 	// Show upload button if clicked (in navbar)
  	$('#nav-upload').on('click', function(){
- 		$('#filename-body').show();
+ 		$('#filename-span').show();
  	});
 
- 	if($('#filter-tags > span')[0] === undefined){
-		for(var x = 2012; x<2016; x++){
-			$("#filter-tags").append('<span class="label label-default" id="habit-'+x+'">'+x+'</span>'+'  ');
-		}
-		yearFilterListeners('#filter-tags > span');
-	}
- 	
- 	getActivitiesCountByGroup(user_id);
-
+	// Nav Scrolling
  	$(window).scroll(function(){
 
-		if($(window).scrollTop()>60){
-			$('.navbar').css("height", "80");
+		if($(window).scrollTop()>70){
+			$('.navbar').css("height", "100");
 			$("#filter-tags").show();
 		}
 
@@ -110,22 +107,13 @@ $(function() {
 			loadDataIntoYear(data, function(){
 				loadTotalActivities(['2015', '2014', '2013', '2012']);
 				loadAveragePerWeekActivities(['2015', '2014', '2013', '2012']);
-				loadListOfActivities();
+				loadListOfActivities('#activities-list');
 			});
 		});
 	}
 
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
-			if(data[i]._id.activityLabel === 'Read' || 
-				data[i]._id.activityLabel === 'Creativity' || 
-				data[i]._id.activityLabel === 'Workout'  || 
-				data[i]._id.activityLabel === 'Express gratitude'  || 
-				data[i]._id.activityLabel === 'Snuggle' || 
-				data[i]._id.activityLabel === 'Eat Fruit'  || 
-				data[i]._id.activityLabel === 'Floss'  || 
-				data[i]._id.activityLabel === 'No coffee after lunch' || 
-				data[i]._id.activityLabel === 'Sleep at least 7 hours'){
 				if(data[i]._id.originalYear === 2015){
 					activityArray['2015'].push(data[i]._id.activityLabel);
 					activityCountArray['2015'].push(data[i].count);
@@ -144,15 +132,29 @@ $(function() {
 					activityAverageArray['2012'].push(data[i].count/52);
 				}
 				activityArray['All'].push(data[i]._id.activityLabel);
-			}
 		}
 		callback();
 	}
 
-	function loadListOfActivities(){
-		var activitiesHtml = template({ activities: $.unique(activityArray['All']) });
-		$('#activities-list').append(activitiesHtml);
+	// Load list of years and activities to body (just below headline)
+	function loadListOfActivities(location){
+		var years = Object.keys(activityArray);
+		activityArray['All'].splice.apply(activityArray['All'], [2, 0].concat(years));
+		var activitiesHtml = template({ activities: $.unique(activityArray['All'].sort()) });
+		$(location).append(activitiesHtml);
+		loadListOfActivitiesNav();
 		yearFilterListeners('#habit-filter > span');
+	}
+
+	// Load list of years and activities to navbar
+ 	function loadListOfActivitiesNav(){
+ 		var arr = $.unique(activityArray['All'].sort());
+	 	if($('#filter-tags > span')[0] === undefined){
+			for(var x = 0; x<arr.length; x++){
+				$("#filter-tags").append('<span class="label label-default" id="habit-'+arr[x]+'">'+arr[x]+'</span>'+'  ');
+			}
+			yearFilterListeners('#filter-tags > span');
+		}
 	}
 
 	function yearFilterListeners(location){
@@ -161,21 +163,21 @@ $(function() {
  			var habitId = $(this)[0].id;
  			console.log($(this));
  			console.log($('#'+habitId));
- 			if(yearArr.indexOf(filter) === -1){
- 				yearArr.push(filter);
+ 			if(filterArr.indexOf(filter) === -1){
+ 				filterArr.push(filter);
  				$('#'+habitId).removeClass('label label-default');
  				$('#habit-filter > span'+'#'+habitId).removeClass('label label-default');
     			$('#'+habitId).addClass('label label-primary');
     			$('#habit-filter > span'+'#'+habitId).addClass('label label-primary');
  			} else {
- 				yearArr.splice(yearArr.indexOf(filter), 1);
+ 				filterArr.splice(filterArr.indexOf(filter), 1);
  				$('#habit-filter > span'+'#'+habitId).removeClass('label label-primary');
  				$('#'+habitId).removeClass('label label-primary');
     			$('#habit-filter > span'+'#'+habitId).addClass('label label-default');
     			$('#'+habitId).addClass('label label-default');
  			}
- 			loadAveragePerWeekActivities(yearArr);
- 			loadTotalActivities(yearArr);
+ 			loadAveragePerWeekActivities(filterArr);
+ 			loadTotalActivities(filterArr);
  		});
 	}
 
