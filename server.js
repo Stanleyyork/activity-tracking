@@ -69,12 +69,15 @@ app.post('/register', function (req, res){
 });
 // GET - User Login
 app.get('/login', function (req, res){
-    res.render('login');
+    console.log(req.flash()['error']);
+    res.render('login', { errorMessage: req.flash()['error'] });
 });
 // POST - User Login
-app.post('/login', passport.authenticate('local'), function (req, res){
-    res.redirect('/index');
-});
+app.post('/login', passport.authenticate('local', {
+    successRedirect : '/index',
+    failureRedirect : '/login',
+    failureFlash : true
+}));
 // GET - User Log-out
 app.get('/logout', function (req, res) {
   req.logout();
@@ -160,6 +163,18 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
         } else {
             res.json(result);
         }
+    });
+});
+// GET - List of longest streaks
+app.get('/api/user/:id/activity/longeststreaks', isAuthenticated, function (req, res){
+    //var userId = req.params.id;
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    console.log(activityName);
+    Activity.find({activityLabel: activityName}, function(err, activityList){
+      if(err){console.error(err);}
+      else {
+        res.json(activityList);
+      }
     });
 });
 

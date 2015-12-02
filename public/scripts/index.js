@@ -11,9 +11,21 @@ $(function() {
 
  	if($('.headline').attr("user-activity-count") > 0){
  		$('#filename-body').hide();
+ 		$("#filter-tags").hide();
  	} else {
  		$('#charts').hide();
  	}
+
+ 	$('#nav-upload').on('click', function(){
+ 		$('#filename-body').show();
+ 	});
+
+ 	if($('#filter-tags > span')[0] === undefined){
+		for(var x = 2012; x<2016; x++){
+			$("#filter-tags").append('<span class="label label-default" id="habit-'+x+'">'+x+'</span>'+'  ');
+		}
+		yearFilterListeners('#filter-tags > span');
+	}
  	
  	getActivitiesCountByGroup(user_id);
 
@@ -21,12 +33,6 @@ $(function() {
 
 		if($(window).scrollTop()>60){
 			$('.navbar').css("height", "80");
-			if($('#filter-tags > span')[0] === undefined){
-				for(var x = 2012; x<2016; x++){
-					$("#filter-tags").append('<span class="label label-default" id="habit-'+x+'">'+x+'</span>'+'  ');
-				}
-				yearFilterListeners('#filter-tags > span');
-			}
 			$("#filter-tags").show();
 		}
 

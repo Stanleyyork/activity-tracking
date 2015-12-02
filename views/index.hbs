@@ -23,6 +23,8 @@
 	Welcome, {{user.username}}! You have {{user.activities.length}} daily activities logged.
   </div>
   <br>
+  <input type="file" name="filename" id="filename-body">
+  <br>
 
   <div class="thumbnail" id="activities-list">
     <script id="activities-template" type="text/x-handlebars-template">    
@@ -41,10 +43,7 @@
   <div class="row" id="charts">
     <div class="thumbnail"><div id="totalCountBarChart"></div></div>
     <div class="thumbnail"><div id="AverageWeekBarChart"></div></div>
-  </div>
-
-  <br><br>
-  <input type="file" name="filename" id="filename-body">
+  </div>  
 	
   <!-- plotly -->
   <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>

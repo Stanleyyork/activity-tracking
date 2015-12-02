@@ -11,5 +11,7 @@ $(function() {
 		}
 	});
 
+	$("#register-form").validate();
+
 
 });
