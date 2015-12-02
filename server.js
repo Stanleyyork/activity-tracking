@@ -92,6 +92,18 @@ app.get('/index', isAuthenticated, function (req, res){
                 res.render('index', {user: singleUser});
             });
 });
+// GET - List of all records for one activity
+app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res){
+    //var userId = req.params.id;
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    console.log(activityName);
+    Activity.find({activityLabel: activityName}, function(err, activityList){
+      if(err){console.error(err);}
+      else {
+        res.render('activityGroup', {activities: activityList});
+      }
+    });
+});
 // GET - Activity Single
 app.get('/activity/:id', isAuthenticated, function (req, res){
     var singleActivity = Activity.findOne({_id: req.params.id});

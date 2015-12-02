@@ -2,7 +2,7 @@ $(function() {
 
 	console.log("index.js working");
 	
-	var source = $('#activities-template').html(); // loads the html from .hbs
+	var source = $('#activities-template').html();
  	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
  	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
@@ -29,6 +29,15 @@ $(function() {
  	$('#nav-upload').on('click', function(){
  		$('#filename-span').show();
  	});
+
+ 	// Pagination
+ 	function paginationLoad(){
+ 		var arr = $.unique(activityArray['All'].sort());
+ 		console.log("here: " + arr);
+ 		for(var x = 0; x<arr.length; x++){
+ 			$('#pagination-list').append('<li><a href="user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
+ 		}
+ 	}
 
 	// Nav Scrolling conditional
  	$(window).scroll(function(){
@@ -136,25 +145,26 @@ $(function() {
 	// Parse data into year arrays
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
-				if(data[i]._id.originalYear === 2015){
-					activityArray['2015'].push(data[i]._id.activityLabel);
-					activityCountArray['2015'].push(data[i].count);
-					activityAverageArray['2015'].push(data[i].count/52);
-				} else if(data[i]._id.originalYear === 2014) {
-					activityArray['2014'].push(data[i]._id.activityLabel);
-					activityCountArray['2014'].push(data[i].count);
-					activityAverageArray['2014'].push(data[i].count/52);
-				} else if(data[i]._id.originalYear === 2013) {
-					activityArray['2013'].push(data[i]._id.activityLabel);
-					activityCountArray['2013'].push(data[i].count);
-					activityAverageArray['2013'].push(data[i].count/52);
-				} else if(data[i]._id.originalYear === 2012) {
-					activityArray['2012'].push(data[i]._id.activityLabel);
-					activityCountArray['2012'].push(data[i].count);
-					activityAverageArray['2012'].push(data[i].count/52);
-				}
-				activityArray['All'].push(data[i]._id.activityLabel);
+			if(data[i]._id.originalYear === 2015){
+				activityArray['2015'].push(data[i]._id.activityLabel);
+				activityCountArray['2015'].push(data[i].count);
+				activityAverageArray['2015'].push(data[i].count/52);
+			} else if(data[i]._id.originalYear === 2014) {
+				activityArray['2014'].push(data[i]._id.activityLabel);
+				activityCountArray['2014'].push(data[i].count);
+				activityAverageArray['2014'].push(data[i].count/52);
+			} else if(data[i]._id.originalYear === 2013) {
+				activityArray['2013'].push(data[i]._id.activityLabel);
+				activityCountArray['2013'].push(data[i].count);
+				activityAverageArray['2013'].push(data[i].count/52);
+			} else if(data[i]._id.originalYear === 2012) {
+				activityArray['2012'].push(data[i]._id.activityLabel);
+				activityCountArray['2012'].push(data[i].count);
+				activityAverageArray['2012'].push(data[i].count/52);
+			}
+			activityArray['All'].push(data[i]._id.activityLabel);
 		}
+		paginationLoad();
 		callback();
 	}
 

@@ -96,6 +96,15 @@ body {
     display: block;
 }
 
+#pagination-list {
+	margin-left: 30px;
+	max-width: 1000px;
+}
+
+#pagination-list > li {
+	font-size: 9px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;
