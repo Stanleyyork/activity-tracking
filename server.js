@@ -172,6 +172,7 @@ app.get('/api/user/:id/streaks', isAuthenticated, function (req, res){
        {
          $group:{
              _id: "$activityLabel",
+             date : { $first: '$originalDate' },
              streakInDays: { $max: "$quantityB" }
            },
        },

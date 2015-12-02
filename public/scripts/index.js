@@ -11,6 +11,7 @@ $(function() {
 	var filterArr = [];
 	var streakArray = [];
 	var streakCountArray = [];
+	var streakLabelArray = [];
 
 	// Load data from server on page load
 	getActivitiesCountByGroup(user_id);
@@ -115,6 +116,7 @@ $(function() {
 			if(data[i]._id !== "Express gratitude" && data[i]._id !== null){
 				streakArray.push(data[i]._id);
 				streakCountArray.push(data[i].streakInDays);
+				streakLabelArray.push(data[i].date);
 			}
 		}
 		loadStreaks();
@@ -210,6 +212,7 @@ $(function() {
 		  type: 'bar',
 		  x: streakCountArray,
 		  y: streakArray,
+		  text: streakLabelArray,
 		  orientation: 'h',
 		  marker: {color: 'rgb(255,140,0)'}
 		}];
