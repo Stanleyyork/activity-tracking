@@ -136,8 +136,12 @@ $(function() {
  			var filter = $(this)[0].innerText;
  			if(yearArr.indexOf(filter) === -1){
  				yearArr.push(filter);
+ 				$(this).removeClass('label label-default');
+    			$(this).addClass('label label-primary');
  			} else {
  				yearArr.splice(yearArr.indexOf(filter), 1);
+ 				$(this).removeClass('label label-primary');
+    			$(this).addClass('label label-default');
  			}
  			loadAveragePerWeekActivities(yearArr);
  			loadTotalActivities(yearArr);
@@ -173,17 +177,17 @@ $(function() {
 		};
 
 		var AverageWeekBarChart_data = [];
-		if(arr.indexOf('2015') !== -1){
-			AverageWeekBarChart_data.push(trace1);
-		}
-		if(arr.indexOf('2014') !== -1){
-			AverageWeekBarChart_data.push(trace2);
+		if(arr.indexOf('2012') !== -1){
+			AverageWeekBarChart_data.push(trace4);
 		}
 		if(arr.indexOf('2013') !== -1){
 			AverageWeekBarChart_data.push(trace3);
 		}
-		if(arr.indexOf('2012') !== -1){
-			AverageWeekBarChart_data.push(trace4);
+		if(arr.indexOf('2014') !== -1){
+			AverageWeekBarChart_data.push(trace2);
+		}
+		if(arr.indexOf('2015') !== -1){
+			AverageWeekBarChart_data.push(trace1);
 		}
 
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
@@ -221,17 +225,17 @@ $(function() {
 
 		var totalCountBarChart_data = [];
 
-		if(arr.indexOf('2015') !== -1){
-			totalCountBarChart_data.push(trace1);
-		}
-		if(arr.indexOf('2014') !== -1){
-			totalCountBarChart_data.push(trace2);
+		if(arr.indexOf('2012') !== -1){
+			totalCountBarChart_data.push(trace4);
 		}
 		if(arr.indexOf('2013') !== -1){
 			totalCountBarChart_data.push(trace3);
 		}
-		if(arr.indexOf('2012') !== -1){
-			totalCountBarChart_data.push(trace4);
+		if(arr.indexOf('2014') !== -1){
+			totalCountBarChart_data.push(trace2);
+		}
+		if(arr.indexOf('2015') !== -1){
+			totalCountBarChart_data.push(trace1);
 		}
 
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
