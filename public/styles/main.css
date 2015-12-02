@@ -29,6 +29,7 @@
 
 #filter-tags {
 	margin-left: 50px;
+	max-width: 1000px
 }
 
 body {
@@ -64,11 +65,6 @@ body {
 	max-width: 1025px;
 	margin-left: 15px;
 	font-size: 16px;
-}
-
-#habit-links {
-	margin-bottom: 5px;
-	margin-left: 10px;
 }
 
 #habit-filter {

@@ -166,15 +166,25 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
     });
 });
 // GET - List of longest streaks
-app.get('/api/user/:id/activity/longeststreaks', isAuthenticated, function (req, res){
+app.get('/api/user/:id/streaks', isAuthenticated, function (req, res){
     //var userId = req.params.id;
-    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-    console.log(activityName);
-    Activity.find({activityLabel: activityName}, function(err, activityList){
-      if(err){console.error(err);}
-      else {
-        res.json(activityList);
-      }
+    Activity.aggregate([
+       {
+         $group:{
+             _id: "$activityLabel",
+             streakInDays: { $max: "$quantityB" }
+           },
+       },
+       { $sort:{
+            streakInDays : 1
+           }
+       }
+     ], function (err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
     });
 });
 

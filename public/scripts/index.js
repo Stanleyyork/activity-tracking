@@ -9,8 +9,12 @@ $(function() {
 	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
 	var activityAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
 	var filterArr = [];
+	var streakArray = [];
+	var streakCountArray = [];
 
+	// Load data from server on page load
 	getActivitiesCountByGroup(user_id);
+	getStreaks(user_id);
 
 	// Determine which content to have based on whether data exists
  	if($('.headline').attr("user-activity-count") > 0){
@@ -25,31 +29,25 @@ $(function() {
  		$('#filename-span').show();
  	});
 
-	// Nav Scrolling
+	// Nav Scrolling conditional
  	$(window).scroll(function(){
-
 		if($(window).scrollTop()>70){
 			$('.navbar').css("height", "100");
 			$("#filter-tags").show();
 		}
-
 		if($(window).scrollTop()<55){
 			$('.navbar').css("height", "55");
 			$("#filter-tags").hide();
 		}
-
 	});
 
-	$("#filename-nav").change(function(e) {
-		var ext = $("input#filename-nav").val().split(".").pop().toLowerCase();
-		uploadFile(e, ext);
-	});
-
+ 	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body").change(function(e) {
 		var ext = $("input#filename-body").val().split(".").pop().toLowerCase();
 		uploadFile(e, ext);
 	});
 
+	// Upload and parse file, then send to sendActivityToServer
 	function uploadFile(e, ext){
 		console.log("inside filename change");
 		var ext = ext;
@@ -80,7 +78,7 @@ $(function() {
 						data.quantityC = cell[3];
 					}
 					data.link = cell[cell.length-1];
-					sendPostToServer(data);
+					sendActivityToServer(data);
 				}
 			};
 			reader.readAsText(e.target.files.item(0));
@@ -88,7 +86,8 @@ $(function() {
 		return false;
 	}
 
-	function sendPostToServer(content){
+	// Send activity to server to save
+	function sendActivityToServer(content){
 		$.ajax({
 			type: "POST",
 			url: '/api/activity',
@@ -102,6 +101,26 @@ $(function() {
 		});
 	}
 
+	// Get streak data from server, then pass to
+	function getStreaks(user_id){
+		$.get('/api/user/' + user_id + '/streaks', function(data){
+			loadStreakDataIntoArray(data);
+		});
+	}
+
+	// Parse data into array
+	function loadStreakDataIntoArray(data){
+		for(var i = 0; i < data.length; i++){
+			console.log(data[i]._id);
+			if(data[i]._id !== "Express gratitude" && data[i]._id !== null){
+				streakArray.push(data[i]._id);
+				streakCountArray.push(data[i].streakInDays);
+			}
+		}
+		loadStreaks();
+	}
+
+	// Get year & activity grouped data from server, then pass to loadDataIntoYear Grouping
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
 			loadDataIntoYear(data, function(){
@@ -112,6 +131,7 @@ $(function() {
 		});
 	}
 
+	// Parse data into year arrays
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
 				if(data[i]._id.originalYear === 2015){
@@ -143,7 +163,7 @@ $(function() {
 		var activitiesHtml = template({ activities: $.unique(activityArray['All'].sort()) });
 		$(location).append(activitiesHtml);
 		loadListOfActivitiesNav();
-		yearFilterListeners('#habit-filter > span');
+		filterListeners('#habit-filter > span');
 	}
 
 	// Load list of years and activities to navbar
@@ -153,35 +173,55 @@ $(function() {
 			for(var x = 0; x<arr.length; x++){
 				$("#filter-tags").append('<span class="label label-default" id="habit-'+arr[x]+'">'+arr[x]+'</span>'+'  ');
 			}
-			yearFilterListeners('#filter-tags > span');
+			filterListeners('#filter-tags > span');
 		}
 	}
 
-	function yearFilterListeners(location){
+	// Listen for and change color of year or habit
+	function filterListeners(location){
 		$(location).on('click', function(){
  			var filter = $(this)[0].innerText;
  			var habitId = $(this)[0].id;
- 			console.log($(this));
- 			console.log($('#'+habitId));
- 			if(filterArr.indexOf(filter) === -1){
- 				filterArr.push(filter);
- 				$('#'+habitId).removeClass('label label-default');
- 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-default');
-    			$('#'+habitId).addClass('label label-primary');
-    			$('#habit-filter > span'+'#'+habitId).addClass('label label-primary');
+ 			if(Object.keys(activityArray).indexOf(filter) !== -1){
+	 			if(filterArr.indexOf(filter) === -1){
+	 				filterArr.push(filter);
+	 				$('#'+habitId).removeClass('label label-default');
+	 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-default');
+	    			$('#'+habitId).addClass('label label-primary');
+	    			$('#habit-filter > span'+'#'+habitId).addClass('label label-primary');
+	 			} else {
+	 				filterArr.splice(filterArr.indexOf(filter), 1);
+	 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-primary');
+	 				$('#'+habitId).removeClass('label label-primary');
+	    			$('#habit-filter > span'+'#'+habitId).addClass('label label-default');
+	    			$('#'+habitId).addClass('label label-default');
+	 			}
+	 			loadAveragePerWeekActivities(filterArr);
+	 			loadTotalActivities(filterArr);
  			} else {
- 				filterArr.splice(filterArr.indexOf(filter), 1);
- 				$('#habit-filter > span'+'#'+habitId).removeClass('label label-primary');
- 				$('#'+habitId).removeClass('label label-primary');
-    			$('#habit-filter > span'+'#'+habitId).addClass('label label-default');
-    			$('#'+habitId).addClass('label label-default');
+ 				console.log("not a year");
  			}
- 			loadAveragePerWeekActivities(filterArr);
- 			loadTotalActivities(filterArr);
  		});
 	}
 
 // Graphs Below
+	function loadStreaks(){
+		var streaks_data = [{
+		  type: 'bar',
+		  x: streakCountArray,
+		  y: streakArray,
+		  orientation: 'h',
+		  marker: {color: 'rgb(255,140,0)'}
+		}];
+
+		var layout = {title: "Longest Streaks",
+			xaxis: {title: "Days"},
+			margin: {l: 150},
+		};
+
+		Plotly.newPlot('streaksBarChart', streaks_data, layout);
+	}
+
 	function loadAveragePerWeekActivities(arr){
 		
 		var trace1 = {
