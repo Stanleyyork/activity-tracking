@@ -96,46 +96,60 @@ app.get('/activity/:id', isAuthenticated, function (req, res){
 });
 // GET - All Activities
 app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
-     var userId = req.user.id;
+    var userId = req.params.id;
     User.findOne({_id: userId})
         .populate('activities')
             .exec(function(err, singleUser){
                 res.json({user: singleUser});
             });
 });
+// GET - List of all records for one activity
+app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
+    //var userId = req.params.id;
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    console.log(activityName);
+    Activity.find({activityLabel: activityName}, function(err, activityList){
+      if(err){console.error(err);}
+      else {
+        res.json(activityList);
+      }
+    });
+});
 // POST - Activity Single
 app.post('/api/activity', function (req, res){
-  var existingActivity = '';
   Activity.findOne({originalId: req.body.originalId}, function(err, exisActivity){
-    if(err) {return console.error(err);}
-    else {
-      if (exisActivity === null){
-        var newActivity = new Activity(req.body);
-        var user_id = req.user._id;
-        newActivity.save(function(err, savedActivity){
-          if(err) {return console.error(err);}
-          else console.log(savedActivity);
+    if(err) {
+      return console.error(err);
+    } else if (exisActivity === null){
+      console.log(req.body);
+      var newActivity = new Activity(req.body);
+      var user_id = req.user._id;
+      newActivity.save(function(err, savedActivity){
+        if(err) {
+          return console.error(err);
+        } else { 
           User.findOne({_id: user_id}, function(err, foundUser){
-            if(err) {return console.error(err);}
-            else {
+            if(err) {
+              return console.error(err);
+            } else {
               foundUser.activities.push(newActivity);
               foundUser.save();
             }
           });
-          res.json(newActivity);
-        });
-      } else {
-        console.log("Activity exists");
-      }
+        }
+        res.json(newActivity);
+      });
+    } else {
+      console.log("Activity already exists");
     }
   });
 });
 // GET - Activity Count by Grouping
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
+  //var userId = req.params.id;
   Activity.aggregate([
         {
             $group: {
-                //_id: '$activityLabel',
                 _id : { originalYear: "$originalYear", activityLabel: "$activityLabel" },
                 count: {$sum: 1}
             }

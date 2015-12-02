@@ -18,27 +18,35 @@
 <body>
 
 	{{> nav}}
+
   <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-	Welcome, {{user.username}}! You have {{user.activities.length}} activities logged.
+	Welcome, {{user.username}}! You have {{user.activities.length}} daily activities logged.
   </div>
   <br>
-  <div class="row" id="charts">
-  <div id="totalCountBarChart"></div>
-  </div>
-  <br>
-  <div class="row" id="activities-list">
-    <script id="activities-template" type="text/x-handlebars-template">
-      \{{#each activitycountbygroup}}
-        \{{_id}}: \{{count}}<br>
-      \{{/each}}
+
+  <div class="thumbnail" id="activities-list">
+    <script id="activities-template" type="text/x-handlebars-template">    
+    <div class="row" id="habit-filter">
+    \{{#each activities}}
+      <span class="label label-default">\{{this}}</span>
+    \{{/each}}
+      <span class="label label-default" id="habit-2012">2012</span>
+      <span class="label label-default" id="habit-2013">2013</span>
+      <span class="label label-default" id="habit-2014">2014</span>
+      <span class="label label-default" id="habit-2015">2015</span>
+    </div>
     </script>
   </div>
-	
+  <div class="row" id="hello">hello</div>
+
+  <div class="row" id="charts">
+    <div class="thumbnail"><div id="totalCountBarChart"></div></div>
+    <div class="thumbnail"><div id="AverageWeekBarChart"></div></div>
+  </div>
+  <br>
 
   <br><br>
-  <div class="row" id="upload-body">
-  <input type="file" name="filename" id="filename">
-  </div>
+  <input type="file" name="filename" id="filename-body">
 	
   <!-- plotly -->
   <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
