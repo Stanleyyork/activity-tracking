@@ -14,6 +14,7 @@
     "chai": "^3.4.1",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
+    "express-flash": "0.0.2",
     "express-session": "^1.12.1",
     "fast-csv": "^0.6.0",
     "hbs": "^4.0.0",
