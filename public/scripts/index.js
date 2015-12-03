@@ -14,6 +14,8 @@ $(function() {
 	var streakArray = [];
 	var streakCountArray = [];
 	var streakLabelArray = [];
+	var activityDoWArray = [];
+	var activityDoWAverageArray = [];
 
 	// Load data from server on page load
 	getActivitiesCountByGroup(user_id);
@@ -39,7 +41,6 @@ $(function() {
  	// Pagination
  	function paginationLoad(){
  		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
- 		console.log(arr);
  		for(var x = 0; x<arr.length; x++){
  			$('#pagination-list').append('<li><a href="user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
  		}
@@ -84,10 +85,12 @@ $(function() {
 					data.activityLabel = cell[1];
 					data.originalId = cell[0];
 					if(date !== undefined){
-						data.originalDate = date;
+						var datetype = new Date(date);
+						data.originalDate = datetype;
 						data.originalYear = date.slice(0,4);
 						data.originalMonth = date.slice(5,7);
 						data.originalDay = date.slice(8,10);
+						data.originalDayOfWeek = datetype.getDay();
 					}
 					data.occured = true;
 					data.measurementA = "Days";
@@ -154,7 +157,7 @@ $(function() {
 		});
 	}
 
-	// Parse data into year arrays
+	// Parse total activity count data into year arrays
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
 			if(data[i]._id.originalYear === '2015'){
@@ -177,6 +180,32 @@ $(function() {
 			activityArray['All'].push(data[i]._id.activityLabel);
 		}
 		paginationLoad();
+		callback();
+	}
+
+	// Parse day of week count data into year arrays
+	function loadDoWDataIntoYear(data, callback){
+		console.log(data);
+		for(var i = 1; i < data.length; i++){
+			console.log(data[i].dayOfWeek);
+			console.log(data[i].count);
+			console.log(data[i].activityLabel);
+			if(data[i].originalYear === '2015'){
+				activityDoWArray['2015'].push(data[i].dayOfWeek);
+				activityDoWAverageArray['2015'].push(data[i].count);
+			} else if(data[i].originalYear === '2014') {
+				activityDoWArray['2014'].push(data[i].dayOfWeek);
+				activityDoWAverageArray['2014'].push(data[i].count);
+			} else if(data[i].originalYear === '2013') {
+				activityDoWArray['2013'].push(data[i].dayOfWeek);
+				activityDoWAverageArray['2013'].push(data[i].count);
+			} else if(data[i].originalYear === '2012') {
+				activityDoWArray['2012'].push(data[i].dayOfWeek);
+				activityDoWAverageArray['2012'].push(data[i].count);
+			}
+		}
+		console.log(activityDoWArray);
+		console.log(activityDoWAverageArray);
 		callback();
 	}
 
@@ -223,13 +252,70 @@ $(function() {
 	 			}
 	 			loadAveragePerWeekActivities(filterArr);
 	 			loadTotalActivities(filterArr);
+	 			loadDayOfWeekActivities(filterArr);
  			} else {
  				console.log("not a year");
  			}
  		});
 	}
+	getActivitiesCountPerDayOfWeek()
+	function getActivitiesCountPerDayOfWeek(){
+		$.get('/api/user/'+user_id+'/activityperweek', function(data){
+			loadDoWDataIntoYear(data, function(){
+				loadDayOfWeekActivities(['2015', '2014', '2013', '2012']);
+			});
+		});
+	}
 
 // Graphs Below
+	function loadDayOfWeekActivities(arr){
+		
+		var trace1 = {
+		  x: activityDoWArray['2015'],
+		  y: activityDoWAverageArray['2015'],
+		  name: '2015',
+		  type: 'bar'
+		};
+		var trace2 = {
+		  x: activityDoWArray['2014'],
+		  y: activityDoWAverageArray['2014'],
+		  name: '2014',
+		  type: 'bar'
+		};
+		var trace3 = {
+		  x: activityDoWArray['2013'],
+		  y: activityDoWAverageArray['2013'],
+		  name: '2013',
+		  type: 'bar'
+		};
+		var trace4 = {
+		  x: activityDoWArray['2012'],
+		  y: activityDoWAverageArray['2012'],
+		  name: '2012',
+		  type: 'bar'
+		};
+
+		var DayOfWeekChart_data = [];
+		if(arr.indexOf('2012') !== -1){
+			DayOfWeekChart_data.push(trace4);
+		}
+		if(arr.indexOf('2013') !== -1){
+			DayOfWeekChart_data.push(trace3);
+		}
+		if(arr.indexOf('2014') !== -1){
+			DayOfWeekChart_data.push(trace2);
+		}
+		if(arr.indexOf('2015') !== -1){
+			DayOfWeekChart_data.push(trace1);
+		}
+
+		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
+					  yaxis: {range: [0, 7], title: 'Days'},
+					  title: 'Average Day of Week', titlefont: {size: 18}
+					 };
+		Plotly.newPlot('DayOfWeekChart', DayOfWeekChart_data, layout);
+	}
+
 	function loadStreaks(){
 		var streaks_data = [{
 		  type: 'bar',

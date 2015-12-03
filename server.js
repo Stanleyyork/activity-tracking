@@ -14,7 +14,11 @@ var express = require('express');
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy;
 
-mongoose.connect('mongodb://localhost/activity-tracking');
+mongoose.connect(
+  process.env.MONGOLAB_URI ||
+  process.env.MONGOHQ_URL ||
+  'mongodb://localhost/activity-tracking'
+);
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 app.use(express.static('public'));
@@ -160,9 +164,12 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
     });
 });
 // GET - (API) List of longest streaks
-app.get('/api/user/:id/streaks', isAuthenticated, function (req, res){
-    //var userId = req.params.id;
+app.get('/api/user/:id/streaks', function (req, res){
+    var userId = req.params.id;
     Activity.aggregate([
+       { 
+          $match : { user_id : userId }
+        },
        {
          $group:{
              _id: "$activityLabel",
@@ -182,8 +189,37 @@ app.get('/api/user/:id/streaks', isAuthenticated, function (req, res){
         }
     });
 });
+// GET - (API) List of activity count per day of week
+app.get('/api/user/:id/activityperweek', function (req, res){
+  var userId = req.params.id;
+  Activity.aggregate([
+    { 
+      $match : { user_id : userId }
+    },
+    {
+      $group:{
+        _id: {activityLabel: "$activityLabel", dayOfWeek: '$originalDayOfWeek' },
+        dayOfWeek: {$first: '$originalDayOfWeek'},
+        activityLabel: {$first: '$activityLabel'},
+        originalYear: {$first: '$originalYear'},
+        count: { $sum: 1 }
+      }
+    },
+    { $sort:{
+          activityLabel : 1,
+          dayOfWeek: 1
+         }
+    }
+  ], function (err, result) {
+        if (err) {
+            next(err);
+        } else {
+            res.json(result);
+        }
+    });
+});
 
 // SERVER PORT
-app.listen(3000, function(){
+app.listen(process.env.PORT || 3000, function(){
     console.log("Server is running");
 });
