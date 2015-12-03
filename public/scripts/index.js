@@ -141,6 +141,7 @@ $(function() {
 	// Get year & activity grouped data from server, then pass to loadDataIntoYear Grouping
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
+			console.log(data);
 			loadDataIntoYear(data, function(){
 				loadTotalActivities(['2015', '2014', '2013', '2012']);
 				loadAveragePerWeekActivities(['2015', '2014', '2013', '2012']);
@@ -152,19 +153,19 @@ $(function() {
 	// Parse data into year arrays
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
-			if(data[i]._id.originalYear === 2015){
+			if(data[i]._id.originalYear === '2015'){
 				activityArray['2015'].push(data[i]._id.activityLabel);
 				activityCountArray['2015'].push(data[i].count);
 				activityAverageArray['2015'].push(data[i].count/52);
-			} else if(data[i]._id.originalYear === 2014) {
+			} else if(data[i]._id.originalYear === '2014') {
 				activityArray['2014'].push(data[i]._id.activityLabel);
 				activityCountArray['2014'].push(data[i].count);
 				activityAverageArray['2014'].push(data[i].count/52);
-			} else if(data[i]._id.originalYear === 2013) {
+			} else if(data[i]._id.originalYear === '2013') {
 				activityArray['2013'].push(data[i]._id.activityLabel);
 				activityCountArray['2013'].push(data[i].count);
 				activityAverageArray['2013'].push(data[i].count/52);
-			} else if(data[i]._id.originalYear === 2012) {
+			} else if(data[i]._id.originalYear === '2012') {
 				activityArray['2012'].push(data[i]._id.activityLabel);
 				activityCountArray['2012'].push(data[i].count);
 				activityAverageArray['2012'].push(data[i].count/52);
