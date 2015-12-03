@@ -1,6 +1,7 @@
 #nav-title {
 	font-weight: bold;
 	margin-bottom: -5px;
+	color: #545454;
 }
 
 .navbar {
@@ -14,15 +15,15 @@
 }
 
 #nav-title-powered {
-	vertical-align: text-top;
 	font-style: italic;
 	font-size: 11px;
 	display:inline-block;
-	margin-left: 23px;
+	margin-left: 115px;
+	color: #545454;
 }
 
 #coach-logo {
-	width: 20px;
+	width: 60px;
 	display:inline-block;
 	margin-left: 5px;
 }
@@ -50,7 +51,7 @@
 body {
 	margin-top: 75px;
 	margin-left: 50px;
-	color: #3f3f3f;
+	color: #545454;
 	background-color: #fafafa;
 }
 
