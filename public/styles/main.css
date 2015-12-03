@@ -1,15 +1,28 @@
 #nav-title {
 	font-weight: bold;
+	margin-bottom: -5px;
 }
 
 .navbar {
-	height: 55px;
+	height: 60px;
 }
 
 #nav-header {
-	margin-top: 15px;
+	margin-top: 9px;
 	margin-left: 20px;
 	font-size: 18px;
+}
+
+#nav-title-powered {
+	font-size: 11px;
+	display:inline-block;
+	margin-left: 23px;
+}
+
+#coach-logo {
+	width: 20px;
+	display:inline-block;
+	margin-left: 5px;
 }
 
 #account-button {

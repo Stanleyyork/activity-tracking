@@ -46,7 +46,7 @@ $(function() {
 	// Nav Scrolling conditional
  	$(window).scroll(function(){
 		if($(window).scrollTop()>70){
-			$('.navbar').css("height", "100");
+			$('.navbar').css("height", "120");
 			$("#filter-tags").show();
 		}
 		if($(window).scrollTop()<55){
@@ -89,7 +89,7 @@ $(function() {
 					data.measurementA = "Days";
 					data.quantityA = 1;
 					data.measurementB = header_values[5];
-					data.quantityB = cell[cell.length-4];
+					data.quantityB = Number(cell[cell.length-4]);
 					if(cell[3] !== ''){
 						data.measurementC = header_values[3];
 						data.quantityC = cell[3];
@@ -109,7 +109,8 @@ $(function() {
 		$.ajax({
 			type: "POST",
 			url: '/api/fileupload',
-			data: importObject,
+			data: JSON.stringify(importObject),
+			contentType: "application/json",
 			success: function (data) {
 		        console.log("Sent to server");
 		    },
@@ -129,7 +130,7 @@ $(function() {
 	// Parse data into array
 	function loadStreakDataIntoArray(data){
 		for(var i = 0; i < data.length; i++){
-			if(data[i]._id !== "Express gratitude" && data[i]._id !== null){
+			if(data[i]._id !== undefined && data[i]._id !== null){
 				streakArray.push(data[i]._id);
 				streakCountArray.push(data[i].streakInDays);
 				streakLabelArray.push(data[i].date);
@@ -141,7 +142,6 @@ $(function() {
 	// Get year & activity grouped data from server, then pass to loadDataIntoYear Grouping
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
-			console.log(data);
 			loadDataIntoYear(data, function(){
 				loadTotalActivities(['2015', '2014', '2013', '2012']);
 				loadAveragePerWeekActivities(['2015', '2014', '2013', '2012']);

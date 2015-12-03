@@ -92,7 +92,7 @@ app.get('/index', isAuthenticated, function (req, res){
               res.render('index', {user: singleUser});
           });
 });
-// GET - All Activities
+// GET - (API) All Activities
 app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
   var userId = req.params.id;
   User.findOne({_id: userId})
@@ -108,7 +108,7 @@ app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res)
   var information = {userId: userId, activityName: activityName};
   res.render('activity', {info: information});
 });
-// GET - List of all records for one activity
+// GET - (API) List of all records for one activity
 app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   //var userId = req.params.id;
   var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
@@ -121,15 +121,13 @@ app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, 
   });
 });
 
-// POST - Retrieve and save all data
+// POST - (API) Retrieve and save all data
 app.post('/api/fileupload', function (req, res){
   console.log("inside /api/fileupload");
   var obj = req.body;
   var arr = Object.keys(obj).map(function(k) { return obj[k]; });
   var user_id = arr[0].user_id;
-  var savedActivitiesArray = [];
 
-  //BULK INSERT
   Activity.collection.insert(arr, function(err, result){
     User.findOne({_id: user_id}, function(err, foundUser){
       foundUser.activities = result.ops;
@@ -139,7 +137,7 @@ app.post('/api/fileupload', function (req, res){
 
 });
 
-// GET - Activity Count by Grouping
+// GET - (API) Activity Count by Grouping
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
   var userId = req.params.id;
   Activity.aggregate([
@@ -160,7 +158,7 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
         }
     });
 });
-// GET - List of longest streaks
+// GET - (API) List of longest streaks
 app.get('/api/user/:id/streaks', isAuthenticated, function (req, res){
     //var userId = req.params.id;
     Activity.aggregate([
