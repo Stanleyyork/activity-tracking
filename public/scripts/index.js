@@ -72,7 +72,7 @@ $(function() {
 			reader.onload = function(e) {
 				var row_values = e.target.result.split("\n");
 				var header_values = row_values[0].split(",");
-				for(var i=1;i<100;i++) {
+				for(var i=1;i<row_values.length;i++) {
 					var cell = row_values[i].split(",");
 					var data = {};
 					var date = cell[2];

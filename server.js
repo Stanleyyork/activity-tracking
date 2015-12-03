@@ -126,9 +126,36 @@ app.post('/api/fileupload', function (req, res){
   console.log("inside /api/fileupload");
   var obj = req.body;
   var arr = Object.keys(obj).map(function(k) { return obj[k]; });
-  Activity.collection.insert(arr, function(){
-    console.log("finished!");
-  });
+  var user_id = arr[0].user_id;
+  //var originalIdArray = arr.map(function(o){return parseInt(o['originalId']);});
+  for(var i=0; i<arr.length; i++){
+    var newActivity = new Activity(arr[i]);
+    newActivity.save(function(err, savedActivity){
+      if(err){console.log(err)}
+      else{
+        User.findOne({_id: user_id}, function(err, foundUser){
+          foundUser.activities.push(savedActivity);
+          foundUser.save();
+        });
+        if(i === arr.length-1){
+          console.log("finished");
+        }
+      }
+    });
+
+  }
+  // Activity.collection.insert(arr, function(){
+  //   console.log("bulk insert complete");
+  //   User.findOne({_id: user_id}, function(err, foundUser){
+  //     Activity.find({},function(err, allActivities){
+  //       allActivities.forEeach(function(activity){
+  //         console.log(activity);
+  //         foundUser.activities.push(activity);
+  //       });
+  //     });
+  //   });
+  // });
+
 });
 // GET - Activity Count by Grouping
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
