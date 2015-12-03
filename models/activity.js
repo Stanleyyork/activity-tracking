@@ -2,6 +2,7 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var ActivitySchema = new Schema({
+	user_id: String,
 	activityLabel: String,
 	activityCategory: String,
 	originalId: Number,

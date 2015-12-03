@@ -5,6 +5,7 @@ $(function() {
 	var source = $('#activities-template').html();
  	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
+ 	var importObject = {};
  	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
 	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
 	var activityAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
@@ -21,8 +22,12 @@ $(function() {
  	if($('.headline').attr("user-activity-count") > 0){
  		$('#filename-span').hide();
  		$("#filter-tags").hide();
+ 		$("#instructions").hide();
  	} else {
  		$('#charts').hide();
+ 		$('#filename-span').show();
+ 		$("#activities-list").hide();
+ 		$("#filter-tags").hide();
  	}
 
  	// Show upload button if clicked (in navbar)
@@ -33,7 +38,6 @@ $(function() {
  	// Pagination
  	function paginationLoad(){
  		var arr = $.unique(activityArray['All'].sort());
- 		console.log("here: " + arr);
  		for(var x = 0; x<arr.length; x++){
  			$('#pagination-list').append('<li><a href="user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
  		}
@@ -54,22 +58,25 @@ $(function() {
  	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body").change(function(e) {
 		var ext = $("input#filename-body").val().split(".").pop().toLowerCase();
-		uploadFile(e, ext);
+		uploadFile(e, ext, function(){
+			console.log("finished, now sending to server...");
+			sendActivityToServer();
+		});
 	});
 
 	// Upload and parse file, then send to sendActivityToServer
-	function uploadFile(e, ext){
-		console.log("inside filename change");
+	function uploadFile(e, ext, callback){
 		var ext = ext;
 		if (e.target.files !== undefined) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				var row_values = e.target.result.split("\n");
 				var header_values = row_values[0].split(",");
-				for(var i=1;i<row_values.length;i++) {
+				for(var i=1;i<100;i++) {
 					var cell = row_values[i].split(",");
 					var data = {};
 					var date = cell[2];
+					data.user_id = user_id;
 					data.activityLabel = cell[1];
 					data.originalId = cell[0];
 					if(date !== undefined){
@@ -88,8 +95,9 @@ $(function() {
 						data.quantityC = cell[3];
 					}
 					data.link = cell[cell.length-1];
-					sendActivityToServer(data);
+					importObject[i] = data;
 				}
+				callback();
 			};
 			reader.readAsText(e.target.files.item(0));
 		}
@@ -97,11 +105,11 @@ $(function() {
 	}
 
 	// Send activity to server to save
-	function sendActivityToServer(content){
+	function sendActivityToServer(){
 		$.ajax({
 			type: "POST",
-			url: '/api/activity',
-			data: content,
+			url: '/api/fileupload',
+			data: importObject,
 			success: function (data) {
 		        console.log("Sent to server");
 		    },
@@ -121,7 +129,6 @@ $(function() {
 	// Parse data into array
 	function loadStreakDataIntoArray(data){
 		for(var i = 0; i < data.length; i++){
-			console.log(data[i]._id);
 			if(data[i]._id !== "Express gratitude" && data[i]._id !== null){
 				streakArray.push(data[i]._id);
 				streakCountArray.push(data[i].streakInDays);

@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
 
   <!-- set viewport to device width to make site responsive -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,15 +10,27 @@
 
   <!-- custom styles -->
   <link rel="stylesheet" type="text/css" href="/styles/main.css">
-<html lang="en">
-<head>
+
 	<meta charset="UTF-8">
-	<title>Activity Page</title>
+	<title>Activity</title>
 </head>
 <body>
 	{{> nav}}
-	<h1>Single Activity</h1>
-	{{activity}}
+	<p id="user-info" data-id={{info.userId}}></p>
+	<h1>Activity: {{info.activityName}}</h1>
+	<br>
+	<div class="highlight" id="activity-info" data-id={{info.activityName}}>
+		<script id="activity-template" type="text/x-handlebars-template"> 
+			\{{#each activities}}
+				\{{activityLabel}}
+				<li>\{{link}}</li>
+				<li>\{{measurementB}}: \{{quantityB}}</li>
+				<li>\{{measurementC}}: \{{quantityC}}</li>
+				<li>\{{originalDate}}</li>
+				<br>
+			\{{/each}}
+		</script>
+	</div>
 
 	<!-- plotly -->
   <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
@@ -27,8 +41,7 @@
   <!-- handlebars -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
   <!-- index.js -->
-  <script type="text/javascript" src="/scripts/index.js"></script>
-	
+  <script type="text/javascript" src="/scripts/activity.js"></script>
 	
 </body>
 </html>
