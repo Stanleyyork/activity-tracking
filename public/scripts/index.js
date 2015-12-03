@@ -9,6 +9,7 @@ $(function() {
  	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
 	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
 	var activityAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
+	var newActivityArray = [];
 	var filterArr = [];
 	var streakArray = [];
 	var streakCountArray = [];
@@ -37,7 +38,8 @@ $(function() {
 
  	// Pagination
  	function paginationLoad(){
- 		var arr = $.unique(activityArray['All'].sort());
+ 		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
+ 		console.log(arr);
  		for(var x = 0; x<arr.length; x++){
  			$('#pagination-list').append('<li><a href="user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
  		}
@@ -46,12 +48,14 @@ $(function() {
 	// Nav Scrolling conditional
  	$(window).scroll(function(){
 		if($(window).scrollTop()>70){
-			$('.navbar').css("height", "120");
+			$('.navbar').css("height", "100");
 			$("#filter-tags").show();
+			$('#coach-logo-words').hide();
 		}
 		if($(window).scrollTop()<55){
-			$('.navbar').css("height", "55");
+			$('.navbar').css("height", "60");
 			$("#filter-tags").hide();
+			$('#coach-logo-words').show();
 		}
 	});
 
@@ -180,7 +184,8 @@ $(function() {
 	function loadListOfActivities(location){
 		var years = Object.keys(activityArray);
 		activityArray['All'].splice.apply(activityArray['All'], [2, 0].concat(years));
-		var activitiesHtml = template({ activities: $.unique(activityArray['All'].sort()) });
+		newActivityArray = activityArray['All'].filter( Boolean ).sort();
+		var activitiesHtml = template({ activities: $.unique(newActivityArray) });
 		$(location).append(activitiesHtml);
 		loadListOfActivitiesNav();
 		filterListeners('#habit-filter > span');
@@ -188,7 +193,7 @@ $(function() {
 
 	// Load list of years and activities to navbar
  	function loadListOfActivitiesNav(){
- 		var arr = $.unique(activityArray['All'].sort());
+ 		var arr = $.unique(newActivityArray);
 	 	if($('#filter-tags > span')[0] === undefined){
 			for(var x = 0; x<arr.length; x++){
 				$("#filter-tags").append('<span class="label label-default" id="habit-'+arr[x]+'">'+arr[x]+'</span>'+'  ');

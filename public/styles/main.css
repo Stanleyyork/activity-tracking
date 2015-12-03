@@ -14,6 +14,8 @@
 }
 
 #nav-title-powered {
+	vertical-align: text-top;
+	font-style: italic;
 	font-size: 11px;
 	display:inline-block;
 	margin-left: 23px;
@@ -65,7 +67,8 @@ body {
 }
 
 .headline {
-	font-size: 20px;
+	font-size: 16px;
+	margin-bottom: 10px;
 }
 
 .thumbnail {
@@ -109,9 +112,8 @@ body {
     display: block;
 }
 
-#pagination-list {
-	margin-left: 30px;
-	max-width: 1000px;
+#pagination-row {
+	max-width: 1025px;
 }
 
 #pagination-list > li {

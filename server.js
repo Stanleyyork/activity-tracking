@@ -104,15 +104,16 @@ app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
 // GET - List of all records for one activity
 app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   var userId = req.params.id;
-  var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-  var information = {userId: userId, activityName: activityName};
-  res.render('activity', {info: information});
+  User.findOne({_id: userId}, function(err, foundUser){
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    var information = {user: foundUser, activityName: activityName};
+    res.render('activity', {info: information});
+  });
 });
 // GET - (API) List of all records for one activity
 app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   //var userId = req.params.id;
   var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-  console.log(activityName);
   Activity.find({activityLabel: activityName}, function(err, activityList){
     if(err){console.error(err);}
     else {

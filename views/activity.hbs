@@ -16,10 +16,10 @@
 </head>
 <body>
 	{{> nav}}
-	<p id="user-info" data-id={{info.userId}}></p>
-	<h1>Activity: {{info.activityName}}</h1>
+	<p id="user-info" data-id={{info.user._id}}></p>
+	<h1 id="activity-name">{{info.activityName}}</h1>
 	<br>
-	<div class="highlight" id="activity-info" data-id={{info.activityName}}>
+	<div class="highlight" id="activity-info">
 		<script id="activity-template" type="text/x-handlebars-template"> 
 			\{{#each activities}}
 				\{{activityLabel}}
