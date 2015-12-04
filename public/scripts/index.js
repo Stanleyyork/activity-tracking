@@ -17,7 +17,6 @@ $(function() {
 
 	// Load data from server on page load
 	getActivitiesCountByGroup(user_id);
-	getActivitiesCountPerDayOfWeek("Read");
 	getStreaks(user_id);
 
 	// Determine which content to have based on whether data exists
@@ -58,6 +57,13 @@ $(function() {
 			$('#coach-logo-words').show();
 		}
 	});
+
+	$('#search-form').on('submit', function(e){
+		e.preventDefault();
+		var activity = $('#search-query').val();
+		getActivitiesCountPerDayOfWeek(activity);
+	});
+		
 
  	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body").change(function(e) {
@@ -264,9 +270,8 @@ $(function() {
 	}
 
 // Graphs Below
-
 	function loadDayOfWeekActivities(arr, doWActivityData, activity){
-		console.log(doWActivityData);
+		
 		var activityDoWArray = doWActivityData[0];
 		var activityDoWAverageArray = doWActivityData[1];
 
