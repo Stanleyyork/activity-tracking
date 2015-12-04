@@ -122,12 +122,23 @@ app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res)
 });
 // GET - (API) List of all records for one activity
 app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
-  //var userId = req.params.id;
+  var userId = req.params.id;
   var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
   Activity.find({activityLabel: activityName}, function(err, activityList){
     if(err){console.error(err);}
     else {
       res.json(activityList);
+    }
+  });
+});
+// DELETE - (API) Delete list of all records for one activity
+app.delete('/api/user/:id/activity/:activityname', function (req, res){
+  var userId = req.params.id;
+  var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+  Activity.remove({activityLabel: activityName}, function(err, deletedActivityList){
+    if(err){console.error(err);}
+    else {
+      res.json(deletedActivityList);
     }
   });
 });
