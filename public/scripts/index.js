@@ -15,6 +15,8 @@ $(function() {
 	var streakArray = [];
 	var streakCountArray = [];
 	var streakLabelArray = [];
+	var doWActivityData = [];
+	var search_activity = '';
 
 // LOADS INITIAL DATA
 	getActivitiesCountByGroup(user_id);
@@ -149,9 +151,10 @@ $(function() {
 
 	// Get day of week data and pass on to parse
 	function getActivitiesCountPerDayOfWeek(activity){
+		search_activity = activity;
 		$.get('/api/user/'+user_id+'/activityperweek/'+activity, function(data){
-			loadDoWDataIntoYear(data, activity, function(doWActivityData){
-				loadDayOfWeekActivities(['2015', '2014', '2013', '2012'], doWActivityData, activity);
+			loadDoWDataIntoYear(data, activity, function(){
+				loadDayOfWeekActivities(['2015', '2014', '2013', '2012'], activity);
 			});
 		});
 	}
@@ -214,8 +217,8 @@ $(function() {
 				activityDoWAverageArray['2012'].push((data[i].count/52)*100);
 			}
 		}
-		var doWActivityData = [activityDoWArray, activityDoWAverageArray];
-		callback(doWActivityData);
+		doWActivityData = [activityDoWArray, activityDoWAverageArray];
+		callback();
 	}
 
 // ADD ACTIVITIES AND FILTERS TO PAGE
@@ -272,7 +275,7 @@ $(function() {
 	 			}
 	 			loadAveragePerWeekActivities(filterArr);
 	 			loadTotalActivities(filterArr);
-	 			loadDayOfWeekActivities(filterArr);
+	 			loadDayOfWeekActivities(filterArr, search_activity);
  			} else {
  				console.log("not a year");
  			}
@@ -281,7 +284,7 @@ $(function() {
 
 // GRAPHS
 	// Day Of Week Graph (includes search)
-	function loadDayOfWeekActivities(arr, doWActivityData, activity){
+	function loadDayOfWeekActivities(arr, activity){
 		
 		var activityDoWArray = doWActivityData[0];
 		var activityDoWAverageArray = doWActivityData[1];
@@ -311,7 +314,19 @@ $(function() {
 		  type: 'bar'
 		};
 
-		var DayOfWeekChart_data = [trace4, trace3, trace2, trace1];
+		var DayOfWeekChart_data = [];
+		if(arr.indexOf('2012') !== -1){
+			DayOfWeekChart_data.push(trace4);
+		}
+		if(arr.indexOf('2013') !== -1){
+			DayOfWeekChart_data.push(trace3);
+		}
+		if(arr.indexOf('2014') !== -1){
+			DayOfWeekChart_data.push(trace2);
+		}
+		if(arr.indexOf('2015') !== -1){
+			DayOfWeekChart_data.push(trace1);
+		}
 
 		if(activityArray['All'].indexOf(activity) !== -1){
 			var title = "Probability of Achieving '"+activity+"' Habit on a Specific Day of the Week"
