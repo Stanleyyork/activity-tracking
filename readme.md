@@ -32,7 +32,7 @@
 * Visualize!
 
 ## Screenshots
-![Alt text](../public/images/dashboard.jpg?raw=true "Dashboard")
-![Alt text](./public/images/streaks.jpg?raw=true "Streaks")
-![Alt text](public/images/probability_coffee.jpg?raw=true "probability_coffee")
-![Alt text](/public/images/probability_read.jpg?raw=true "probability_read")
+![Alt text](https://github.com/Stanleyyork/activity-tracking/blob/master/public/images/dashboard.png?raw=true "Dashboard")
+![Alt text](https://github.com/Stanleyyork/activity-tracking/blob/master/public/images/streaks.png?raw=true "Streaks")
+![Alt text](https://github.com/Stanleyyork/activity-tracking/blob/master/public/images/probability_coffee.png?raw=true  "probability_coffee")
+![Alt text](https://github.com/Stanleyyork/activity-tracking/blob/master/public/images/probability_read.png?raw=true "probability_read")
