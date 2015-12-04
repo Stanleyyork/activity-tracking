@@ -300,22 +300,10 @@ $(function() {
 		  type: 'bar'
 		};
 
-		var DayOfWeekChart_data = [];
-		if(arr.indexOf('2012') !== -1){
-			DayOfWeekChart_data.push(trace4);
-		}
-		if(arr.indexOf('2013') !== -1){
-			DayOfWeekChart_data.push(trace3);
-		}
-		if(arr.indexOf('2014') !== -1){
-			DayOfWeekChart_data.push(trace2);
-		}
-		if(arr.indexOf('2015') !== -1){
-			DayOfWeekChart_data.push(trace1);
-		}
+		var DayOfWeekChart_data = [trace4, trace3, trace2, trace1];
 
-		if(DayOfWeekChart_data[0]['x'].length > 0){
-			var title = "Liklihood of Achieving '"+activity+"' Habit Sun - Sat"
+		if(activityArray['All'].indexOf(activity) !== -1){
+			var title = "Probability of Achieving '"+activity+"' Habit on a Specific Day of the Week"
 		} else {
 			var title = "That habit does not exist";
 		}
