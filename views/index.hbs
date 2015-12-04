@@ -46,18 +46,19 @@
   </div>
 
   <div class="row" id="charts">
-    <div class="thumbnail"><div id="totalCountBarChart"></div></div>
-    <div class="thumbnail"><div id="AverageWeekBarChart"></div></div>
-    <div class="thumbnail">
+    <div class="thumbnail" id="thumbnail-chart"><div id="GSDChart"></div></div>
+    <div class="thumbnail" id="thumbnail-chart"><div id="totalCountBarChart"></div></div>
+    <div class="thumbnail" id="thumbnail-chart"><div id="AverageWeekBarChart"></div></div>
+    <div class="thumbnail" id="thumbnail-chart">
       <form id="search-form">
         <input type="submit" class="btn btn-primary" value="Search" style="float: right" />
         <div style="overflow: hidden; padding-right: .5em;">
           <input type="text" class="form-control" name="search-field" placeholder="Enter a Habit (e.g. 'Read')" id="search-query" style="width: 100%;" />
          </div>
       </form>
-      <div id="DayOfWeekChart"></div>
+      <div id="DayOfWeekChart" id="thumbnail-chart"></div>
     </div>
-    <div class="thumbnail"><div id="streaksBarChart"></div></div>
+    <div class="thumbnail" id="thumbnail-chart"><div id="streaksBarChart"></div></div>
   </div>  
 
 	{{> footer}}

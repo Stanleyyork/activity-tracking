@@ -226,6 +226,31 @@ app.get('/api/user/:id/activityperweek/:activity', function (req, res){
         }
     });
 });
+// GET - (API) List of all activities by day
+app.get('/api/user/:id/allactivitiesbyday', function (req, res){
+  var userId = req.params.id;
+  Activity.aggregate([
+        {
+          $match: { user_id : userId}
+        },
+        { $group: {
+            _id : "$originalDate",
+            year : { $first: "$originalYear" },
+            month : { $first: "$originalMonth" },
+            day : { $first: "$originalDay" },
+            count: {$sum: 1}
+          }
+
+        },
+        { $sort:{year : 1, month: 1, day: 1}}
+        ], function (err, result) {
+          if (err) {
+              next(err);
+          } else {
+              res.json(result);
+          }
+        });
+});
 
 // SERVER PORT
 app.listen(process.env.PORT || 3000, function(){
