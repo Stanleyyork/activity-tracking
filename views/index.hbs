@@ -18,17 +18,17 @@
 
 	{{> nav}}
 
-  
-  
   <span class="btn btn-primary btn-file" id="filename-span">
     Browse<input type="file" name="filename" id="filename-body">
   </span>
+
   <p id="instructions">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
   <br>
+
   <div class="thumbnail" id="activities-list">
-  <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-  Welcome, {{user.username}}! You have <a href="{{user.coachMeProfileUrl}}" target="_blank">{{user.activities.length}} daily activities</a> logged.
-  </div>
+    <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
+      {{user.username}} has <a href="{{user.coachMeProfileUrl}}" target="_blank">{{user.activities.length}} daily activities</a> logged.
+    </div>
     <script id="activities-template" type="text/x-handlebars-template">    
     <div class="row" id="habit-filter">
     \{{#each activities}}
@@ -46,6 +46,7 @@
   </div>  
 
 	{{> footer}}
+
   <!-- plotly -->
   <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->
@@ -53,7 +54,7 @@
   <!-- bootstrap js -->
   <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
   <!-- handlebars -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
   <!-- index.js -->
   <script type="text/javascript" src="/scripts/index.js"></script>
     

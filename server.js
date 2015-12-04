@@ -87,6 +87,15 @@ app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
+// GET - External (not logged in) view for users
+app.get('/user/:id', function (req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId})
+      .populate('activities')
+          .exec(function(err, singleUser){
+              res.render('index', {user: singleUser});
+          });
+});
 // GET - Activity Index (Primary Dashboard View)
 app.get('/index', isAuthenticated, function (req, res){
   var userId = req.user.id;
@@ -110,8 +119,7 @@ app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res)
   var userId = req.params.id;
   User.findOne({_id: userId}, function(err, foundUser){
     var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-    var information = {user: foundUser, activityName: activityName};
-    res.render('activity', {info: information});
+    res.render('activity', {user: foundUser, activityName: activityName});
   });
 });
 // GET - (API) List of all records for one activity
@@ -190,27 +198,20 @@ app.get('/api/user/:id/streaks', function (req, res){
     });
 });
 // GET - (API) List of activity count per day of week
-app.get('/api/user/:id/activityperweek', function (req, res){
+app.get('/api/user/:id/activityperweek/:activity', function (req, res){
   var userId = req.params.id;
+  var activity = req.params.activity;
   Activity.aggregate([
-    { 
-      $match : { user_id : userId }
-    },
-    {
-      $group:{
-        _id: {activityLabel: "$activityLabel", dayOfWeek: '$originalDayOfWeek' },
-        dayOfWeek: {$first: '$originalDayOfWeek'},
-        activityLabel: {$first: '$activityLabel'},
-        originalYear: {$first: '$originalYear'},
-        count: { $sum: 1 }
-      }
-    },
-    { $sort:{
-          activityLabel : 1,
-          dayOfWeek: 1
-         }
-    }
-  ], function (err, result) {
+        { 
+            $match : { user_id : userId, activityLabel: activity }
+        },
+        {
+            $group: {
+                _id : { originalYear: "$originalYear", dayOfWeek: "$originalDayOfWeek", activityLabel: "$activityLabel" },
+                count: {$sum: 1}
+            }
+        }
+    ], function (err, result) {
         if (err) {
             next(err);
         } else {

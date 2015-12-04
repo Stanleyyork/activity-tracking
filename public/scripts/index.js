@@ -14,11 +14,10 @@ $(function() {
 	var streakArray = [];
 	var streakCountArray = [];
 	var streakLabelArray = [];
-	var activityDoWArray = [];
-	var activityDoWAverageArray = [];
 
 	// Load data from server on page load
 	getActivitiesCountByGroup(user_id);
+	getActivitiesCountPerDayOfWeek("Read");
 	getStreaks(user_id);
 
 	// Determine which content to have based on whether data exists
@@ -184,29 +183,26 @@ $(function() {
 	}
 
 	// Parse day of week count data into year arrays
-	function loadDoWDataIntoYear(data, callback){
-		console.log(data);
-		for(var i = 1; i < data.length; i++){
-			console.log(data[i].dayOfWeek);
-			console.log(data[i].count);
-			console.log(data[i].activityLabel);
-			if(data[i].originalYear === '2015'){
-				activityDoWArray['2015'].push(data[i].dayOfWeek);
-				activityDoWAverageArray['2015'].push(data[i].count);
-			} else if(data[i].originalYear === '2014') {
-				activityDoWArray['2014'].push(data[i].dayOfWeek);
-				activityDoWAverageArray['2014'].push(data[i].count);
-			} else if(data[i].originalYear === '2013') {
-				activityDoWArray['2013'].push(data[i].dayOfWeek);
-				activityDoWAverageArray['2013'].push(data[i].count);
-			} else if(data[i].originalYear === '2012') {
-				activityDoWArray['2012'].push(data[i].dayOfWeek);
-				activityDoWAverageArray['2012'].push(data[i].count);
+	function loadDoWDataIntoYear(data, activity, callback){
+		var activityDoWArray = {'2015': [], '2014': [], '2013': [], '2012': []};
+		var activityDoWAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
+		for(var i = 0; i < data.length; i++){
+			if(data[i]._id.originalYear === '2015'){
+				activityDoWArray['2015'].push(data[i]._id.dayOfWeek);
+				activityDoWAverageArray['2015'].push((data[i].count/52)*100);
+			} else if(data[i]._id.originalYear === '2014') {
+				activityDoWArray['2014'].push(data[i]._id.dayOfWeek);
+				activityDoWAverageArray['2014'].push((data[i].count/52)*100);
+			} else if(data[i]._id.originalYear === '2013') {
+				activityDoWArray['2013'].push(data[i]._id.dayOfWeek);
+				activityDoWAverageArray['2013'].push((data[i].count/52)*100);
+			} else if(data[i]._id.originalYear === '2012') {
+				activityDoWArray['2012'].push(data[i]._id.dayOfWeek);
+				activityDoWAverageArray['2012'].push((data[i].count/52)*100);
 			}
 		}
-		console.log(activityDoWArray);
-		console.log(activityDoWAverageArray);
-		callback();
+		var doWActivityData = [activityDoWArray, activityDoWAverageArray];
+		callback(doWActivityData);
 	}
 
 	// Load list of years and activities to body (just below headline)
@@ -258,18 +254,22 @@ $(function() {
  			}
  		});
 	}
-	getActivitiesCountPerDayOfWeek()
-	function getActivitiesCountPerDayOfWeek(){
-		$.get('/api/user/'+user_id+'/activityperweek', function(data){
-			loadDoWDataIntoYear(data, function(){
-				loadDayOfWeekActivities(['2015', '2014', '2013', '2012']);
+	
+	function getActivitiesCountPerDayOfWeek(activity){
+		$.get('/api/user/'+user_id+'/activityperweek/'+activity, function(data){
+			loadDoWDataIntoYear(data, activity, function(doWActivityData){
+				loadDayOfWeekActivities(['2015', '2014', '2013', '2012'], doWActivityData, activity);
 			});
 		});
 	}
 
 // Graphs Below
-	function loadDayOfWeekActivities(arr){
-		
+
+	function loadDayOfWeekActivities(arr, doWActivityData, activity){
+		console.log(doWActivityData);
+		var activityDoWArray = doWActivityData[0];
+		var activityDoWAverageArray = doWActivityData[1];
+
 		var trace1 = {
 		  x: activityDoWArray['2015'],
 		  y: activityDoWAverageArray['2015'],
@@ -310,8 +310,8 @@ $(function() {
 		}
 
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
-					  yaxis: {range: [0, 7], title: 'Days'},
-					  title: 'Average Day of Week', titlefont: {size: 18}
+					  yaxis: {title: '%'}, xaxis: {title: 'Day of Week (0 = Sunday)'},
+					  title: "Liklihood of Achieving '"+activity+"' Habit Sun - Sat", titlefont: {size: 18}
 					 };
 		Plotly.newPlot('DayOfWeekChart', DayOfWeekChart_data, layout);
 	}
