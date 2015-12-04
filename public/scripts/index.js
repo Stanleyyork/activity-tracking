@@ -47,7 +47,7 @@ $(function() {
 	// Nav Scrolling conditional
  	$(window).scroll(function(){
 		if($(window).scrollTop()>70){
-			$('.navbar').css("height", "100");
+			$('.navbar').css("height", "80");
 			$("#filter-tags").show();
 			$('#coach-logo-words').hide();
 		}
