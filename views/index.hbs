@@ -44,12 +44,10 @@
     <div class="thumbnail"><div id="streaksBarChart"></div></div>
     <div class="thumbnail">
       <form id="search-form">
-        <div class="form-group">
-          <input type="text" name="search-field" class="form-control" placeholder="Enter One Of Your Habits" id="search-query" autofocus>
-        </div>
-        <div class="form-group">
-          <input type="submit" class="btn btn-block btn-primary" value="Search">
-        </div>
+        <input type="submit" class="btn btn-primary" value="Search" style="float: right" />
+        <div style="overflow: hidden; padding-right: .5em;">
+          <input type="text" class="form-control" name="search-field" placeholder="Enter One Of Your Habits" id="search-query" style="width: 100%;" />
+         </div>
       </form>
       <div id="DayOfWeekChart"></div>
     </div>
