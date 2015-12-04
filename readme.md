@@ -32,7 +32,7 @@
 * Visualize!
 
 ## Screenshots
-![Alt text](/public/images/dashboard.jpg?raw=true "Dashboard")
-![Alt text](/public/images/streaks.jpg?raw=true "Streaks")
+![Alt text](public/images/dashboard.jpg?raw=true "Dashboard")
+![Alt text](/tree/public/images/streaks.jpg?raw=true "Streaks")
 ![Alt text](/public/images/probability_coffee.jpg?raw=true "probability_coffee")
 ![Alt text](/public/images/probability_read.jpg?raw=true "probability_read")
