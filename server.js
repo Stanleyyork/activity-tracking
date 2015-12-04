@@ -32,9 +32,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
-// Flash Messages
 app.use(flash());
-// Passport config
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -133,14 +131,12 @@ app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, 
     }
   });
 });
-
 // POST - (API) Retrieve and save all data
 app.post('/api/fileupload', isAuthenticated, function (req, res){
   console.log("inside /api/fileupload");
   var obj = req.body;
   var arr = Object.keys(obj).map(function(k) { return obj[k]; });
   var user_id = arr[0].user_id;
-
   Activity.collection.insert(arr, function(err, result){
     User.findOne({_id: user_id}, function(err, foundUser){
       foundUser.activities = result.ops;

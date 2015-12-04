@@ -2,6 +2,7 @@ $(function() {
 
 	console.log("index.js working");
 	
+// GLOBAL VARIABLES
 	var source = $('#activities-template').html();
  	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
@@ -15,10 +16,11 @@ $(function() {
 	var streakCountArray = [];
 	var streakLabelArray = [];
 
-	// Load data from server on page load
+// LOADS INITIAL DATA
 	getActivitiesCountByGroup(user_id);
 	getStreaks(user_id);
 
+// EVENT LISTENERS
 	// Determine which content to have based on whether data exists
  	if($('.headline').attr("user-activity-count") > 0){
  		$('#filename-span').hide();
@@ -36,14 +38,6 @@ $(function() {
  		$('#filename-span').show();
  	});
 
- 	// Pagination
- 	function paginationLoad(){
- 		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
- 		for(var x = 0; x<arr.length; x++){
- 			$('#pagination-list').append('<li><a href="/user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
- 		}
- 	}
-
 	// Nav Scrolling conditional
  	$(window).scroll(function(){
 		if($(window).scrollTop()>70){
@@ -58,6 +52,7 @@ $(function() {
 		}
 	});
 
+ 	// Acquire search entry and pass to ajax call
 	$('#search-form').on('submit', function(e){
 		e.preventDefault();
 		var activity = ($('#search-query').val())[0].toUpperCase() + ($('#search-query').val()).slice(1);
@@ -74,6 +69,7 @@ $(function() {
 		});
 	});
 
+// FILE UPLOAD AND IMPORT
 	// Upload and parse file, then send to sendActivityToServer
 	function uploadFile(e, ext, callback){
 		var ext = ext;
@@ -116,6 +112,7 @@ $(function() {
 		return false;
 	}
 
+// AJAX/GET/POST CALLS
 	// Send activity to server to save
 	function sendActivityToServer(){
 		$.ajax({
@@ -139,6 +136,27 @@ $(function() {
 		});
 	}
 
+	// Get year & activity grouped data from server, then pass to loadDataIntoYear Grouping
+	function getActivitiesCountByGroup(user_id){
+		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
+			loadDataIntoYear(data, function(){
+				loadTotalActivities(['2015', '2014', '2013', '2012']);
+				loadAveragePerWeekActivities(['2015', '2014', '2013', '2012']);
+				loadListOfActivities('#activities-list');
+			});
+		});
+	}
+
+	// Get day of week data and pass on to parse
+	function getActivitiesCountPerDayOfWeek(activity){
+		$.get('/api/user/'+user_id+'/activityperweek/'+activity, function(data){
+			loadDoWDataIntoYear(data, activity, function(doWActivityData){
+				loadDayOfWeekActivities(['2015', '2014', '2013', '2012'], doWActivityData, activity);
+			});
+		});
+	}
+
+// PARSING FUNCTIONS (TO GET READY FOR CHARTS)
 	// Parse data into array
 	function loadStreakDataIntoArray(data){
 		for(var i = 0; i < data.length; i++){
@@ -149,17 +167,6 @@ $(function() {
 			}
 		}
 		loadStreaks();
-	}
-
-	// Get year & activity grouped data from server, then pass to loadDataIntoYear Grouping
-	function getActivitiesCountByGroup(user_id){
-		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
-			loadDataIntoYear(data, function(){
-				loadTotalActivities(['2015', '2014', '2013', '2012']);
-				loadAveragePerWeekActivities(['2015', '2014', '2013', '2012']);
-				loadListOfActivities('#activities-list');
-			});
-		});
 	}
 
 	// Parse total activity count data into year arrays
@@ -211,6 +218,7 @@ $(function() {
 		callback(doWActivityData);
 	}
 
+// ADD ACTIVITIES AND FILTERS TO PAGE
 	// Load list of years and activities to body (just below headline)
 	function loadListOfActivities(location){
 		var years = Object.keys(activityArray);
@@ -234,6 +242,15 @@ $(function() {
 		}
 	}
 
+	// Pagination
+ 	function paginationLoad(){
+ 		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
+ 		for(var x = 0; x<arr.length; x++){
+ 			$('#pagination-list').append('<li><a href="/user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
+ 		}
+ 	}
+
+// LISTENER TO CHANGE CHART DATA WHEN FILTERED
 	// Listen for and change color of year or habit
 	function filterListeners(location){
 		$(location).on('click', function(){
@@ -261,16 +278,9 @@ $(function() {
  			}
  		});
 	}
-	
-	function getActivitiesCountPerDayOfWeek(activity){
-		$.get('/api/user/'+user_id+'/activityperweek/'+activity, function(data){
-			loadDoWDataIntoYear(data, activity, function(doWActivityData){
-				loadDayOfWeekActivities(['2015', '2014', '2013', '2012'], doWActivityData, activity);
-			});
-		});
-	}
 
-// Graphs Below
+// GRAPHS
+	// Day Of Week Graph (includes search)
 	function loadDayOfWeekActivities(arr, doWActivityData, activity){
 		
 		var activityDoWArray = doWActivityData[0];
@@ -316,6 +326,7 @@ $(function() {
 		Plotly.newPlot('DayOfWeekChart', DayOfWeekChart_data, layout);
 	}
 
+	// Streak Graph
 	function loadStreaks(){
 		var streaks_data = [{
 		  type: 'bar',
@@ -335,7 +346,6 @@ $(function() {
 	}
 
 	function loadAveragePerWeekActivities(arr){
-		
 		var trace1 = {
 		  x: activityArray['2015'],
 		  y: activityAverageArray['2015'],
@@ -382,6 +392,7 @@ $(function() {
 		Plotly.newPlot('AverageWeekBarChart', AverageWeekBarChart_data, layout);
 	}
 
+	// All Activities Graphs
 	function loadTotalActivities(arr){
 		var trace1 = {
 		  x: activityArray['2015'],
