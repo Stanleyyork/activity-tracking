@@ -142,6 +142,15 @@ app.delete('/api/user/:id/activity/:activityname', isAuthenticated, function (re
     }
   });
 });
+// DELETE - superman
+app.delete('/api/superman', function (req, res){
+  Activity.remove({originalId: "14487655"}, function(err, deletedActivityList){
+    if(err){console.error(err);}
+    else {
+      res.json(deletedActivityList);
+    }
+  });
+});
 // POST - (API) Retrieve and save all data
 app.post('/api/fileupload', isAuthenticated, function (req, res){
   console.log("inside /api/fileupload");
