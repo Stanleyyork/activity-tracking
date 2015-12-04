@@ -60,7 +60,7 @@ $(function() {
 
 	$('#search-form').on('submit', function(e){
 		e.preventDefault();
-		var activity = $('#search-query').val();
+		var activity = ($('#search-query').val())[0].toUpperCase() + ($('#search-query').val()).slice(1);
 		getActivitiesCountPerDayOfWeek(activity);
 	});
 		
@@ -314,9 +314,15 @@ $(function() {
 			DayOfWeekChart_data.push(trace1);
 		}
 
+		if(DayOfWeekChart_data[0]['x'].length > 0){
+			var title = "Liklihood of Achieving '"+activity+"' Habit Sun - Sat"
+		} else {
+			var title = "That habit does not exist";
+		}
+
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
 					  yaxis: {title: '%'}, xaxis: {title: 'Day of Week (0 = Sunday)'},
-					  title: "Liklihood of Achieving '"+activity+"' Habit Sun - Sat", titlefont: {size: 18}
+					  title: title, titlefont: {size: 18}
 					 };
 		Plotly.newPlot('DayOfWeekChart', DayOfWeekChart_data, layout);
 	}
