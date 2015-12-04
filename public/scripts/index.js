@@ -214,7 +214,7 @@ $(function() {
 	// Load list of years and activities to body (just below headline)
 	function loadListOfActivities(location){
 		var years = Object.keys(activityArray);
-		activityArray['All'].splice.apply(activityArray['All'], [2, 0].concat(years));
+		//activityArray['All'].splice.apply(activityArray['All'], [2, 0].concat(years));
 		newActivityArray = activityArray['All'].filter( Boolean ).sort();
 		var activitiesHtml = template({ activities: $.unique(newActivityArray) });
 		$(location).append(activitiesHtml);
@@ -224,7 +224,8 @@ $(function() {
 
 	// Load list of years and activities to navbar
  	function loadListOfActivitiesNav(){
- 		var arr = $.unique(newActivityArray);
+ 		//var arr = $.unique(newActivityArray);
+ 		var arr = ['2012', '2013', '2014', '2015'];
 	 	if($('#filter-tags > span')[0] === undefined){
 			for(var x = 0; x<arr.length; x++){
 				$("#filter-tags").append('<span class="label label-default" id="habit-'+arr[x]+'">'+arr[x]+'</span>'+'  ');
@@ -325,7 +326,7 @@ $(function() {
 		  marker: {color: 'rgb(255,140,0)'}
 		}];
 
-		var layout = {title: "Longest Streaks",
+		var layout = {title: "Longest Streaks For Each Habit",
 			xaxis: {title: "Days"},
 			margin: {l: 150},
 		};
@@ -376,7 +377,7 @@ $(function() {
 
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
 					  yaxis: {range: [0, 7], title: 'Days'},
-					  title: 'Average per Week', titlefont: {size: 18}
+					  title: 'Average Habits Achieved per Week', titlefont: {size: 18}
 					 };
 		Plotly.newPlot('AverageWeekBarChart', AverageWeekBarChart_data, layout);
 	}

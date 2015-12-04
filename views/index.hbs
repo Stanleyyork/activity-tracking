@@ -29,12 +29,19 @@
     <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
       {{user.username}} has <a href="{{user.coachMeProfileUrl}}" target="_blank">{{user.activities.length}} daily activities</a> logged.
     </div>
-    <script id="activities-template" type="text/x-handlebars-template">    
-    <div class="row" id="habit-filter">
-    \{{#each activities}}
-      <span class="label label-default" id="habit-\{{this}}">\{{this}}</span>
-    \{{/each}}
-    </div>
+    <script id="activities-template" type="text/x-handlebars-template"> 
+      <div class="row" id="habit-filter">
+        <span class="label label-primary">Habits:</span>
+        \{{#each activities}}
+          <span class="label label-default" id="habit-\{{this}}">\{{this}}</span>
+        \{{/each}}
+        <br>
+        <span class="label label-primary">Filters:</span>
+        <span class="label label-default" id="habit-2012">2012</span>
+        <span class="label label-default" id="habit-2013">2013</span>
+        <span class="label label-default" id="habit-2014">2014</span>
+        <span class="label label-default" id="habit-2015">2015</span>
+      </div>
     </script>
   </div>
 
@@ -46,7 +53,7 @@
       <form id="search-form">
         <input type="submit" class="btn btn-primary" value="Search" style="float: right" />
         <div style="overflow: hidden; padding-right: .5em;">
-          <input type="text" class="form-control" name="search-field" placeholder="Enter One Of Your Habits" id="search-query" style="width: 100%;" />
+          <input type="text" class="form-control" name="search-field" placeholder="Enter a Habit (e.g. 'Read')" id="search-query" style="width: 100%;" />
          </div>
       </form>
       <div id="DayOfWeekChart"></div>
