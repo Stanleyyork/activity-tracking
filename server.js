@@ -135,7 +135,7 @@ app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, 
 });
 
 // POST - (API) Retrieve and save all data
-app.post('/api/fileupload', function (req, res){
+app.post('/api/fileupload', isAuthenticated, function (req, res){
   console.log("inside /api/fileupload");
   var obj = req.body;
   var arr = Object.keys(obj).map(function(k) { return obj[k]; });

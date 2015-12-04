@@ -40,7 +40,7 @@ $(function() {
  	function paginationLoad(){
  		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
  		for(var x = 0; x<arr.length; x++){
- 			$('#pagination-list').append('<li><a href="user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
+ 			$('#pagination-list').append('<li><a href="/user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
  		}
  	}
 
@@ -425,7 +425,7 @@ $(function() {
 
 		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
 					  yaxis: {range: [0, 365], title: 'Days'},
-					  title: 'Total per Year', titlefont: {size: 18}
+					  title: 'Total Habits Achieved per Year', titlefont: {size: 18}
 					 };
 		Plotly.newPlot('totalCountBarChart', totalCountBarChart_data, layout);
 	}
