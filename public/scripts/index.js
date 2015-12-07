@@ -252,6 +252,7 @@ $(function() {
 		//activityArray['All'].splice.apply(activityArray['All'], [2, 0].concat(years));
 		newActivityArray = activityArray['All'].filter( Boolean ).sort();
 		var activitiesHtml = template({ activities: $.unique(newActivityArray) });
+		$("#search-form").append("suggestions:" + newActivityArray); 
 		$(location).append(activitiesHtml);
 		loadListOfActivitiesNav();
 		filterListeners('#habit-filter > span');
