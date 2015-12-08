@@ -243,6 +243,30 @@ $(function() {
 			activityGSDCountArray.push((activityGSDCountArray[i-1] || 0) + data[i].count);
 		}
 		callback();
+		// newActivityArray.forEach(function(habit){
+		// 	activityGSDArray[habit] = [];
+		// 	activityGSDCountArray[habit] = [];
+		// });
+		
+		// var tempDate = new Date(data[1]._id.originalDate);
+		// for(var i = 1; i < data.length; i++){
+		// 	console.log(new Date(data[i]._id.originalDate));
+		// 	console.log(tempDate);
+		// 	console.log("==");
+		// 	if(new Date(data[i]._id.originalDate) === tempDate){
+		// 		activityGSDArray[data[i]._id.activityLabel].push(data[i]._id.originalDate);
+		// 		activityGSDCountArray[data[i]._id.activityLabel].push(data[i].count);
+		// 		tempDate.setDate(tempDate.getDate() + 1);
+		// 	} else {
+		// 		while(tempDate < new Date(data[i+1]._id.originalDate)){
+		// 			activityGSDArray[data[i]._id.activityLabel].push(tempDate);
+		// 			activityGSDCountArray[data[i]._id.activityLabel].push(0);
+		// 			tempDate.setDate(tempDate.getDate() + 1);
+		// 		}
+		// 	}
+		// }
+		// console.log(activityGSDArray);
+		// callback();
 	}
 
 // ADD ACTIVITIES AND FILTERS TO PAGE
@@ -309,7 +333,7 @@ $(function() {
 // GRAPHS
 	// Activities Grouped and Sorted by Day
 	function loadGSDGraph(){
-		
+
 		var trace1 = {
 		  x: activityGSDArray,
 		  y: activityGSDCountArray,
@@ -324,6 +348,31 @@ $(function() {
 					 };
 
 		Plotly.newPlot('GSDChart', data, layout);
+
+		// var data = [];
+		// for(var key in activityGSDArray){
+		// 	var trace = {
+		// 	  x: activityGSDArray[key],
+		// 	  y: activityGSDCountArray[key],
+		// 	  fill: 'tozeroy'
+		// 	};
+		// 	data.push(trace);
+		// }
+
+		// function stackedArea(traces) {
+		// 	for(var i=1; i<traces.length; i++) {
+		// 		for(var j=0; j<(Math.min(traces[i]['y'].length, traces[i-1]['y'].length)); j++) {
+		// 			traces[i]['y'][j] += traces[i-1]['y'][j];
+		// 		}
+		// 	}
+		// 	return traces;
+		// }
+
+		// var layout = {width: 1000, height: 400,
+		// 			  title: "Total Habits Achieved Over Time", titlefont: {size: 18}
+		// 			 };
+
+		// Plotly.newPlot('GSDChart', stackedArea(data), layout);
 	}
 
 	// Day Of Week Graph (includes search)

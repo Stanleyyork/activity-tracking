@@ -103,6 +103,17 @@ app.get('/index', isAuthenticated, function (req, res){
               res.render('index', {user: singleUser});
           });
 });
+// GET - (API) All Users
+app.get('/users', isAuthenticated, function (req, res){
+  if(String(req.user._id) === "5660c53843c9bd110091c39a"){
+    console.log("inside users me logic");
+    User.find(function(err, allUsers){
+      res.render('users', {users: allUsers});
+    });
+  } else {
+    res.json("No Access Allowed");
+  }
+});
 // GET - (API) All Activities
 app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
   var userId = req.params.id;
