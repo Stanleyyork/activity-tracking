@@ -47,6 +47,10 @@ function isAuthenticated(req, res, next) {
 }
 
 // ROUTES
+// GET - Home
+app.get('/', function (req, res) {
+    res.redirect('/register');
+});
 // GET - Register
 app.get('/register', function (req, res) {
     if(req.user){
