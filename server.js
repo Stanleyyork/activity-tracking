@@ -56,24 +56,24 @@ app.get('/register', function (req, res) {
     if(req.user){
         res.redirect('/index');
     } else {
-        res.render('register', {errorMessage: req.flash('registerError')});
+        res.redirect('/login'); //res.render('register', {errorMessage: req.flash('registerError')});
     }
 });
 // POST - Register
-app.post('/register', function (req, res){
-  User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
-    function (err, newUser) {
-          if (err){
-            req.flash('registerError', err.message);
-            res.redirect('/register');
-          } else {
-              passport.authenticate('local')(req, res, function() {
-                res.redirect('/index');
-              });
-          }
-      }
-  );
-});
+// app.post('/register', function (req, res){
+//   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
+//     function (err, newUser) {
+//           if (err){
+//             req.flash('registerError', err.message);
+//             res.redirect('/register');
+//           } else {
+//               passport.authenticate('local')(req, res, function() {
+//                 res.redirect('/index');
+//               });
+//           }
+//       }
+//   );
+// });
 // GET - User Login
 app.get('/login', function (req, res){
     res.render('login', { errorMessage: req.flash('error') });
