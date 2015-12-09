@@ -49,7 +49,7 @@ function isAuthenticated(req, res, next) {
 // ROUTES
 // GET - Home
 app.get('/', function (req, res) {
-    res.redirect('/register');
+    res.redirect('/login');
 });
 // GET - Register
 app.get('/register', function (req, res) {
@@ -90,9 +90,9 @@ app.get('/logout', function (req, res) {
   res.redirect('/login');
 });
 // GET - External (not logged in) view for users
-app.get('/user/:id', function (req, res){
-  var userId = req.params.id;
-  User.findOne({_id: userId})
+app.get('/:username', function (req, res){
+  var username = req.params.username;
+  User.findOne({username: username})
       .populate('activities')
           .exec(function(err, singleUser){
               res.render('index', {user: singleUser});
