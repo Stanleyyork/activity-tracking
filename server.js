@@ -340,6 +340,20 @@ app.get('/api/user/:id/activitylabels', function (req, res){
           }
         });
 });
+// GET - External (not logged in) view for users
+app.get('/:username', function (req, res){
+  var username = req.params.username;
+  User.findOne({username: username})
+      .populate('activities')
+          .exec(function(err, singleUser){
+            if(singleUser === null){
+              console.log("error");
+              res.redirect('/login');
+            } else {
+              res.render('index', {user: singleUser});
+            }
+          });
+});
 
 // SERVER PORT
 app.listen(process.env.PORT || 3000, function(){
