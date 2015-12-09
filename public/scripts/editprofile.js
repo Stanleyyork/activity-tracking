@@ -27,7 +27,6 @@ $(function() {
 	}
 
 	$('#edit-profile-hidden-activities-form').on('submit', function(e){
-		//e.preventDefault();
 		data = $("#edit-profile-hidden-activities-form").closest('form').find('input:checkbox:checked');
 		formatDataToSend(data, function(){
 			sendHiddenValuesToServer();

@@ -90,7 +90,7 @@ app.get('/logout', function (req, res) {
   res.redirect('/login');
 });
 // GET - External (not logged in) view for users
-app.get('/:username', function (req, res){
+app.get('/user/:username', function (req, res){
   var username = req.params.username;
   User.findOne({username: username})
       .populate('activities')
@@ -100,6 +100,7 @@ app.get('/:username', function (req, res){
 });
 // GET - Activity Index (Primary Dashboard View)
 app.get('/index', isAuthenticated, function (req, res){
+  console.log("hello");
   var userId = req.user.id;
   User.findOne({_id: userId})
       .populate('activities')
