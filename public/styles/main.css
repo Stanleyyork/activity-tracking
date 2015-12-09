@@ -126,6 +126,14 @@ body {
 	margin-bottom: 5px;
 }
 
+#edit-profile-form {
+	max-width: 450px;
+}
+
+#edit-profile-hidden-activities-form {
+	max-width: 450px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;

@@ -110,13 +110,37 @@ app.get('/index', isAuthenticated, function (req, res){
 // GET - (API) All Users
 app.get('/users', isAuthenticated, function (req, res){
   if(String(req.user._id) === "5660c53843c9bd110091c39a"){
-    console.log("inside users me logic");
     User.find(function(err, allUsers){
       res.render('users', {users: allUsers});
     });
   } else {
     res.json("No Access Allowed");
   }
+});
+// GET - (API) All Users
+app.get('/editprofile', isAuthenticated, function (req, res){
+  User.findOne({_id: req.user._id})
+      .populate('activities')
+          .exec(function(err, currentUser){
+              res.render('editProfile', {user: currentUser});
+          });
+});
+// POST - Hidden Activities from Edit Profile
+app.post('/api/user/hiddenvalues', isAuthenticated, function (req, res){
+  var user_id = req.user._id;
+  var obj = req.body;
+  var hiddenvalues = Object.keys(obj);
+  User.findOne({_id: user_id}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      foundUser.hiddenActivities = [];
+      for(var x = 0; x<hiddenvalues.length; x++){
+        foundUser.hiddenActivities.push(hiddenvalues[x]);
+      }
+      foundUser.save();
+    }
+  });
 });
 // GET - (API) All Activities
 app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
@@ -175,49 +199,69 @@ app.post('/api/fileupload', isAuthenticated, function (req, res){
 // GET - (API) Activity Count by Grouping
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
   var userId = req.params.id;
-  Activity.aggregate([
-        { 
-            $match : { user_id : userId }
-        },
-        {
-            $group: {
-                _id : { originalYear: "$originalYear", activityLabel: "$activityLabel" },
-                count: {$sum: 1}
+  var hiddenactivities = [];
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      hiddenactivities = foundUser.hiddenActivities;
+      Activity.aggregate([
+            { 
+                $match : { 
+                  user_id : userId,
+                  activityLabel: {$nin: hiddenactivities }
+                }
+            },
+            {
+                $group: {
+                    _id : { originalYear: "$originalYear", activityLabel: "$activityLabel" },
+                    count: {$sum: 1}
+                }
             }
-        }
-    ], function (err, result) {
-        if (err) {
-            next(err);
-        } else {
-            res.json(result);
-        }
-    });
+        ], function (err, result) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(result);
+            }
+        });
+    }
+  });
 });
 // GET - (API) List of longest streaks
 app.get('/api/user/:id/streaks', function (req, res){
     var userId = req.params.id;
-    Activity.aggregate([
-       { 
-          $match : { user_id : userId }
-        },
-       {
-         $group:{
-             _id: "$activityLabel",
-             date : { $first: '$originalDate' },
-             streakInDays: { $max: "$quantityB" }
-           },
-       },
-       { $sort:{
-            streakInDays : 1
-           }
-       }
-     ], function (err, result) {
-        if (err) {
-            next(err);
-        } else {
-            res.json(result);
-        }
-    });
+    User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      hiddenactivities = foundUser.hiddenActivities;
+      Activity.aggregate([
+         { 
+            $match : { user_id : userId,
+                    activityLabel: {$nin: hiddenactivities }
+                     }
+          },
+         {
+           $group:{
+               _id: "$activityLabel",
+               date : { $first: '$originalDate' },
+               streakInDays: { $max: "$quantityB" }
+             },
+         },
+         { $sort:{
+              streakInDays : 1
+             }
+         }
+       ], function (err, result) {
+          if (err) {
+              next(err);
+          } else {
+              res.json(result);
+          }
+      });
+    }
+  });
 });
 // GET - (API) List of activity count per day of week
 app.get('/api/user/:id/activityperweek/:activity', function (req, res){
@@ -244,20 +288,49 @@ app.get('/api/user/:id/activityperweek/:activity', function (req, res){
 // GET - (API) List of all activities by day
 app.get('/api/user/:id/allactivitiesbyday', function (req, res){
   var userId = req.params.id;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      hiddenactivities = foundUser.hiddenActivities;
+      Activity.aggregate([
+            {
+              $match: { user_id : userId,
+                  activityLabel: {$nin: hiddenactivities}
+              }
+            },
+            { $group: {
+                _id : "$originalDate",
+                year : { $first: "$originalYear" },
+                month : { $first: "$originalMonth" },
+                day : { $first: "$originalDay" },
+                count: {$sum: 1}
+              }
+
+            },
+            { $sort:{year : 1, month: 1, day: 1}}
+            ], function (err, result) {
+              if (err) {
+                  next(err);
+              } else {
+                  res.json(result);
+              }
+            });
+    }
+  });
+});
+// GET - (API) List of all activityLabels
+app.get('/api/user/:id/activitylabels', function (req, res){
+  var userId = req.params.id;
   Activity.aggregate([
         {
           $match: { user_id : userId}
         },
         { $group: {
-            _id : "$originalDate",
-            year : { $first: "$originalYear" },
-            month : { $first: "$originalMonth" },
-            day : { $first: "$originalDay" },
-            count: {$sum: 1}
+            _id : "$activityLabel"
           }
 
-        },
-        { $sort:{year : 1, month: 1, day: 1}}
+        }
         ], function (err, result) {
           if (err) {
               next(err);

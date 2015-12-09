@@ -8,6 +8,7 @@ var UserSchema = new Schema({
 	email: String,
 	password: String,
 	coachMeProfileUrl: String,
+	hiddenActivities: Array,
 	activities: [{type: Schema.Types.ObjectId, ref: 'Activity'}]
 });
 
