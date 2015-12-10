@@ -47,18 +47,21 @@ function isAuthenticated(req, res, next) {
 }
 
 // ROUTES
+
 // GET - Home
 app.get('/', function (req, res) {
     res.redirect('/login');
 });
+
 // GET - Register
 app.get('/register', function (req, res) {
     if(req.user){
-        res.redirect('/index');
+        res.redirect('/habits');
     } else {
         res.redirect('/login'); //res.render('register', {errorMessage: req.flash('registerError')});
     }
 });
+
 // POST - Register
 // app.post('/register', function (req, res){
 //   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
@@ -74,33 +77,37 @@ app.get('/register', function (req, res) {
 //       }
 //   );
 // });
+
 // GET - User Login
 app.get('/login', function (req, res){
     res.render('login', { errorMessage: req.flash('error') });
 });
+
 // POST - User Login
 app.post('/login', passport.authenticate('local', {
   successRedirect : '/index',
   failureRedirect : '/login',
   failureFlash : true
 }));
+
 // GET - User Log-out
 app.get('/logout', function (req, res) {
   req.logout();
   res.redirect('/login');
 });
+
 // GET - External (not logged in) view for users
-app.get('/user/:username', function (req, res){
-  var username = req.params.username;
-  User.findOne({username: username})
+app.get('/user/:id', function (req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
               res.render('index', {user: singleUser});
           });
 });
-// GET - Activity Index (Primary Dashboard View)
+
+// GET - Index (Primary Dashboard View)
 app.get('/index', isAuthenticated, function (req, res){
-  console.log("hello");
   var userId = req.user.id;
   User.findOne({_id: userId})
       .populate('activities')
@@ -108,6 +115,17 @@ app.get('/index', isAuthenticated, function (req, res){
               res.render('index', {user: singleUser});
           });
 });
+
+// GET - Activity: Habits
+app.get('/habits', isAuthenticated, function (req, res){
+  var userId = req.user.id;
+  User.findOne({_id: userId})
+      .populate('activities')
+          .exec(function(err, singleUser){
+              res.render('habits', {user: singleUser});
+          });
+});
+
 // GET - (API) All Users
 app.get('/users', isAuthenticated, function (req, res){
   if(String(req.user._id) === "5660c53843c9bd110091c39a"){
@@ -118,6 +136,7 @@ app.get('/users', isAuthenticated, function (req, res){
     res.json("No Access Allowed");
   }
 });
+
 // GET - (API) All Users
 app.get('/editprofile', isAuthenticated, function (req, res){
   User.findOne({_id: req.user._id})
@@ -126,6 +145,16 @@ app.get('/editprofile', isAuthenticated, function (req, res){
               res.render('editProfile', {user: currentUser});
           });
 });
+
+// GET - List of all records for one activity
+app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId}, function(err, foundUser){
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    res.render('activity', {user: foundUser, activityName: activityName});
+  });
+});
+
 // POST - Hidden Activities from Edit Profile
 app.post('/api/user/hiddenvalues', isAuthenticated, function (req, res){
   var user_id = req.user._id;
@@ -143,6 +172,7 @@ app.post('/api/user/hiddenvalues', isAuthenticated, function (req, res){
     }
   });
 });
+
 // GET - (API) All Activities
 app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
   var userId = req.params.id;
@@ -152,14 +182,7 @@ app.get('/api/user/:id/activity', isAuthenticated, function (req, res){
               res.json({user: singleUser});
           });
 });
-// GET - List of all records for one activity
-app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res){
-  var userId = req.params.id;
-  User.findOne({_id: userId}, function(err, foundUser){
-    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-    res.render('activity', {user: foundUser, activityName: activityName});
-  });
-});
+
 // GET - (API) List of all records for one activity
 app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   var userId = req.params.id;
@@ -171,6 +194,7 @@ app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, 
     }
   });
 });
+
 // DELETE - (API) Delete list of all records for one activity
 app.delete('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   var userId = req.params.id;
@@ -182,6 +206,7 @@ app.delete('/api/user/:id/activity/:activityname', isAuthenticated, function (re
     }
   });
 });
+
 // POST - (API) Retrieve and save all data
 app.post('/api/fileupload', isAuthenticated, function (req, res){
   console.log("inside /api/fileupload");
@@ -229,6 +254,7 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
     }
   });
 });
+
 // GET - (API) List of longest streaks
 app.get('/api/user/:id/streaks', function (req, res){
     var userId = req.params.id;
@@ -264,6 +290,7 @@ app.get('/api/user/:id/streaks', function (req, res){
     }
   });
 });
+
 // GET - (API) List of activity count per day of week
 app.get('/api/user/:id/activityperweek/:activity', function (req, res){
   var userId = req.params.id;
@@ -286,6 +313,7 @@ app.get('/api/user/:id/activityperweek/:activity', function (req, res){
         }
     });
 });
+
 // GET - (API) List of all activities by day
 app.get('/api/user/:id/allactivitiesbyday', function (req, res){
   var userId = req.params.id;
@@ -320,6 +348,7 @@ app.get('/api/user/:id/allactivitiesbyday', function (req, res){
     }
   });
 });
+
 // GET - (API) List of all activityLabels
 app.get('/api/user/:id/activitylabels', function (req, res){
   var userId = req.params.id;
@@ -340,6 +369,7 @@ app.get('/api/user/:id/activitylabels', function (req, res){
           }
         });
 });
+
 // GET - External (not logged in) view for users
 app.get('/:username', function (req, res){
   var username = req.params.username;
@@ -347,10 +377,9 @@ app.get('/:username', function (req, res){
       .populate('activities')
           .exec(function(err, singleUser){
             if(singleUser === null){
-              console.log("error");
               res.redirect('/login');
             } else {
-              res.render('index', {user: singleUser});
+              res.render('habits', {user: singleUser});
             }
           });
 });

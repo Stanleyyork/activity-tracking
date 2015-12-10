@@ -4,6 +4,11 @@
 	color: #545454;
 }
 
+#nav-title > a:hover
+{
+  text-decoration:none;
+}
+
 .navbar {
 	height: 60px;
 }
@@ -18,7 +23,7 @@
 	font-style: italic;
 	font-size: 11px;
 	display:inline-block;
-	margin-left: 115px;
+	margin-left: 35px;
 	color: #919191;
 }
 
@@ -26,6 +31,12 @@
 	width: 60px;
 	display:inline-block;
 	margin-left: 5px;
+}
+
+#apple-health-logo {
+	margin-left: 5px;
+	height: 25px;
+	display:inline-block;
 }
 
 #account-button {

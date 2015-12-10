@@ -1,78 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<!-- set viewport to device width to make site responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- set viewport to device width to make site responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- bootstrap css -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-  <!-- bootstrap css -->
-  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-
-  <!-- custom styles -->
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
-  <meta charset="UTF-8">
-
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<meta charset="UTF-8">
 	<title>Index</title>
 </head>
 <body>
-
+	
 	{{> nav}}
 
-  <span class="btn btn-primary btn-file" id="filename-span">
-    Browse<input type="file" name="filename" id="filename-body">
-  </span>
+	<div class="thumbnail">
+		<span class="btn btn-primary btn-file" id="filename-span">
+	    	Browse<input type="file" name="filename" id="filename-body">
+		</span>
 
-  <p id="instructions">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
-  <br>
+		<p id="instructions">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
 
-  <div class="thumbnail" id="activities-list">
-    <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-      {{user.username}} has <a href="{{user.coachMeProfileUrl}}" target="_blank">{{user.activities.length}} daily activities</a> logged.
+		<div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
+	      {{user.username}} has <a href="/habits">{{user.activities.length}} daily habits</a> and walks/runs roughly X miles per day.
+	    </div>
     </div>
-    <script id="activities-template" type="text/x-handlebars-template"> 
-      <div class="row" id="habit-filter">
-        <span class="label label-primary">Habits:</span>
-        \{{#each activities}}
-          <span class="label label-default" id="habit-\{{this}}">\{{this}}</span>
-        \{{/each}}
-        <br>
-        <span class="label label-primary">Filters:</span>
-        <span class="label label-default" id="habit-2012">2012</span>
-        <span class="label label-default" id="habit-2013">2013</span>
-        <span class="label label-default" id="habit-2014">2014</span>
-        <span class="label label-default" id="habit-2015">2015</span>
-      </div>
-    </script>
-  </div>
 
-  <div class="row" id="charts">
-    <div class="thumbnail" id="thumbnail-chart"><div id="GSDChart"></div></div>
-    <div class="thumbnail" id="thumbnail-chart"><div id="totalCountBarChart"></div></div>
-    <div class="thumbnail" id="thumbnail-chart"><div id="AverageWeekBarChart"></div></div>
-    <div class="thumbnail" id="thumbnail-chart">
-      <form id="search-form">
-        <input type="submit" class="btn btn-primary" value="Search" style="float: right" />
-        <div style="overflow: hidden; padding-right: .5em;">
-          <input type="text" class="form-control" name="search-field" placeholder="Enter a Habit (e.g. 'Read')" id="search-query" style="width: 100%;" />
-         </div>
-      </form>
-      <div id="DayOfWeekChart" id="thumbnail-chart"></div>
-    </div>
-    <div class="thumbnail" id="thumbnail-chart"><div id="streaksBarChart"></div></div>
-  </div>  
 
-	{{> footer}}
-
-  <!-- plotly -->
-  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<!-- plotly -->
+	<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <!-- handlebars -->
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-  <!-- index.js -->
-  <script type="text/javascript" src="/scripts/index.js"></script>
-    
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- handlebars -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/index.js"></script>
 </body>
 </html>

@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- set viewport to device width to make site responsive -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- set viewport to device width to make site responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- bootstrap css -->
-  <link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- bootstrap css -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
-  <!-- custom styles -->
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
 	<meta charset="UTF-8">
 	<title>Edit Profile</title>
 </head>
@@ -18,6 +18,19 @@
 
 	<h1>Edit Profile</h1>
 	<div class="row" id="username-header" user-id={{user._id}}></div>
+
+	<div class="thumbnail">
+		<span class="btn btn-primary btn-file" id="filename-span">
+	    	Browse<input type="file" name="filename" id="filename-body">
+		</span>
+
+		<p id="instructions">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
+
+		<div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
+	      {{user.username}} has <a href="/habits">{{user.activities.length}} daily habits</a> and walks/runs roughly X miles per day.
+	    </div>
+    </div>
+
 	<form id="edit-profile-hidden-activities-form">
 		Select the Activities you'd like to hide:
 		<div class="form-group" id="activity-list-hidden-form">
@@ -27,7 +40,9 @@
 	    	<input type="submit" class="btn btn-block btn-primary" value="Submit">
 	  	</div>
 	</form>
+
 	<br><br>
+
 	<form method="POST" action="/edit-profile" id="edit-profile-form">
 		<div class="form-group">
 	    	<input type="text" name="username" class="form-control" placeholder={{user.username}} autofocus>
@@ -46,12 +61,11 @@
 	  	</div>
 	</form>
 	
-
-  <!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <!-- index.js -->
-  <script type="text/javascript" src="/scripts/editprofile.js"></script>
+	<!-- jquery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/editprofile.js"></script>
 </body>
 </html>
