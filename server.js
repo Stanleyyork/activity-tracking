@@ -104,16 +104,6 @@ app.get('/logout', function (req, res) {
   res.redirect('/login');
 });
 
-// GET - External (not logged in) view for users
-app.get('/user/:id', function (req, res){
-  var userId = req.params.id;
-  User.findOne({_id: userId})
-      .populate('activities')
-          .exec(function(err, singleUser){
-              res.render('index', {user: singleUser});
-          });
-});
-
 // GET - Index (Primary Dashboard View)
 app.get('/index', function (req, res){
   var userId = req.user.id; //"5660a6c810d090e34c47938f"
@@ -414,6 +404,20 @@ app.get('/api/user/:id/activitylabels', function (req, res){
 
 // GET - External (not logged in) view for users
 app.get('/:username', function (req, res){
+  var username = req.params.username;
+  User.findOne({username: username})
+      .populate('activities')
+          .exec(function(err, singleUser){
+            if(singleUser === null){
+              res.redirect('/login');
+            } else {
+              res.render('index', {user: singleUser});
+            }
+          });
+});
+
+// GET - External (not logged in) view for users
+app.get('/:username/habits', function (req, res){
   var username = req.params.username;
   User.findOne({username: username})
       .populate('activities')
