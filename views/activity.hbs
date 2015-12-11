@@ -15,34 +15,25 @@
 	<title>Activity</title>
 </head>
 <body>
+
 	{{> nav}}
+	
 	<p id="user-info" data-id={{user._id}}></p>
 	<h1 id="activity-name">{{activityName}}</h1>
 	<br>
-	<div class="highlight" id="activity-info">
-		<script id="activity-template" type="text/x-handlebars-template"> 
-			\{{#each activities}}
-				\{{activityLabel}}
-				<li>\{{link}}</li>
-				<li>\{{measurementB}}: \{{quantityB}}</li>
-				<li>\{{measurementC}}: \{{quantityC}}</li>
-				<li>\{{originalDate}}</li>
-				<li>userId: \{{user_id}}</li>
-				<br>
-			\{{/each}}
-		</script>
-	</div>
+	<div class="thumbnail" id="thumbnail-chart"><div id="GSDChart"></div></div>
+	<div class="row" id="activity-template"></div>
 
 	<!-- plotly -->
-  <script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->
-  <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
-  <!-- bootstrap js -->
-  <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <!-- handlebars -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
-  <!-- index.js -->
-  <script type="text/javascript" src="/scripts/activity.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- handlebars -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/activity.js"></script>
 	
 </body>
 </html>

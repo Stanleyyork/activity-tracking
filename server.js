@@ -357,6 +357,40 @@ app.get('/api/user/:id/allactivitiesbyday', function (req, res){
   });
 });
 
+// GET - (API) List of single activities by day
+app.get('/api/user/:id/:activity/byday', function (req, res){
+  var userId = req.params.id;
+  var activity = req.params.activity;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      hiddenactivities = foundUser.hiddenActivities;
+      Activity.aggregate([
+            {
+              $match: { user_id : userId, activityLabel: activity }
+            },
+            { $group: {
+                _id : "$originalDate",
+                year : { $first: "$originalYear" },
+                month : { $first: "$originalMonth" },
+                day : { $first: "$originalDay" },
+                count: {$sum: 1}
+              }
+
+            },
+            { $sort:{year : 1, month: 1, day: 1}}
+            ], function (err, result) {
+              if (err) {
+                  next(err);
+              } else {
+                  res.json(result);
+              }
+            });
+    }
+  });
+});
+
 // GET - (API) List of all activityLabels
 app.get('/api/user/:id/activitylabels', function (req, res){
   var userId = req.params.id;
