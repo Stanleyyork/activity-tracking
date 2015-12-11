@@ -46,6 +46,13 @@ function isAuthenticated(req, res, next) {
     res.redirect('/login');
 }
 
+function isStanley(req, res, next) {
+    if (req.user._id === "5660a6c810d090e34c47938f" || req.user._id === "5660c53843c9bd110091c39a"){
+        return next();
+    }
+    res.redirect('/login');
+}
+
 // ROUTES
 
 // GET - Home
@@ -54,15 +61,11 @@ app.get('/', function (req, res) {
 });
 
 // GET - Register
-app.get('/register', function (req, res) {
-    if(req.user){
-        res.redirect('/habits');
-    } else {
-        res.redirect('/login'); //res.render('register', {errorMessage: req.flash('registerError')});
-    }
-});
+// app.get('/register', function (req, res) {
+//     res.render('register', {errorMessage: req.flash('registerError')});
+// });
 
-// POST - Register
+//POST - Register
 // app.post('/register', function (req, res){
 //   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
 //     function (err, newUser) {
@@ -71,11 +74,16 @@ app.get('/register', function (req, res) {
 //             res.redirect('/register');
 //           } else {
 //               passport.authenticate('local')(req, res, function() {
-//                 res.redirect('/index');
+//                 res.redirect('/postregister');
 //               });
 //           }
 //       }
 //   );
+// });
+
+// GET - Post Register Thanks
+// app.get('/postregister', function (req, res){
+//   res.render('postregister');
 // });
 
 // GET - User Login
@@ -138,11 +146,11 @@ app.get('/users', isAuthenticated, function (req, res){
 });
 
 // GET - (API) All Users
-app.get('/editprofile', isAuthenticated, function (req, res){
+app.get('/settings', isAuthenticated, function (req, res){
   User.findOne({_id: req.user._id})
       .populate('activities')
           .exec(function(err, currentUser){
-              res.render('editProfile', {user: currentUser});
+              res.render('settings', {user: currentUser});
           });
 });
 

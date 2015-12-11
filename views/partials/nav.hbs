@@ -4,21 +4,18 @@
       
       <div class="col-xs-4" id="nav-header">
         <p id="nav-title"><a href="https://www.google.com/?gws_rd=ssl#q=mirror+test" target="_blank">speculo</a></p>
-        <div class="row" id="coach-logo-words">
-          <p id="nav-title-powered">with life data from</p><a href="http://www.coach.me"  target="_blank"><img src="http://static.logomaker.com.s3-us-west-2.amazonaws.com/wp-content/uploads/2015/01/Coach.me-Logo.png" id="coach-logo"></a><a href="http://www.apple.com/ios/health/" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/1/1a/Health_iOS_8_icon.png/64px-Health_iOS_8_icon.png" id="apple-health-logo"></a>
-        </div>
       </div>
 
       <div class="col-xs-7" id="account-button">
         <div class ="pull-right">
             <ul class="nav nav-pills">
               <li role="presentation" class="dropdown">
-                <a href="#" id="drop1" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user"></span><span class="caret"></span></a>
+                <a href="#" id="drop1" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" id="account-setting-man"></span><span class="caret" id="account-setting-man"></span></a>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                   {{#if user.username}}
                     <li><a href="/index"><p id="nav-activity">Dashboard</p></a></li>
                     <li><a href="/habits"><p id="nav-upload">Habits</p></a></li>
-                    <li><a href="/editprofile"><p id="nav-upload">Settings</p></a></li>
+                    <li><a href="/settings"><p id="nav-upload">Settings</p></a></li>
                     <li><a href="/logout"><p id="nav-logout">Logout</p></a></li>
                   {{else}}
                     <li><a href="/login"><p id="nav-login">Login</p></a></li>

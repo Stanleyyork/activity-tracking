@@ -12,14 +12,28 @@ $(function() {
 
 // EVENT LISTENERS
 	// Determine which content to have based on whether data exists
+	$("div#hidden").removeClass("hidden");
  	if($('.headline').attr("user-activity-count") > 0){
  		$('#upload-thumbnail').hide();
  		$("#instructions").hide();
+ 		$('#category-details-drawer').hide();
  	} else {
  		$('#upload-thumbnail').show();
  	}
 
+ 	// Tooltip (to show daily habits)
  	$('[data-toggle="tooltip"]').tooltip();
+
+ 	// Expand Category for details
+ 	$('.catheader').on('click', function(e){
+ 		e.preventDefault();
+ 		$('#category-details-drawer').empty();
+ 		$('#category-details-drawer').hide();
+ 		data = $(this).text().trim();
+ 		$('#category-details-drawer').slideDown( "fast", function() {
+		    $('#category-details-drawer').append(data + " details...");
+		});
+ 	});
 
  	// Show upload button if clicked (in navbar)
  	$('#nav-upload').on('click', function(){

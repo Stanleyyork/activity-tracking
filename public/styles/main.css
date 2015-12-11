@@ -1,12 +1,14 @@
 #nav-title {
+	margin-top: 5px;
 	font-weight: bold;
-	margin-bottom: -5px;
+	font-size: 22px;
+	text-decoration: none;
 	color: #545454;
 }
 
-#nav-title > a:hover
-{
-  text-decoration:none;
+#nav-title > a {
+  text-decoration: none;
+  color: #545454;
 }
 
 .navbar {
@@ -19,24 +21,9 @@
 	font-size: 18px;
 }
 
-#nav-title-powered {
-	font-style: italic;
-	font-size: 11px;
-	display:inline-block;
-	margin-left: 35px;
-	color: #919191;
-}
-
-#coach-logo {
-	width: 60px;
-	display:inline-block;
-	margin-left: 5px;
-}
-
-#apple-health-logo {
-	margin-left: 5px;
-	height: 25px;
-	display:inline-block;
+#account-setting-man {
+	text-decoration: none;
+  	color: #545454;
 }
 
 #account-button {
@@ -66,6 +53,10 @@ body {
 	background-color: #fafafa;
 }
 
+.div.hidden {
+   display: none
+}
+
 #login {
 	max-width: 400px;
 }
@@ -87,6 +78,10 @@ body {
 	margin-left: 15px;
 	max-width: 1050px;
 	padding: 20px;
+}
+
+.thumbnail.edit-profile {
+	display: inline-block;
 }
 
 .thumbnail.index {
@@ -213,6 +208,10 @@ body {
 	text-decoration: none;
 }
 
+#category-details-drawer {
+	height: 150px;
+}
+
 #activities-list {
 	max-width: 1000px;
 	margin-left: 15px;
@@ -261,12 +260,12 @@ body {
 	margin-bottom: 5px;
 }
 
-#edit-profile-form {
+#edit-profile-hidden-activities-form {
 	max-width: 450px;
 }
 
-#edit-profile-hidden-activities-form {
-	max-width: 450px;
+#edit-profile-form {
+	min-width: 400px;
 }
 
 @media all and (max-width: 500px) { /* screen size until 500px */

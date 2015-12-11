@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- set viewport to device width to make site responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- bootstrap css -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<meta charset="UTF-8">
+	<title>Settings</title>
+</head>
+<body>
+
+	{{> nav}}
+
+	<h1>Settings</h1>
+	<div class="row" id="username-header" user-id={{user._id}}></div>
+
+	<div class="thumbnail edit-profile">
+		<span class="btn btn-primary btn-file" id="filename-span">
+	    	Browse & Upload<input type="file" name="filename" id="filename-body">
+		</span>
+		<p id="instructions-edit-profile">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
+    </div>
+
+	<br>
+
+	<div class="thumbnail edit-profile">
+		<form id="edit-profile-hidden-activities-form">
+			Select the Activities you'd like to hide:
+			<div class="form-group" id="activity-list-hidden-form">
+		  	</div>
+			<div class="form-group">
+		    	<input type="submit" class="btn btn-primary" value="Submit">
+		  	</div>
+		</form>
+	</div>
+
+	<div class="thumbnail edit-profile">
+		<form method="POST" action="/edit-profile" id="edit-profile-form">
+			<div class="form-group">
+		    	<input type="text" name="username" class="form-control" placeholder={{user.username}} autofocus>
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="text" name="email" class="form-control" placeholder={{user.email}} autofocus>
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="text" name="coachMeProfileUrl" class="form-control" placeholder={{user.coachMeProfileUrl}} autofocus>
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="password" name="password" class="form-control" placeholder="Password">
+		  	</div>
+		  	<div class="form-group">
+		    	<input type="submit" class="btn btn-block btn-primary" value="Submit">
+		  	</div>
+		</form>
+	</div>
+	
+	<!-- jquery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/settings.js"></script>
+</body>
+</html>
