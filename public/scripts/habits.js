@@ -68,7 +68,6 @@ $(function() {
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
 			loadDataIntoYear(data, function(){
-				loadTotalGraph(['2015', '2014', '2013', '2012']);
 				loadAveragePerWeekGraph(['2015', '2014', '2013', '2012']);
 				loadListOfActivities('#activities-list');
 			});
@@ -200,6 +199,7 @@ $(function() {
 		newActivityArray = activityArray['All'].filter( Boolean ).sort();
 		var activitiesHtml = template({ activities: $.unique(newActivityArray) });
 		$(location).append(activitiesHtml);
+		$('.headline').append(newActivityArray.length+" daily habits.");
 		loadListOfActivitiesNav();
 		filterListeners('#habit-filter > span');
 	}
@@ -420,55 +420,6 @@ $(function() {
 					  title: 'Average Habits Achieved per Week', titlefont: {size: 18}
 					 };
 		Plotly.newPlot('AverageWeekBarChart', AverageWeekBarChart_data, layout);
-	}
-
-	// All Activities Graphs
-	function loadTotalGraph(arr){
-		var trace1 = {
-		  x: activityArray['2015'],
-		  y: activityCountArray['2015'],
-		  name: '2015',
-		  type: 'bar'
-		};
-		var trace2 = {
-		  x: activityArray['2014'],
-		  y: activityCountArray['2014'],
-		  name: '2014',
-		  type: 'bar'
-		};
-		var trace3 = {
-		  x: activityArray['2013'],
-		  y: activityCountArray['2013'],
-		  name: '2013',
-		  type: 'bar'
-		};
-		var trace4 = {
-		  x: activityArray['2012'],
-		  y: activityCountArray['2012'],
-		  name: '2012',
-		  type: 'bar'
-		};
-
-		var totalCountBarChart_data = [];
-
-		if(arr.indexOf('2012') !== -1){
-			totalCountBarChart_data.push(trace4);
-		}
-		if(arr.indexOf('2013') !== -1){
-			totalCountBarChart_data.push(trace3);
-		}
-		if(arr.indexOf('2014') !== -1){
-			totalCountBarChart_data.push(trace2);
-		}
-		if(arr.indexOf('2015') !== -1){
-			totalCountBarChart_data.push(trace1);
-		}
-
-		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
-					  yaxis: {range: [0, 365], title: 'Days'},
-					  title: 'Total Habits Achieved per Year', titlefont: {size: 18}
-					 };
-		Plotly.newPlot('totalCountBarChart', totalCountBarChart_data, layout);
 	}
 
 });

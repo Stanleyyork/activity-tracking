@@ -72,6 +72,7 @@ body {
 .headline {
 	font-size: 16px;
 	margin-bottom: 10px;
+	margin-left: 10px;
 }
 
 .thumbnail {
@@ -214,6 +215,11 @@ body {
 
 #activities-list {
 	font-size: 16px;
+	margin-left: 15px;
+}
+
+#charts {
+	margin-left: 0px;
 }
 
 #habit-filter {

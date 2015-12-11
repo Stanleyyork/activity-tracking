@@ -20,7 +20,7 @@
 
   <div class="thumbnail" id="activities-list">
     <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-      {{user.username}} has <a href="{{user.coachMeProfileUrl}}" target="_blank">{{user.activities.length}} daily habits</a> logged.
+      {{user.activities.length}} daily achievements across
     </div>
     <script id="activities-template" type="text/x-handlebars-template"> 
       <div class="row" id="habit-filter">
@@ -39,9 +39,6 @@
   </div>
 
   <div class="row" id="charts">
-    <div class="thumbnail" id="thumbnail-chart"><div id="GSDChart"></div></div>
-    <div class="thumbnail" id="thumbnail-chart"><div id="totalCountBarChart"></div></div>
-    <div class="thumbnail" id="thumbnail-chart"><div id="AverageWeekBarChart"></div></div>
     <div class="thumbnail" id="thumbnail-chart">
       <form id="search-form">
         <input type="submit" class="btn btn-primary" value="Search" style="float: right" />
@@ -51,6 +48,8 @@
       </form>
       <div id="DayOfWeekChart" id="thumbnail-chart"></div>
     </div>
+    <div class="thumbnail" id="thumbnail-chart"><div id="GSDChart"></div></div>
+    <div class="thumbnail" id="thumbnail-chart"><div id="AverageWeekBarChart"></div></div>
     <div class="thumbnail" id="thumbnail-chart"><div id="streaksBarChart"></div></div>
   </div>  
 
