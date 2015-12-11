@@ -13,10 +13,10 @@ $(function() {
 // EVENT LISTENERS
 	// Determine which content to have based on whether data exists
  	if($('.headline').attr("user-activity-count") > 0){
- 		$('#filename-span').hide();
+ 		$('#upload-thumbnail').hide();
  		$("#instructions").hide();
  	} else {
- 		$('#filename-span').show();
+ 		$('#upload-thumbnail').show();
  	}
 
  	// Show upload button if clicked (in navbar)

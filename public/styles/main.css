@@ -61,7 +61,7 @@
 
 body {
 	margin-top: 75px;
-	margin-left: 50px;
+	margin-left: 25px;
 	color: #545454;
 	background-color: #fafafa;
 }
@@ -84,13 +84,108 @@ body {
 }
 
 .thumbnail {
-	margin-left: 30px;
-	max-width: 1025px;
+	margin-left: 15px;
+	max-width: 1050px;
 	padding: 20px;
 }
 
+.thumbnail.index {
+	margin-left: 15px;
+	width: 200px;
+	height: 300px;
+	display:inline-block;
+	margin-top: 20px;
+}
+
+.category-header {
+	color: white;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+	vertical-align: middle;
+	height: 30%;
+	margin: -20px;
+	padding: 0px;
+	border: none;
+	opacity: 0.75;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+}
+
+.category-body {
+	margin-top: 5px;
+	height: 70%;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+.category-header.category-a{
+	background-color: #0080FF;
+}
+
+.category-header.category-b{
+	background-color: #0db40d;
+}
+
+.category-header.category-c{
+	background-color: #e6e726;
+}
+
+.category-header.category-d{
+	background-color: #FF7F00;
+}
+
+.category-header.category-e{
+	background-color: #d43434;
+}
+
+.catheader {
+	position: relative;
+   	top: 30%;                     
+}
+
+.catheader.a {
+	position: relative;
+   	top: 10%;                     
+}
+
+.catheader.c {
+	position: relative;
+   	top: 10%;                     
+}
+
+.catbody {
+	margin-top: 20px;
+}
+
+.catbody > span.icon-activity{
+	margin-top: 15px;
+	margin-left: 5px;
+	margin-right: 10px;
+}
+
+.catbody > span.icon-blank{
+	margin-top: 15px;
+	color: white;
+}
+
+.catbody > span.glyphicon.habit-color-blue {
+	color: #0080FF;
+	opacity: 0.6;
+}
+
+.catbody > span.glyphicon.habit-color-green {
+	color: #0db40d;
+	opacity: 0.6;
+}
+
+.catbody > span.glyphicon.habit-color-yellow {
+	color: #e6e726;
+	opacity: 0.6;
+}
+
 #activities-list {
-	max-width: 1025px;
+	max-width: 1000px;
 	margin-left: 15px;
 	font-size: 16px;
 }

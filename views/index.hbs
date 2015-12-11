@@ -16,7 +16,7 @@
 	
 	{{> nav}}
 
-	<div class="thumbnail">
+	<div class="thumbnail" id="upload-thumbnail">
 		<span class="btn btn-primary btn-file" id="filename-span">
 	    	Browse<input type="file" name="filename" id="filename-body">
 		</span>
@@ -24,7 +24,85 @@
 		<p id="instructions">To upload your activities, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
 
 		<div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-	      {{user.username}} has <a href="/habits">{{user.activities.length}} daily habits</a> and walks/runs roughly X miles per day.
+	    </div>
+    </div>
+
+    <div class="categories">
+	    <div class="thumbnail index">
+	    	<div class="category-header category-a">
+	    		<div class="catheader a">
+	    			Cognitive Intelligence
+	    		</div>
+	    	</div><br>
+	    	<div class="category-body category-a">
+	    		<div class="catbody a">
+	    			<span class="glyphicon glyphicon-book icon-activity habit-color-blue"></span> Reading<br>
+	    			<span class="glyphicon glyphicon-flash icon-activity habit-color-blue"></span> Creativity<br>
+	    			<span class="glyphicon glyphicon-pencil icon-activity"></span> Writing<br>
+	    			<span class="glyphicon glyphicon-sound-stereo icon-activity"></span> Code
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="thumbnail index">
+	    	<div class="category-header category-b">
+	    		<div class="catheader b">
+	    			Fitness & Nutrition
+	    		</div>
+	    	</div><br>
+	    	<div class="category-body category-b">
+	    		<div class="catbody b">
+	    			<span class="glyphicon glyphicon-apple icon-activity habit-color-green"></span> Fruit<br>
+	    			<span class="glyphicon glyphicon-forward icon-activity habit-color-green"></span> Physical<br>
+	    			<span class="glyphicon glyphicon-bed icon-activity habit-color-green"></span> Sleep<br>
+					<span class="glyphicon glyphicon-option-horizontal icon-activity habit-color-green"></span> Floss
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="thumbnail index">
+	    <div class="category-header category-c">
+	    		<div class="catheader c">
+	    			Pyschological & Emotional
+	    		</div>
+	    	</div><br>
+	    	<div class="category-body category-c">
+	    		<div class="catbody c">
+	    			<span class="glyphicon glyphicon-heart icon-activity habit-color-yellow"></span> Gratitude<br>
+	    			<span class="glyphicon glyphicon-cloud icon-activity habit-color-yellow"></span> Snuggle<br>
+	    			<span class="glyphicon glyphicon-home icon-activity"></span> Family<br>
+	    			<span class="glyphicon glyphicon-tent icon-activity"></span> Outdoors
+	    		</div>
+	    	</div>
+	    	
+	    </div>
+	    <div class="thumbnail index">
+	    	<div class="category-header category-d">
+	    		<div class="catheader d">
+	    			Social
+	    		</div>
+	    	</div><br>
+	    	<div class="category-body category-d">
+	    		<div class="catbody d">
+	    			<span class="glyphicon glyphicon-envelope icon-activity"></span> Email<br>
+	    			<span class="glyphicon glyphicon-text-size icon-activity"></span> Tweets<br>
+	    			<span class="glyphicon glyphicon-camera icon-activity"></span> Photos<br>
+	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
+	    		</div>
+	    	</div>
+	    </div>
+	    <div class="thumbnail index">
+	    	<div class="category-header category-e">
+	    		<div class="catheader e">
+	    			Travel
+	    		</div>
+	    	</div><br>
+	    	<div class="category-body category-e">
+	    		<div class="catbody e">
+	    			<span class="glyphicon glyphicon-plane icon-activity"></span> Flights<br>
+	    			<span class="glyphicon glyphicon-road icon-activity"></span> Auto<br>
+	    			<span class="glyphicon glyphicon-globe icon-activity"></span> States<br>
+	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
+	    		</div>
+	    	</div>
 	    </div>
     </div>
 
