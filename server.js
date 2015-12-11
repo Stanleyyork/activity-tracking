@@ -474,6 +474,15 @@ app.get('/:username/habits', function (req, res){
           });
 });
 
+// GET - List of all records for one activity
+app.get('/:username/activity/:activityname', function (req, res){
+  var username = req.params.username
+  User.findOne({username: username}, function(err, foundUser){
+    var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
+    res.render('activity', {user: foundUser, activityName: activityName});
+  });
+});
+
 // SERVER PORT
 app.listen(process.env.PORT || 3000, function(){
     console.log("Server is running");
