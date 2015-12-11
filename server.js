@@ -105,7 +105,7 @@ app.get('/logout', function (req, res) {
 });
 
 // GET - Index (Primary Dashboard View)
-app.get('/index', function (req, res){
+app.get('/index', isAuthenticated, function (req, res){
   var userId = req.user.id; 
   User.findOne({_id: userId})
       .populate('activities')

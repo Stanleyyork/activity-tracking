@@ -20,6 +20,8 @@ $(function() {
  		$('#category-details-drawer').hide();
  	} else {
  		$('#upload-thumbnail').show();
+ 		$('#category-details-drawer').hide();
+ 		$('#categories').hide();
  	}
 
  	// Tooltip (to show daily habits)
