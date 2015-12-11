@@ -82,7 +82,7 @@ body {
 }
 
 .thumbnail.edit-profile {
-	display: inline-block;
+	max-width: 450px;
 }
 
 .thumbnail.index {

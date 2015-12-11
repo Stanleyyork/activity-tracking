@@ -198,7 +198,18 @@ app.get('/api/user/:id/activity/:activityname', isAuthenticated, function (req, 
 app.delete('/api/user/:id/activity/:activityname', isAuthenticated, function (req, res){
   var userId = req.params.id;
   var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
-  Activity.remove({activityLabel: activityName}, function(err, deletedActivityList){
+  Activity.remove({activityLabel: activityName, user_id: userId}, function(err, deletedActivityList){
+    if(err){console.error(err);}
+    else {
+      res.json(deletedActivityList);
+    }
+  });
+});
+
+// DELETE - (API) Delete all records for one user
+app.delete('/api/user/:id/activity/', isAuthenticated, function (req, res){
+  var userId = req.params.id;
+  Activity.remove({user_id: userId}, function(err, deletedActivityList){
     if(err){console.error(err);}
     else {
       res.json(deletedActivityList);

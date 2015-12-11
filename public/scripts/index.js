@@ -7,6 +7,7 @@ $(function() {
  // 	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
  	var clickedHeader = '';
+ 	var importObject = {};
 
 // LOADS INITIAL DATA
 	
@@ -21,7 +22,7 @@ $(function() {
  	} else {
  		$('#upload-thumbnail').show();
  		$('#category-details-drawer').hide();
- 		$('#categories').hide();
+ 		$('.categories').hide();
  	}
 
  	// Tooltip (to show daily habits)
