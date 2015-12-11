@@ -7,47 +7,44 @@ $(function() {
  	var activityName = $('#activity-name').html();
  	var user_id = $('#user-info').attr("data-id");
  	var groupedActivities = {};
- 	var activityGSDArray = [];
- 	var activityGSDCountArray = [];
+ 	var activityGSMArray = [];
+ 	var activityGSMCountArray = [];
 
- 	getSingleActivityGroupedAndSortedByDay();
+ 	getSingleActivityGroupedAndSortedByMonth();
 
  	// Get all activities sorted by day
-	function getSingleActivityGroupedAndSortedByDay(){
-		$.get('/api/user/'+user_id+'/'+activityName+'/byday/', function(data){
-			loadGroupedSortedDay(data, function(){
-				loadGSDGraph();
+	function getSingleActivityGroupedAndSortedByMonth(){
+		$.get('/api/user/'+user_id+'/'+activityName+'/bymonth/', function(data){
+			loadGroupedSortedMonth(data, function(){
+				loadGSMGraph();
 			});
 		});
 	}
 
 	// Load data in correct format for graph
- 	function loadGroupedSortedDay(data, callback){
+ 	function loadGroupedSortedMonth(data, callback){
 		for(var i = 0; i < data.length; i++){
-			if(i===0){
-				activityGSDArray.push(data[i]._id);
-			} else {
-				activityGSDArray.push(data[i]._id.slice(0,10));
-			}
-			activityGSDCountArray.push((activityGSDCountArray[i-1] || 0) + data[i].count);
+			activityGSMArray.push(data[i].year + '-' + data[i].month);
+			activityGSMCountArray.push(data[i].count);
 		}
 		callback();
 	}
 
 // GRAPHS
 	// Activities Grouped and Sorted by Day
-	function loadGSDGraph(){
+	function loadGSMGraph(){
 
 		var trace1 = {
-		  x: activityGSDArray,
-		  y: activityGSDCountArray,
+		  x: activityGSMArray,
+		  y: activityGSMCountArray,
 		  fill: 'tozeroy',
-		  type: 'scatter'
+		  type: 'bar'
 		};
 
 		var data = [trace1];
 		var layout = {width: 1000, height: 400,
-					  title: "Total '"+activityName+"' Habits Achieved Over Time", titlefont: {size: 18}
+					  title: "Total '"+activityName+"' Habits Achieved Over Time", titlefont: {size: 18},
+					  yaxis: {title: "Days per Month"}
 					 };
 
 		Plotly.newPlot('GSDChart', data, layout);
