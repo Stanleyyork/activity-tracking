@@ -354,7 +354,7 @@ $(function() {
 			var title = "That habit does not exist";
 		}
 
-		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
+		var layout = {barmode: 'group', bargroupgap: 0.00, width: 1000, height: 500,
 					  yaxis: {title: '%'}, xaxis: {title: 'Day of Week (0 = Sunday)'},
 					  title: title, titlefont: {size: 18}
 					 };
@@ -424,7 +424,7 @@ $(function() {
 			AverageWeekBarChart_data.push(trace1);
 		}
 
-		var layout = {barmode: 'group', bargroupgap: 0.05, width: 1000, height: 500,
+		var layout = {barmode: 'group', bargroupgap: 0.00, width: 1000, height: 500,
 					  yaxis: {range: [0, 7], title: 'Days'},
 					  title: 'Average Habits Achieved per Week', titlefont: {size: 18}
 					 };

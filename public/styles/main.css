@@ -276,10 +276,16 @@ body {
     body {
     	margin-left: 5px;
     }
+    .navbar {
+    	height: 40px;
+    }
     #nav-title {
         font-size: 0.8em; /* 0.8x default size */
     }
     #nav-header {
 		margin-top: 7px;
+	}
+	#account-button-pull {
+		text-align: center;
 	}
 }

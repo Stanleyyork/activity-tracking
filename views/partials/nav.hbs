@@ -6,12 +6,15 @@
         <p id="nav-title"><a href="https://www.google.com/?gws_rd=ssl#q=mirror+test" target="_blank">speculo</a></p>
       </div>
 
-      <div class="col-xs-7" id="account-button">
+      <div class="col-sm-2">
+      </div>
+
+      <div class="col-xs-5" id="account-button">
         <div class ="pull-right">
             <ul class="nav nav-pills">
               <li role="presentation" class="dropdown">
                 <a href="#" id="drop1" role="button" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user" id="account-setting-man"></span><span class="caret" id="account-setting-man"></span></a>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                <ul class="dropdown-menu dropdown-menu-left" aria-labelledby="dLabel">
                   {{#if user.username}}
                     <li><a href="/stanleyyork"><p id="nav-activity">Dashboard</p></a></li>
                     <li><a href="/stanleyyork/habits"><p id="nav-upload">Habits</p></a></li>

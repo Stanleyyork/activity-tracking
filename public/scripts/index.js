@@ -42,18 +42,6 @@ $(function() {
 	    	$('#category-details-drawer').slideUp();
 	    }
  	});
-
-	// Nav Scrolling conditional
- 	$(window).scroll(function(){
-		if($(window).scrollTop()>70){
-			$('.navbar').css("height", "80");
-			$('#coach-logo-words').hide();
-		}
-		if($(window).scrollTop()<55){
-			$('.navbar').css("height", "60");
-			$('#coach-logo-words').show();
-		}
-	});
 		
  	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body").change(function(e) {
