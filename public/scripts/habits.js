@@ -261,7 +261,8 @@ $(function() {
 		  x: activityGSDArray,
 		  y: activityGSDCountArray,
 		  fill: 'tozeroy',
-		  type: 'scatter'
+		  type: 'scatter',
+		  marker: {color: 'rgb(19,131,234)'}
 		};
 
 		var data = [trace1];
@@ -308,25 +309,29 @@ $(function() {
 		  x: activityDoWArray['2015'],
 		  y: activityDoWAverageArray['2015'],
 		  name: '2015',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(11,81,146)'}
 		};
 		var trace2 = {
 		  x: activityDoWArray['2014'],
 		  y: activityDoWAverageArray['2014'],
 		  name: '2014',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(19,131,234)'}
 		};
 		var trace3 = {
 		  x: activityDoWArray['2013'],
 		  y: activityDoWAverageArray['2013'],
 		  name: '2013',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(190,221,249)'}
 		};
 		var trace4 = {
 		  x: activityDoWArray['2012'],
 		  y: activityDoWAverageArray['2012'],
 		  name: '2012',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(213,220,227)'}
 		};
 
 		var DayOfWeekChart_data = [];
@@ -364,11 +369,11 @@ $(function() {
 		  y: streakArray,
 		  text: streakLabelArray,
 		  orientation: 'h',
-		  marker: {color: 'rgb(255,140,0)'}
+		  marker: {color: 'rgb(249,173,35)'}
 		}];
 
 		var layout = {title: "Longest Streaks For Each Habit",
-			xaxis: {title: "Days"},
+			xaxis: {title: "Days"}, height: 350,
 			margin: {l: 150},
 		};
 
@@ -380,25 +385,29 @@ $(function() {
 		  x: activityArray['2015'],
 		  y: activityAverageArray['2015'],
 		  name: '2015',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(11,81,146)'}
 		};
 		var trace2 = {
 		  x: activityArray['2014'],
 		  y: activityAverageArray['2014'],
 		  name: '2014',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(19,131,234)'}
 		};
 		var trace3 = {
 		  x: activityArray['2013'],
 		  y: activityAverageArray['2013'],
 		  name: '2013',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(190,221,249)'}
 		};
 		var trace4 = {
 		  x: activityArray['2012'],
 		  y: activityAverageArray['2012'],
 		  name: '2012',
-		  type: 'bar'
+		  type: 'bar',
+		  marker: {color: 'rgb(213,220,227)'}
 		};
 
 		var AverageWeekBarChart_data = [];

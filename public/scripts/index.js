@@ -6,13 +6,14 @@ $(function() {
  //     var source = $('#index-template').html();
  // 	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
+ 	var clickedHeader = '';
 
 // LOADS INITIAL DATA
 	
 
 // EVENT LISTENERS
 	// Determine which content to have based on whether data exists
-	$("div#hidden").removeClass("hidden");
+	$("div.hidden").removeClass("hidden");
  	if($('.headline').attr("user-activity-count") > 0){
  		$('#upload-thumbnail').hide();
  		$("#instructions").hide();
@@ -28,16 +29,15 @@ $(function() {
  	$('.catheader').on('click', function(e){
  		e.preventDefault();
  		$('#category-details-drawer').empty();
- 		$('#category-details-drawer').hide();
- 		data = $(this).text().trim();
- 		$('#category-details-drawer').slideDown( "fast", function() {
-		    $('#category-details-drawer').append(data + " details...");
-		});
- 	});
-
- 	// Show upload button if clicked (in navbar)
- 	$('#nav-upload').on('click', function(){
- 		$('#filename-span').show();
+ 		if ($('#category-details-drawer').is( ":hidden" ) || clickedHeader !== $(this).text().trim()) {
+	 		$('#category-details-drawer').hide();
+	 		clickedHeader = $(this).text().trim();
+	 		$('#category-details-drawer').slideDown( "fast", function() {
+			    $('#category-details-drawer').append(clickedHeader + " details...");
+			});	
+	  	} else {
+	    	$('#category-details-drawer').slideUp("slow");
+	    }
  	});
 
 	// Nav Scrolling conditional
