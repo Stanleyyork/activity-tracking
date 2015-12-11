@@ -116,7 +116,7 @@ app.get('/user/:id', function (req, res){
 
 // GET - Index (Primary Dashboard View)
 app.get('/index', function (req, res){
-  var userId = "5660a6c810d090e34c47938f"//req.user.id;
+  var userId = req.user.id; //"5660a6c810d090e34c47938f"
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
