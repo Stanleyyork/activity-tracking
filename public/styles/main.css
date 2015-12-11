@@ -184,6 +184,35 @@ body {
 	opacity: 0.6;
 }
 
+.catbody > a {
+	color: #545454;
+}
+
+.catbody.a > a:hover {
+	color: #0080FF;
+	text-decoration: none;
+}
+
+.catbody.b > a:hover {
+	color: #0db40d;
+	text-decoration: none;
+}
+
+.catbody.c > a:hover {
+	color: #e6e726;
+	text-decoration: none;
+}
+
+.catbody.d > a:hover {
+	color: #FF7F00;
+	text-decoration: none;
+}
+
+.catbody.e > a:hover {
+	color: #d43434;
+	text-decoration: none;
+}
+
 #activities-list {
 	max-width: 1000px;
 	margin-left: 15px;

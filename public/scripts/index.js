@@ -19,6 +19,8 @@ $(function() {
  		$('#upload-thumbnail').show();
  	}
 
+ 	$('[data-toggle="tooltip"]').tooltip();
+
  	// Show upload button if clicked (in navbar)
  	$('#nav-upload').on('click', function(){
  		$('#filename-span').show();

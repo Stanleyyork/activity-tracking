@@ -17,12 +17,11 @@
                 <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
                   {{#if user.username}}
                     <li><a href="/index"><p id="nav-activity">Dashboard</p></a></li>
-                    <li><a href="/editprofile"><p id="nav-upload">Edit Profile</p></a></li>
+                    <li><a href="/habits"><p id="nav-upload">Habits</p></a></li>
+                    <li><a href="/editprofile"><p id="nav-upload">Settings</p></a></li>
                     <li><a href="/logout"><p id="nav-logout">Logout</p></a></li>
-                    <li><a href="/editprofile"><p id="nav-upload">Upload More</p></a></li>
                   {{else}}
                     <li><a href="/login"><p id="nav-login">Login</p></a></li>
-                    <li><a href="/register"><p id="nav-register">Register</p></a></li>
                   {{/if}}
                 </ul>
               </li>
