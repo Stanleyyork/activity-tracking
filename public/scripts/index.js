@@ -34,11 +34,11 @@ $(function() {
  		if ($('#category-details-drawer').is( ":hidden" ) || clickedHeader !== $(this).text().trim()) {
 	 		$('#category-details-drawer').hide();
 	 		clickedHeader = $(this).text().trim();
-	 		$('#category-details-drawer').slideDown( "fast", function() {
+	 		$('#category-details-drawer').slideDown(function() {
 			    $('#category-details-drawer').append(clickedHeader + " details...");
 			});	
 	  	} else {
-	    	$('#category-details-drawer').slideUp("slow");
+	    	$('#category-details-drawer').slideUp();
 	    }
  	});
 
