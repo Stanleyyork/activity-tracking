@@ -57,7 +57,7 @@ function isStanley(req, res, next) {
 
 // GET - Home
 app.get('/', function (req, res) {
-    res.redirect('/login');
+    res.redirect('/index');
 });
 
 // GET - Register
