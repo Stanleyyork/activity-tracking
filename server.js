@@ -61,30 +61,30 @@ app.get('/', function (req, res) {
 });
 
 // GET - Register
-app.get('/register', function (req, res) {
-    res.render('register', {errorMessage: req.flash('registerError')});
-});
+// app.get('/register', function (req, res) {
+//     res.render('register', {errorMessage: req.flash('registerError')});
+// });
 
 //POST - Register
-app.post('/register', function (req, res){
-  User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
-    function (err, newUser) {
-          if (err){
-            req.flash('registerError', err.message);
-            res.redirect('/register');
-          } else {
-              passport.authenticate('local')(req, res, function() {
-                res.redirect('/postregister');
-              });
-          }
-      }
-  );
-});
+// app.post('/register', function (req, res){
+//   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
+//     function (err, newUser) {
+//           if (err){
+//             req.flash('registerError', err.message);
+//             res.redirect('/register');
+//           } else {
+//               passport.authenticate('local')(req, res, function() {
+//                 res.redirect('/postregister');
+//               });
+//           }
+//       }
+//   );
+// });
 
 // GET - Post Register Thanks
-app.get('/postregister', function (req, res){
-  res.render('postregister');
-});
+// app.get('/postregister', function (req, res){
+//   res.render('postregister');
+// });
 
 // GET - User Login
 app.get('/login', function (req, res){
