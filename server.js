@@ -1,7 +1,7 @@
 // SERVER.js
 
 // APP REQUIREMENTS
-var express = require('express');
+var express = require('express'),
     bodyParser = require('body-parser'),
     hbs = require('hbs'),
     app = express(),
@@ -61,30 +61,30 @@ app.get('/', function (req, res) {
 });
 
 // GET - Register
-// app.get('/register', function (req, res) {
-//     res.render('register', {errorMessage: req.flash('registerError')});
-// });
+app.get('/register', function (req, res) {
+    res.render('register', {errorMessage: req.flash('registerError')});
+});
 
 //POST - Register
-// app.post('/register', function (req, res){
-//   User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
-//     function (err, newUser) {
-//           if (err){
-//             req.flash('registerError', err.message);
-//             res.redirect('/register');
-//           } else {
-//               passport.authenticate('local')(req, res, function() {
-//                 res.redirect('/postregister');
-//               });
-//           }
-//       }
-//   );
-// });
+app.post('/register', function (req, res){
+  User.register(new User({ username: req.body.username, coachMeProfileUrl: req.body.coachMeProfileUrl, email: req.body.email }), req.body.password,
+    function (err, newUser) {
+          if (err){
+            req.flash('registerError', err.message);
+            res.redirect('/register');
+          } else {
+              passport.authenticate('local')(req, res, function() {
+                res.redirect('/postregister');
+              });
+          }
+      }
+  );
+});
 
 // GET - Post Register Thanks
-// app.get('/postregister', function (req, res){
-//   res.render('postregister');
-// });
+app.get('/postregister', function (req, res){
+  res.render('postregister');
+});
 
 // GET - User Login
 app.get('/login', function (req, res){
@@ -231,6 +231,7 @@ app.post('/api/fileupload', isAuthenticated, function (req, res){
   });
 
 });
+
 
 // GET - (API) Activity Count by Grouping
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
@@ -476,7 +477,7 @@ app.get('/:username/habits', function (req, res){
 
 // GET - List of all records for one activity
 app.get('/:username/activity/:activityname', function (req, res){
-  var username = req.params.username
+  var username = req.params.username;
   User.findOne({username: username}, function(err, foundUser){
     var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
     res.render('activity', {user: foundUser, activityName: activityName});
