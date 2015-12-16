@@ -78,17 +78,65 @@ $(function() {
 	}
 
 // LISTEN FOR FILE, THEN UPLOAD, PARSE AND SEND TO SERVER
-	 // Listen for file upload, then pass to upload/parse file
-	$("#filename-body").change(function(e) {
+	// Listen for file upload, then pass to upload/parse file
+	$("#filename-body-csv").change(function(e) {
 		var ext = $("input#filename-body").val().split(".").pop().toLowerCase();
-		uploadFile(e, ext, function(){
+		uploadCSVFile(e, ext, function(){
 			console.log("finished, now sending to server...");
 			sendActivityToServer();
 		});
 	});
 
+	$("#filename-body-xml").change(function(e) {
+		uploadXMLFile(e, function(){
+			console.log("finished, now sending to server...");
+			sendActivityToServer();
+		});
+	});
+
+	//$("#filename-body").change(uploadXMLFile);
+
+	function uploadXMLFile(e, callback) {
+        var files = e.target.files;
+        for (var i = 0, f; f = files[i]; i++) {
+          var reader = new FileReader();
+          reader.onload = (function(theFile) {
+            return function(e) {
+            	var row_values = e.target.result.split("\n");
+				for(var i=4;i<row_values.length-2;i++) {
+				 	var cell = row_values[i].match(/(?:[^\s"]+|"[^"]*")+/g);
+					var data = {};
+					var date = cell[4].split('"')[1];
+					data.user_id = user_id;
+					data.activityCategory = "Fitness & Nutrition";
+					data.activityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
+					data.originalActivityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
+					data.activityType = "Health";
+					data.activitySource = "Apple";
+					data.originalId = null;
+					var datetype = new Date("'"+date.slice(0,4)+"'"+date.slice(4,6)+"'"+date.slice(6,8)+"'");
+					data.originalDate = datetype;
+					data.originalYear = date.slice(0,4);
+					data.originalMonth = date.slice(4,6);
+					data.originalDay = date.slice(6,8);
+					data.originalDayOfWeek = datetype.getDay();
+					data.occured = true;
+					data.measurementA = "Days";
+					data.quantityA = null;
+					data.measurementB = cell[3].split('"')[1];
+					data.quantityB = cell[6].split('"')[1];
+					data.link = "http://www.apple.com/ios/health"
+					importObject[i] = data;
+				}
+				callback();
+            };
+          })(f);
+          reader.readAsText(f);
+        }
+      }
+
 	// Upload and parse file, then send to sendActivityToServer
-	function uploadFile(e, ext, callback){
+	function uploadCSVFile(e, ext, callback){
 		var ext = ext;
 		if (e.target.files !== undefined) {
 			var reader = new FileReader();
@@ -101,6 +149,9 @@ $(function() {
 					var date = cell[2];
 					data.user_id = user_id;
 					data.activityLabel = cell[1];
+					data.originalActivityLabel = cell[1];
+					data.activityType = "Habit";
+					data.activitySource = "Coach.me";
 					data.originalId = cell[0];
 					if(date !== undefined){
 						var datetype = new Date(date);

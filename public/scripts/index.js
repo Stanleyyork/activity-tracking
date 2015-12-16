@@ -46,14 +46,14 @@ $(function() {
  	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body").change(function(e) {
 		var ext = $("input#filename-body").val().split(".").pop().toLowerCase();
-		uploadFile(e, ext, function(){
+		uploadXMLFile(e, ext, function(){
 			console.log("finished, now sending to server...");
 			sendActivityToServer();
 		});
 	});
 
 // FILE UPLOAD AND IMPORT
-	// Upload and parse file, then send to sendActivityToServer
+	// Upload and parse Coach CSV file, then send to sendActivityToServer
 	function uploadFile(e, ext, callback){
 		var ext = ext;
 		if (e.target.files !== undefined) {
@@ -93,6 +93,10 @@ $(function() {
 			reader.readAsText(e.target.files.item(0));
 		}
 		return false;
+	}
+	// Upload and parse Apple Health XML file, then send to sendActivityToServer
+	function uploadXMLFile(){
+		
 	}
 
 // AJAX/GET/POST CALLS
