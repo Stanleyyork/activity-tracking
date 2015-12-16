@@ -246,6 +246,7 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
             { 
                 $match : { 
                   user_id : userId,
+                  quantityA: {$nin: [null]},
                   activityLabel: {$nin: hiddenactivities }
                 }
             },
@@ -337,6 +338,7 @@ app.get('/api/user/:id/allactivitiesbyday', function (req, res){
       Activity.aggregate([
             {
               $match: { user_id : userId,
+                  quantityA: {$nin: [null]},
                   activityLabel: {$nin: hiddenactivities}
               }
             },
