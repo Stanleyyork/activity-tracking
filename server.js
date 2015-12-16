@@ -234,6 +234,7 @@ app.post('/api/fileupload', isAuthenticated, function (req, res){
 
 
 // GET - (API) Activity Count by Grouping
+// For: Average Per Week Graph
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
   var userId = req.params.id;
   var hiddenactivities = [];
@@ -246,13 +247,17 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
             { 
                 $match : { 
                   user_id : userId,
-                  quantityA: {$nin: [null]},
                   activityLabel: {$nin: hiddenactivities }
                 }
             },
             {
                 $group: {
-                    _id : { originalYear: "$originalYear", activityLabel: "$activityLabel" },
+                    _id : { originalDate: "$originalDate", originalYear: "$originalYear", activityLabel: "$activityLabel" }
+                }
+            },
+            {
+                $group: {
+                    _id : { originalYear: {originalYear: "$_id.originalYear"}, activityLabel: "$_id.activityLabel" },
                     count: {$sum: 1}
                 }
             }
@@ -328,6 +333,7 @@ app.get('/api/user/:id/activityperweek/:activity', function (req, res){
 });
 
 // GET - (API) List of all activities by day
+// For: Total habits achieved over time graph
 app.get('/api/user/:id/allactivitiesbyday', function (req, res){
   var userId = req.params.id;
   User.findOne({_id: userId}, function(err, foundUser){
@@ -338,7 +344,6 @@ app.get('/api/user/:id/allactivitiesbyday', function (req, res){
       Activity.aggregate([
             {
               $match: { user_id : userId,
-                  quantityA: {$nin: [null]},
                   activityLabel: {$nin: hiddenactivities}
               }
             },
