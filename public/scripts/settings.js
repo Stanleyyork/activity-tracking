@@ -80,7 +80,7 @@ $(function() {
 // LISTEN FOR FILE, THEN UPLOAD, PARSE AND SEND TO SERVER
 	// Listen for file upload, then pass to upload/parse file
 	$("#filename-body-csv").change(function(e) {
-		var ext = $("input#filename-body").val().split(".").pop().toLowerCase();
+		var ext = $("input#filename-body-csv").val().split(".").pop().toLowerCase();
 		uploadCSVFile(e, ext, function(){
 			console.log("finished, now sending to server...");
 			sendActivityToServer();

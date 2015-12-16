@@ -277,6 +277,7 @@ app.get('/api/user/:id/streaks', function (req, res){
       Activity.aggregate([
          { 
             $match : { user_id : userId,
+                    // measurementB: "streakInDays",
                     activityLabel: {$nin: hiddenactivities }
                      }
           },
