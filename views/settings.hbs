@@ -26,6 +26,7 @@
 		<span class="btn btn-primary btn-file" id="filename-span">
 	    	Browse & Upload<input type="file" name="filename" id="filename-body-csv">
 		</span> <span class="glyphicon glyphicon-hourglass hidden" id="spinning-cog-csv"></span>
+		<div class="counter" id="csv-undefined-counter"></div>
 		<p id="instructions-edit-profile">To upload your <b>Coach.me</b> data, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
     </div>
 
@@ -34,6 +35,7 @@
 		<span class="btn btn-primary btn-file" id="filename-span">
 	    	Browse & Upload<input type="file" name="filename" id="filename-body-xml">
 		</span> <span class="glyphicon glyphicon-hourglass hidden" id="spinning-cog-xml"></span>
+		<div class="counter" id="xml-undefined-counter"></div>
 		<p id="instructions-edit-profile">To upload your <b>Apple Health</b> data, open the Health App and head to 'Health data < All' and use the arrow on the upper right of the screen then choose export. Once you have the file, upload here.</p>
     </div>
 
@@ -51,13 +53,13 @@
 	<div class="thumbnail edit-profile">
 		<form method="POST" action="/edit-profile" id="edit-profile-form">
 			<div class="form-group">
-		    	<input type="text" name="username" class="form-control" placeholder={{user.username}} autofocus>
+		    	<input type="text" name="username" class="form-control" placeholder={{user.username}} >
 		  	</div>
 		  	<div class="form-group">
-		    	<input type="text" name="email" class="form-control" placeholder={{user.email}} autofocus>
+		    	<input type="text" name="email" class="form-control" placeholder={{user.email}} >
 		  	</div>
 		  	<div class="form-group">
-		    	<input type="text" name="coachMeProfileUrl" class="form-control" placeholder={{user.coachMeProfileUrl}} autofocus>
+		    	<input type="text" name="coachMeProfileUrl" class="form-control" placeholder={{user.coachMeProfileUrl}} >
 		  	</div>
 		  	<div class="form-group">
 		    	<input type="password" name="password" class="form-control" placeholder="Password">

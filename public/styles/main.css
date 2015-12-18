@@ -239,6 +239,10 @@ body {
     margin-bottom: 10px;
 }
 
+#undefined-counter {
+	font-style: italic;
+}
+
 .btn-file {
     position: relative;
     overflow: hidden;

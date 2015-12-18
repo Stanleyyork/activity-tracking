@@ -3,6 +3,10 @@ $(function() {
 	console.log("editprofile.js working");
 	var user_id = $('#username-header').attr("user-id");
 	var activityLabelsArray = [];
+	var xml_undefined_counter = 0;
+	var xml_total_count = 0;
+	var csv_undefined_counter = 0;
+	var csv_total_count = 0;
 	var hiddenValues = {};
 	var importObject = {};
 	var uploadbox = '';
@@ -92,6 +96,9 @@ $(function() {
 			var ext = $("input#filename-body-csv").val().split(".").pop().toLowerCase();
 			uploadCSVFile(e, ext, function(){
 				console.log("finished, now sending to server...");
+				var csv_defined_count = csv_total_count - csv_undefined_counter;
+				var csv_percent_complete = ((csv_defined_count / csv_total_count)*100).toFixed(0);
+				$('#csv-undefined-counter').append(csv_defined_count + "/" + csv_total_count + " (" + csv_percent_complete + "%) " + "Uploaded");
 				sendActivityToServer();
 			});
 		} else {
@@ -108,6 +115,9 @@ $(function() {
 		if(xml_q.substr(xml_q.length - 3) === "xml"){
 			uploadXMLFile(e, function(){
 				console.log("finished, now sending to server...");
+				var xml_defined_count = xml_total_count - xml_undefined_counter;
+				var xml_percent_complete = ((xml_defined_count / xml_total_count)*100).toFixed(0);
+				$('#xml-undefined-counter').append(xml_defined_count + "/" + xml_total_count + " (" + xml_percent_complete + "%) " + "Uploaded");
 				sendActivityToServer();
 			});
 		} else {
@@ -126,31 +136,45 @@ $(function() {
           var reader = new FileReader();
           reader.onload = (function(theFile) {
             return function(e) {
-            	var row_values = e.target.result.split("\n");
-				for(var i=4;i<row_values.length-2;i++) {
-				 	var cell = row_values[i].match(/(?:[^\s"]+|"[^"]*")+/g);
-					var data = {};
-					var date = cell[4].split('"')[1];
-					data.user_id = user_id;
-					data.activityPillar = "Physical Health";
-					data.activityCategory = 'Fitness';
-					data.activityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
-					data.originalActivityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
-					data.activitySource = "Apple";
-					data.originalId = null;
-					var datetype = new Date("'"+date.slice(0,4)+"'"+date.slice(4,6)+"'"+date.slice(6,8)+"'");
-					data.originalDate = datetype;
-					data.originalYear = date.slice(0,4);
-					data.originalMonth = date.slice(4,6);
-					data.originalDay = date.slice(6,8);
-					data.originalDayOfWeek = datetype.getDay();
-					data.occured = true;
-					data.measurementA = "Days";
-					data.quantityA = null;
-					data.measurementB = cell[3].split('"')[1];
-					data.quantityB = cell[6].split('"')[1];
-					data.link = "http://www.apple.com/ios/health"
-					importObject[i] = data;
+            	var firstIndex = e.target.result.indexOf("<Record");
+            	var string = e.target.result.substring(firstIndex);
+            	var lastIndexofRecord = string.lastIndexOf("<Record");
+            	var lastIndexofEndofRecord = string.indexOf(">",lastIndexofRecord+1);
+            	var text = string.slice(0,lastIndexofEndofRecord+1);
+            	var row_values = text.split("\n");
+            	xml_total_count = row_values.length;
+				for(var i=0;i<row_values.length;i++) {
+				 	var cell = row_values[i].split(/type=|unit=|startDate=|value=/g)//.match(/(?:[^\s"]+|"[^"]*")+/g);
+				 	if(typeof cell[1] === "undefined" || typeof cell[2] === "undefined" || typeof cell[3] === "undefined" || typeof cell[4] === "undefined"){
+				 		xml_undefined_counter += 1;
+				 	} else {
+					 	var cellActivity = cell[1].split(" ")[0].replace(/['"]+/g, '').replace("HKQuantityTypeIdentifier", "");
+					 	var cellUnit = cell[2].split(" ")[0].replace(/['"]+/g, '');
+					 	var cellDate = cell[3].split(" ")[0].replace(/['"]+/g, '').replace(/-/g,"").substring(0,8);
+					 	var cellValue = cell[4].split(" ")[0].replace(/['"]+/g, '').replace(/\/>/g, '');
+						var data = {};
+						var date = cell[4].split('"')[1];
+						data.user_id = user_id;
+						data.activityPillar = "Physical Health";
+						data.activityCategory = 'Fitness';
+						data.activityLabel = cellActivity;
+						data.originalActivityLabel = cellActivity;
+						data.activitySource = "Apple";
+						data.originalId = null;
+						var datetype = new Date("'"+cellDate.slice(0,4)+"'"+cellDate.slice(4,6)+"'"+cellDate.slice(6,8)+"'");
+						data.originalDate = datetype;
+						data.originalYear = cellDate.slice(0,4);
+						data.originalMonth = cellDate.slice(4,6);
+						data.originalDay = cellDate.slice(6,8);
+						data.originalDayOfWeek = datetype.getDay();
+						data.occured = true;
+						data.measurementA = "Days";
+						data.quantityA = null;
+						data.measurementB = cellUnit;
+						data.quantityB = cellValue;
+						data.link = "http://www.apple.com/ios/health";
+						importObject[i] = data;
+					}
 				}
 				callback();
             };
@@ -167,36 +191,41 @@ $(function() {
 			var reader = new FileReader();
 			reader.onload = function(e) {
 				var row_values = e.target.result.split("\n");
+				csv_total_count = row_values.length;
 				var header_values = row_values[0].split(",");
 				for(var i=1;i<row_values.length;i++) {
 					var cell = row_values[i].split(",");
-					var data = {};
-					var date = cell[2];
-					data.user_id = user_id;
-					data.activityLabel = cell[1];
-					data.originalActivityLabel = cell[1];
-					data.activityHabit = true;
-					data.activitySource = "Coach.me";
-					data.originalId = cell[0];
-					if(date !== undefined){
-						var datetype = new Date(date);
-						data.originalDate = datetype;
-						data.originalYear = date.slice(0,4);
-						data.originalMonth = date.slice(5,7);
-						data.originalDay = date.slice(8,10);
-						data.originalDayOfWeek = datetype.getDay();
+					if(typeof cell[1] === "undefined" || typeof cell[2] === "undefined" || typeof cell[3] === "undefined" || typeof cell[5] === "undefined"){
+				 		csv_undefined_counter += 1;
+				 	} else {
+						var data = {};
+						var date = cell[2];
+						data.user_id = user_id;
+						data.activityLabel = cell[1];
+						data.originalActivityLabel = cell[1];
+						data.activityHabit = true;
+						data.activitySource = "Coach.me";
+						data.originalId = cell[0];
+						if(date !== undefined){
+							var datetype = new Date(date);
+							data.originalDate = datetype;
+							data.originalYear = date.slice(0,4);
+							data.originalMonth = date.slice(5,7);
+							data.originalDay = date.slice(8,10);
+							data.originalDayOfWeek = datetype.getDay();
+						}
+						data.occured = true;
+						data.measurementA = "Days";
+						data.quantityA = 1;
+						data.measurementB = header_values[5];
+						data.quantityB = Number(cell[cell.length-4]);
+						if(cell[3] !== ''){
+							data.measurementC = header_values[3];
+							data.quantityC = cell[3];
+						}
+						data.link = cell[cell.length-1];
+						importObject[i] = data;
 					}
-					data.occured = true;
-					data.measurementA = "Days";
-					data.quantityA = 1;
-					data.measurementB = header_values[5];
-					data.quantityB = Number(cell[cell.length-4]);
-					if(cell[3] !== ''){
-						data.measurementC = header_values[3];
-						data.quantityC = cell[3];
-					}
-					data.link = cell[cell.length-1];
-					importObject[i] = data;
 				}
 				callback();
 			};
