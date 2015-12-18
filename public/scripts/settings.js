@@ -85,6 +85,7 @@ $(function() {
 // LISTEN FOR FILE, THEN UPLOAD, PARSE AND SEND TO SERVER
 	// Listen for CSV file upload, then pass to upload/parse file
 	$("#filename-body-csv").change(function(e) {
+		$('#spinning-cog-csv').removeClass("hidden");
 		console.log(e.target.value);
 		var csv_q = String(e.target.value);
 		if(csv_q.substr(csv_q.length - 3) === "csv"){
@@ -102,6 +103,7 @@ $(function() {
 
 	// Listen for XML file upload, then pass to upload/parse file
 	$("#filename-body-xml").change(function(e) {
+		$('#spinning-cog-xml').removeClass("hidden");
 		var xml_q = String(e.target.value);
 		if(xml_q.substr(xml_q.length - 3) === "xml"){
 			uploadXMLFile(e, function(){
@@ -213,6 +215,8 @@ $(function() {
 			success: function (response) {
 		        var box = '#upload-box-' + uploadbox;
 		        var boxcheck = '#complete-checkmark-'+uploadbox;
+		        $('#spinning-cog-csv').addClass("hidden");
+		        $('#spinning-cog-xml').addClass("hidden");
 		        $(boxcheck).removeClass("hidden");
 		        $(box).css('background-color', '#b2dba1');
 		    },
