@@ -17,7 +17,7 @@
 	{{> nav}}
 
 	<div class="thumbnail hidden" id="upload-thumbnail">
-		<p id="instructions">To upload your activities, go to the <a href="/settings" target="_blank">settings page</a>.</p>
+		<p id="instructions">To upload your activities, go to the <a href="/settings">settings page</a>.</p>
 
 		<div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
 	    </div>
@@ -32,10 +32,10 @@
 	    	</div><br>
 	    	<div class="category-body category-a">
 	    		<div class="catbody a">
-	    			<span class="glyphicon glyphicon-book icon-activity habit-color-blue" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-book icon-activity habit-color-blue" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/reading">Reading</a><br>
 	    			
-	    			<span class="glyphicon glyphicon-flash icon-activity habit-color-blue" data-toggle="tooltip" title="Daily Habit"></span></a>
+	    			<span class="glyphicon glyphicon-flash icon-activity habit-color-blue" data-toggle="tooltip" title="Includes Daily Habit"></span></a>
 	    			<a href="/{{user.username}}/category/creativity">Creativity</a><br>
 	    			
 	    			<span class="glyphicon glyphicon-pencil icon-activity"></span>
@@ -54,13 +54,13 @@
 	    	</div><br>
 	    	<div class="category-body category-b">
 	    		<div class="catbody b">
-	    			<span class="glyphicon glyphicon-apple icon-activity habit-color-green" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-apple icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/eating">Eating</a><br>
 
-	    			<span class="glyphicon glyphicon-forward icon-activity habit-color-green" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-forward icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/fitness">Fitness</a><br>
 
-	    			<span class="glyphicon glyphicon-bed icon-activity habit-color-green" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-bed icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/sleep">Sleep</a><br>
 
 	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
@@ -75,10 +75,10 @@
 	    	</div><br>
 	    	<div class="category-body category-c">
 	    		<div class="catbody c">
-	    			<span class="glyphicon glyphicon-heart icon-activity habit-color-yellow" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-heart icon-activity habit-color-yellow" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/gratitude">Gratitude</a><br>
 
-	    			<span class="glyphicon glyphicon-cloud icon-activity habit-color-yellow" data-toggle="tooltip" title="Daily Habit"></span>
+	    			<span class="glyphicon glyphicon-cloud icon-activity habit-color-yellow" data-toggle="tooltip" title="Includes Daily Habit"></span>
 	    			<a href="/{{user.username}}/category/snuggle">Snuggle</a><br>
 
 	    			<span class="glyphicon glyphicon-home icon-activity"></span>

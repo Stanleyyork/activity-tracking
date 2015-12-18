@@ -5,6 +5,7 @@ $(function() {
 	var activityLabelsArray = [];
 	var hiddenValues = {};
 	var importObject = {};
+	var uploadbox = '';
 	getActivityLabels(formatReceivedData);
 
 	// Get all activitiyLabels
@@ -22,8 +23,11 @@ $(function() {
 	}
 
 	function loadActivityLabelsOnPage(){
-		for(var x = 0; x<activityLabelsArray.length; x++){
- 			$('#activity-list-hidden-form').append('<input type="checkbox" name="vehicle-'+activityLabelsArray[x]+'" value="'+activityLabelsArray[x]+'">'+" "+activityLabelsArray[x]+'<br>');
+		if(activityLabelsArray.length > 0){
+			$('#activity-list-hidden-thumbnail').removeClass("hidden");
+			for(var x = 0; x<activityLabelsArray.length; x++){
+	 			$('#activity-list-hidden-form').append('<input type="checkbox" name="vehicle-'+activityLabelsArray[x]+'" value="'+activityLabelsArray[x]+'">'+" "+activityLabelsArray[x]+'<br>');
+	 		}
  		}
 	}
 
@@ -45,7 +49,8 @@ $(function() {
 			type: "DELETE",
 			url: '/api/user/'+user_id+'/activity/',
 			success: function (data) {
-		        console.log("Sent delete all bookmarks call to server.");
+				$('#delete-complete-checkmark').removeClass("hidden");
+				$('#delete-thumbnail').css('background-color', '#f2dede');
 		        callback();
 		    },
 		    error: function (error) {
@@ -78,26 +83,43 @@ $(function() {
 	}
 
 // LISTEN FOR FILE, THEN UPLOAD, PARSE AND SEND TO SERVER
-	// Listen for file upload, then pass to upload/parse file
+	// Listen for CSV file upload, then pass to upload/parse file
 	$("#filename-body-csv").change(function(e) {
-		var ext = $("input#filename-body-csv").val().split(".").pop().toLowerCase();
-		uploadCSVFile(e, ext, function(){
-			console.log("finished, now sending to server...");
-			sendActivityToServer();
-		});
+		console.log(e.target.value);
+		var csv_q = String(e.target.value);
+		if(csv_q.substr(csv_q.length - 3) === "csv"){
+			var ext = $("input#filename-body-csv").val().split(".").pop().toLowerCase();
+			uploadCSVFile(e, ext, function(){
+				console.log("finished, now sending to server...");
+				sendActivityToServer();
+			});
+		} else {
+			$('#danger-message-top').removeClass("hidden");
+			$('#danger-message-top').empty();
+			$('#danger-message-top').append("Incorrect file: not a CSV file.");
+		}
 	});
 
+	// Listen for XML file upload, then pass to upload/parse file
 	$("#filename-body-xml").change(function(e) {
-		uploadXMLFile(e, function(){
-			console.log("finished, now sending to server...");
-			sendActivityToServer();
-		});
+		var xml_q = String(e.target.value);
+		if(xml_q.substr(xml_q.length - 3) === "xml"){
+			uploadXMLFile(e, function(){
+				console.log("finished, now sending to server...");
+				sendActivityToServer();
+			});
+		} else {
+			$('#danger-message-top').removeClass("hidden");
+			$('#danger-message-top').empty();
+			$('#danger-message-top').append("Incorrect file: not an XML file.");
+		}
 	});
 
 	//$("#filename-body").change(uploadXMLFile);
 
 	function uploadXMLFile(e, callback) {
         var files = e.target.files;
+        uploadbox = 'xml';
         for (var i = 0, f; f = files[i]; i++) {
           var reader = new FileReader();
           reader.onload = (function(theFile) {
@@ -138,6 +160,7 @@ $(function() {
 	// Upload and parse file, then send to sendActivityToServer
 	function uploadCSVFile(e, ext, callback){
 		var ext = ext;
+		uploadbox = 'csv';
 		if (e.target.files !== undefined) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
@@ -187,8 +210,11 @@ $(function() {
 			url: '/api/fileupload',
 			data: JSON.stringify(importObject),
 			contentType: "application/json",
-			success: function (data) {
-		        console.log("Sent to server");
+			success: function (response) {
+		        var box = '#upload-box-' + uploadbox;
+		        var boxcheck = '#complete-checkmark-'+uploadbox;
+		        $(boxcheck).removeClass("hidden");
+		        $(box).css('background-color', '#b2dba1');
 		    },
 		    error: function (error) {
 		      console.error(error);

@@ -159,7 +159,7 @@ app.get('/:username/category/:categoryname', isAuthenticated, function (req, res
   var username = req.params.username;
   User.findOne({username: username}, function(err, foundUser){
     var categoryName = req.params.categoryname[0].toUpperCase() + req.params.categoryname.slice(1);
-    res.render('category', {user: foundUser, category: categoryName});
+    res.render('category', {user: foundUser, categoryName: categoryName});
   });
 });
 
@@ -236,6 +236,7 @@ app.post('/api/fileupload', isAuthenticated, function (req, res){
     User.findOne({_id: user_id}, function(err, foundUser){
       foundUser.activities = result.ops;
       foundUser.save();
+      res.json(true);
     });
   });
 

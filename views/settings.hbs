@@ -19,21 +19,25 @@
 	<h1>Settings</h1>
 	<div class="row" id="username-header" user-id={{user._id}}></div>
 
-	<div class="thumbnail edit-profile">
+	<div class="alert alert-danger hidden" role="alert" id="danger-message-top"></div>
+
+	<div class="thumbnail edit-profile" id="upload-box-csv">
+		<span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="complete-checkmark-csv"></span>
 		<span class="btn btn-primary btn-file" id="filename-span">
 	    	Browse & Upload<input type="file" name="filename" id="filename-body-csv">
 		</span>
 		<p id="instructions-edit-profile">To upload your <b>Coach.me</b> data, log into Coach.me and go to the bottom of <a href="https://www.coach.me/settings" target="_blank">this page</a> to download CSV. Then upload above.</p>
     </div>
 
-    <div class="thumbnail edit-profile">
+    <div class="thumbnail edit-profile"  id="upload-box-xml">
+    	<span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="complete-checkmark-xml"></span>
 		<span class="btn btn-primary btn-file" id="filename-span">
 	    	Browse & Upload<input type="file" name="filename" id="filename-body-xml">
 		</span>
 		<p id="instructions-edit-profile">To upload your <b>Apple Health</b> data, open the Health App and head to 'Health data < All' and use the arrow on the upper right of the screen then choose export. Once you have the file, upload here.</p>
     </div>
 
-	<div class="thumbnail edit-profile">
+	<div class="thumbnail edit-profile hidden" id="activity-list-hidden-thumbnail">
 		<form id="edit-profile-hidden-activities-form">
 			Select the Activities you'd like to hide:
 			<div class="form-group" id="activity-list-hidden-form">
@@ -64,7 +68,8 @@
 		</form>
 	</div>
 	
-	<div class="thumbnail edit-profile">
+	<div class="thumbnail edit-profile" id="delete-thumbnail">
+		<span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="delete-complete-checkmark"></span>
 		<input type="submit" class="btn btn-block btn-danger" id="delete-all-bookmarks" value="Delete All Bookmarks">
 	</div>
 	
