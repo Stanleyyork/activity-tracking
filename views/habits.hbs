@@ -19,7 +19,7 @@
   {{> nav}}
 
   <div class="thumbnail" id="activities-list">
-    <div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
+    <div class="headline" user-id={{user._id}} user-username={{user.username}} user-activity-count={{user.activities.length}}>
       {{user.activities.length}} daily achievements across
     </div>
     <script id="activities-template" type="text/x-handlebars-template"> 

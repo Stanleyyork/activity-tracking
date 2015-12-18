@@ -146,15 +146,15 @@ app.get('/settings', isAuthenticated, function (req, res){
 });
 
 // GET - List of all records for one activity
-app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res){
-  var userId = req.params.id;
-  User.findOne({_id: userId}, function(err, foundUser){
+app.get('/:username/activity/:activityname', isAuthenticated, function (req, res){
+  var username = req.params.username;
+  User.findOne({username: username}, function(err, foundUser){
     var activityName = req.params.activityname[0].toUpperCase() + req.params.activityname.slice(1);
     res.render('activity', {user: foundUser, activityName: activityName});
   });
 });
 
-// GET - page for subcategory
+// GET - page for category
 app.get('/:username/category/:categoryname', isAuthenticated, function (req, res){
   var username = req.params.username;
   User.findOne({username: username}, function(err, foundUser){
@@ -256,6 +256,7 @@ app.get('/api/user/:id/activitycountbygroup', function (req,res){
             { 
                 $match : { 
                   user_id : userId,
+                  activityHabit: true,
                   activityLabel: {$nin: hiddenactivities }
                 }
             },
@@ -293,6 +294,7 @@ app.get('/api/user/:id/streaks', function (req, res){
          { 
             $match : { user_id : userId,
                     measurementB: "Days in Streak",
+                    activityHabit: true,
                     activityLabel: {$nin: hiddenactivities }
                      }
           },
@@ -324,7 +326,9 @@ app.get('/api/user/:id/activityperweek/:activity', function (req, res){
   var activity = req.params.activity;
   Activity.aggregate([
         { 
-            $match : { user_id : userId, activityLabel: activity }
+            $match : { user_id : userId,
+              activityHabit: true,
+              activityLabel: activity }
         },
         {
             $group: {
@@ -353,6 +357,7 @@ app.get('/api/user/:id/allactivitiesbyday', function (req, res){
       Activity.aggregate([
             {
               $match: { user_id : userId,
+                  activityHabit: true,
                   activityLabel: {$nin: hiddenactivities}
               }
             },

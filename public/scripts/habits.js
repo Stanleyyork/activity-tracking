@@ -6,6 +6,7 @@ $(function() {
 	var source = $('#activities-template').html();
  	var template = Handlebars.compile(source);
  	var user_id = $('.headline').attr("user-id");
+ 	var username = $('.headline').attr("user-username");
  	var importObject = {};
  	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
 	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
@@ -220,7 +221,7 @@ $(function() {
  	function paginationLoad(){
  		var arr = $.unique(activityArray['All'].filter( Boolean ).sort());
  		for(var x = 0; x<arr.length; x++){
- 			$('#pagination-list').append('<li><a href="/user/'+user_id+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
+ 			$('#pagination-list').append('<li><a href="/'+username+'/activity/'+arr[x]+'">'+arr[x]+'</li>');
  		}
  	}
 
