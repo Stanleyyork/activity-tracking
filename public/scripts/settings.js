@@ -108,10 +108,10 @@ $(function() {
 					var data = {};
 					var date = cell[4].split('"')[1];
 					data.user_id = user_id;
-					data.activityCategory = "Fitness & Nutrition";
+					data.activityPillar = "Physical Health";
+					data.activityCategory = 'Fitness';
 					data.activityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
 					data.originalActivityLabel = cell[1].split('"')[1].replace("HKQuantityTypeIdentifier", "");
-					data.activityType = "Health";
 					data.activitySource = "Apple";
 					data.originalId = null;
 					var datetype = new Date("'"+date.slice(0,4)+"'"+date.slice(4,6)+"'"+date.slice(6,8)+"'");
@@ -150,7 +150,7 @@ $(function() {
 					data.user_id = user_id;
 					data.activityLabel = cell[1];
 					data.originalActivityLabel = cell[1];
-					data.activityType = "Habit";
+					data.activityHabit = true;
 					data.activitySource = "Coach.me";
 					data.originalId = cell[0];
 					if(date !== undefined){

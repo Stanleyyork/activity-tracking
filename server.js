@@ -154,6 +154,15 @@ app.get('/user/:id/activity/:activityname', isAuthenticated, function (req, res)
   });
 });
 
+// GET - page for subcategory
+app.get('/:username/category/:categoryname', isAuthenticated, function (req, res){
+  var username = req.params.username;
+  User.findOne({username: username}, function(err, foundUser){
+    var categoryName = req.params.categoryname[0].toUpperCase() + req.params.categoryname.slice(1);
+    res.render('category', {user: foundUser, category: categoryName});
+  });
+});
+
 // POST - Hidden Activities from Edit Profile
 app.post('/api/user/hiddenvalues', isAuthenticated, function (req, res){
   var user_id = req.user._id;
