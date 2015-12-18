@@ -136,12 +136,21 @@ app.get('/users', isAuthenticated, function (req, res){
   }
 });
 
-// GET - (API) All Users
+// GET - User Settings
 app.get('/settings', isAuthenticated, function (req, res){
   User.findOne({_id: req.user._id})
       .populate('activities')
           .exec(function(err, currentUser){
               res.render('settings', {user: currentUser});
+          });
+});
+
+// GET - User Data Structure Settings
+app.get('/settings/datastructure', isAuthenticated, function (req, res){
+  User.findOne({_id: req.user._id})
+      .populate('activities')
+          .exec(function(err, currentUser){
+              res.render('datastructure', {user: currentUser});
           });
 });
 
