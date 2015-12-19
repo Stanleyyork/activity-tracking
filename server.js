@@ -479,6 +479,18 @@ app.get('/api/user/:id/activitylabels', function (req, res){
         });
 });
 
+// GET - (API) List of all hidden activityLabels
+app.get('/api/user/:id/hiddenactivitylabels', function (req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      res.json(foundUser.hiddenActivities);
+    }
+  });
+});
+
 // GET - External (not logged in) view for users
 app.get('/:username', function (req, res){
   var username = req.params.username;

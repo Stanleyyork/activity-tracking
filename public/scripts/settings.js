@@ -3,6 +3,7 @@ $(function() {
 	console.log("editprofile.js working");
 	var user_id = $('#username-header').attr("user-id");
 	var activityLabelsArray = [];
+	var hiddenActivityLablesArray = [];
 	var xml_undefined_counter = 0;
 	var xml_total_count = 0;
 	var csv_undefined_counter = 0;
@@ -10,12 +11,21 @@ $(function() {
 	var hiddenValues = {};
 	var importObject = {};
 	var uploadbox = '';
+	getHiddenActivityLabels();
 	getActivityLabels(formatReceivedData);
 
 	// Get all activitiyLabels
 	function getActivityLabels(callback){
 		$.get('/api/user/' + user_id + '/activitylabels', function(data){
 			callback(data, loadActivityLabelsOnPage);
+		});
+	}
+
+	// Get all HIDDEN activitiyLabels
+	function getHiddenActivityLabels(){
+		$.get('/api/user/' + user_id + '/hiddenactivitylabels', function(data){
+			console.log(data);
+			hiddenActivityLablesArray = data;
 		});
 	}
 
@@ -30,7 +40,11 @@ $(function() {
 		if(activityLabelsArray.length > 0){
 			$('#activity-list-hidden-thumbnail').removeClass("hidden");
 			for(var x = 0; x<activityLabelsArray.length; x++){
-	 			$('#activity-list-hidden-form').append('<input type="checkbox" name="vehicle-'+activityLabelsArray[x]+'" value="'+activityLabelsArray[x]+'">'+" "+activityLabelsArray[x]+'<br>');
+				if(hiddenActivityLablesArray.indexOf(activityLabelsArray[x]) === -1){
+	 				$('#activity-list-hidden-form').append('<input type="checkbox" name="vehicle-'+activityLabelsArray[x]+'" value="'+activityLabelsArray[x]+'">'+" "+activityLabelsArray[x]+'<br>');
+	 			} else {
+	 				$('#activity-list-hidden-form').append('<input type="checkbox" name="vehicle-'+activityLabelsArray[x]+'" value="'+activityLabelsArray[x]+'" checked="checked">'+" "+activityLabelsArray[x]+'<br>');
+	 			}
 	 		}
  		}
 	}
