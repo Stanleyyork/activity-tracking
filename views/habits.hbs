@@ -18,6 +18,10 @@
 
   {{> nav}}
 
+  <div class="thumbnail hidden" id="upload-thumbnail">
+    <p id="instructions">To upload your activities, go to the <a href="/settings">settings page</a>.</p>
+  </div>
+
   <div class="thumbnail" id="activities-list">
     <div class="headline" user-id={{user._id}} user-username={{user.username}} user-activity-count={{user.activities.length}}>
       {{user.activities.length}} daily achievements across

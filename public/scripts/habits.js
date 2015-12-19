@@ -28,10 +28,14 @@ $(function() {
 
 // EVENT LISTENERS
 	// Determine which content to have based on whether data exists
+	$("div.hidden").removeClass("hidden");
  	if($('.headline').attr("user-activity-count") > 0){
  		$("#filter-tags").hide();
+ 		$('#upload-thumbnail').hide();
+ 		$("#instructions").hide();
  	} else {
  		$('#charts').hide();
+ 		$('#upload-thumbnail').show();
  		$("#activities-list").hide();
  		$("#filter-tags").hide();
  	}

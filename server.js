@@ -497,7 +497,7 @@ app.get('/:username', function (req, res){
   User.findOne({username: username})
       .populate('activities')
           .exec(function(err, singleUser){
-            if(singleUser === null){
+            if(singleUser === null || singleUser.activities.length < 1){
               res.redirect('/login');
             } else {
               res.render('index', {user: singleUser});
@@ -511,7 +511,7 @@ app.get('/:username/habits', function (req, res){
   User.findOne({username: username})
       .populate('activities')
           .exec(function(err, singleUser){
-            if(singleUser === null){
+            if(singleUser === null || singleUser.activities.length < 1){
               res.redirect('/login');
             } else {
               res.render('habits', {user: singleUser});
