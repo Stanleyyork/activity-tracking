@@ -11,8 +11,9 @@ $(function() {
 	var hiddenValues = {};
 	var importObject = {};
 	var uploadbox = '';
-	getHiddenActivityLabels();
-	getActivityLabels(formatReceivedData);
+	getHiddenActivityLabels(function(){
+		getActivityLabels(formatReceivedData);
+	});
 
 	// Get all activitiyLabels
 	function getActivityLabels(callback){
@@ -22,10 +23,11 @@ $(function() {
 	}
 
 	// Get all HIDDEN activitiyLabels
-	function getHiddenActivityLabels(){
+	function getHiddenActivityLabels(callback){
 		$.get('/api/user/' + user_id + '/hiddenactivitylabels', function(data){
 			console.log(data);
 			hiddenActivityLablesArray = data;
+			callback();
 		});
 	}
 
