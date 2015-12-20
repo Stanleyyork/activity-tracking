@@ -93,7 +93,7 @@ app.get('/login', function (req, res){
 
 // POST - User Login
 app.post('/login', passport.authenticate('local', {
-  successRedirect : '/index',
+  successRedirect : '/settings/datastructure',
   failureRedirect : '/login',
   failureFlash : true
 }));
@@ -153,6 +153,40 @@ app.get('/settings/datastructure', isAuthenticated, function (req, res){
               res.render('datastructure', {user: currentUser});
           });
 });
+
+app.get('/api/user/:id/datastructure', isAuthenticated, function (req, res){
+  var userId = req.params.id;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      Activity.aggregate([
+          { 
+              $match : { user_id : userId }
+          },
+          {
+              $group: {
+                  _id : { activityPillar: "$activityPillar", activityCategory: "$activityCategory", activityLabel: "$activityLabel" },
+                  activityPillar: { $first: "$activityPillar" },
+                  activityCategory: { $first: "$activityCategory" }
+              }
+          },
+         { $sort:{
+              activityPillar : 1, 
+              activityCategory: 1
+             }
+         }
+        ], function (err, result) {
+            if (err) {
+                next(err);
+            } else {
+                res.json(result);
+            }
+        });
+    }
+  });
+});
+
 
 // GET - List of all records for one activity
 app.get('/:username/activity/:activityname', isAuthenticated, function (req, res){

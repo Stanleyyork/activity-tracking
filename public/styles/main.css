@@ -284,6 +284,12 @@ body {
 	min-width: 400px;
 }
 
+.datastructure-form-class {
+	margin-left: 10px;
+	margin-bottom: 10px;
+	width: 250px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;
