@@ -20,19 +20,19 @@
 	<div class="row" id="username-header" user-id={{user._id}}></div>
 
 	<div class="row" id="data-structure-list">
-    <script id="datastructure-template" type="text/x-handlebars-template"> 
-    	<div class="thumbnail">
-        	\{{#each datastructure}}
-        		<form id="datastructure-form-\{{this}}">
-	        		\{{#each this}}
-					<input type="text" class="datastructure-form-class" value= "\{{this}}" >
-	        		\{{/each}}
-	        		<input type="submit" class="btn btn-primary">
-        		</form>
-      		\{{/each}}
-      	</div>
-    </script>
-  </div>
+	    <script id="datastructure-template" type="text/x-handlebars-template"> 
+	    	<div class="thumbnail">
+	        	\{{#each datastructure}}
+	        		<form id="datastructure-form">
+		        		\{{#each this}}
+							<input type="text" class="datastructure-form-class" data="\{{this}}" value="\{{this}}" >
+		        		\{{/each}}
+		        		<input type="submit" class="btn btn-primary">
+	        		</form>
+	      		\{{/each}}
+	      	</div>
+	    </script>
+  	</div>
 	
 	<!-- jquery -->
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>

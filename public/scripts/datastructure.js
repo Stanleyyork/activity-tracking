@@ -5,6 +5,7 @@ $(function() {
 	var template = Handlebars.compile(source);
 	var user_id = $('#username-header').attr("user-id");
 	var dataStructureObject = [];
+	var datastructureLabelObject = [];
 
 	getDataStructureActivity(formatReceivedDSData);
 
@@ -17,6 +18,7 @@ $(function() {
 	function formatReceivedDSData(data, callback){
 		for(var i = 0; i<data.length; i++){
 			dataStructureObject.push([data[i].activityPillar, data[i].activityCategory, data[i]._id.activityLabel]);
+			datastructureLabelObject.push(data[i]._id.activityLabel);
 		}
 		callback();
 	}
