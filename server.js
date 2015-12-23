@@ -206,9 +206,9 @@ app.post('/api/user/:id/datastructure/', function (req, res){
          { multi: true },
          function (err, result) {
             if (err) {
-                console.log(err);
+                res.json(err);
             } else {
-                console.log(result);
+                res.json(result);
             }
           }
       );

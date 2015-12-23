@@ -4,6 +4,7 @@ $(function() {
 	var source = $('#datastructure-template').html();
 	var template = Handlebars.compile(source);
 	var user_id = $('#username-header').attr("user-id");
+	var saveConfirmationLabel = '';
 	var dataStructureObject = [];
 	var datastructureLabelObject = [];
 
@@ -40,6 +41,7 @@ $(function() {
 			saveObject.activityCategory = value_object[1].value;
 			saveObject.activityLabel = value_object[2].value;
 			saveObject.originalActivityLabel = value_object[2].defaultValue;
+			saveConfirmationLabel  = value_object[2].defaultValue;
 			sendNewFormDataToServer(saveObject);
 		});
 	}
@@ -51,6 +53,10 @@ $(function() {
 			data: saveObject,
 			success: function (data) {
 				console.log("Saved");
+				console.log(data);
+				console.log(saveConfirmationLabel);
+				var selector = 'input:text[value="'+saveConfirmationLabel+'"]';
+				$(selector).closest('form').find(':submit').css('background-color', 'green');
 		    },
 		    error: function (error) {
 		      console.log("Not saved. Client-side error: ");
