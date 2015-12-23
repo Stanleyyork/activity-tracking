@@ -187,6 +187,35 @@ app.get('/api/user/:id/datastructure', isAuthenticated, function (req, res){
   });
 });
 
+// POST - Update pillar, category and activitylabel associated with originalactivitylabel
+app.post('/api/user/:id/datastructure/', function (req, res){
+  var data = req.body;
+  var userId = req.params.id;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      Activity.update(
+         { originalActivityLabel: data.originalActivityLabel },
+         { $set: {
+              activityPillar: data.activityPillar,
+              activityCategory: data.activityCategory,
+              activityLabel: data.activityLabel
+            }
+         },
+         { multi: true },
+         function (err, result) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(result);
+            }
+          }
+      );
+    }
+  });
+});
+
 
 // GET - List of all records for one activity
 app.get('/:username/activity/:activityname', isAuthenticated, function (req, res){
