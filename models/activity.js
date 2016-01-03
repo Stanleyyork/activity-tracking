@@ -14,6 +14,7 @@ var ActivitySchema = new Schema({
 	originalYear: Number,
 	originalMonth: Number,
 	originalDay: Number,
+	originalDayOfYear: Number,
 	orignalDayOfWeek: Number,
 	occured: Boolean,
 	measurementA: String,

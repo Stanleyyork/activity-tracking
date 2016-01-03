@@ -39,6 +39,14 @@
 		<p id="instructions-edit-profile">To upload your <b>Apple Health</b> data, open the Health App and head to 'Health data < All' and use the arrow on the upper right of the screen then choose export. Once you have the file, upload here.</p>
     </div>
 
+    <div class="thumbnail edit-profile"  id="upload-box-json">
+    	<span class="glyphicon glyphicon-ok hidden" aria-hidden="true" id="complete-checkmark-xml"></span>
+		<span class="btn btn-primary btn-file" id="filename-span">
+	    	Browse & Upload<input type="file" name="filename" id="filename-body-json">
+		</span> <span class="glyphicon glyphicon-hourglass hidden" id="spinning-cog-json"></span>
+		<div class="counter" id="json-undefined-counter"></div>
+    </div>
+
 	<div class="thumbnail edit-profile hidden" id="activity-list-hidden-thumbnail">
 		<form id="edit-profile-hidden-activities-form">
 			Select the Activities you'd like to hide:

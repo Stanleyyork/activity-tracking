@@ -8,6 +8,9 @@ $(function() {
 	var xml_total_count = 0;
 	var csv_undefined_counter = 0;
 	var csv_total_count = 0;
+	var json_defined_counter = 0;
+	var json_undefined_counter = 0;
+	var json_total_count = 0;
 	var hiddenValues = {};
 	var importObject = {};
 	var uploadbox = '';
@@ -143,7 +146,62 @@ $(function() {
 		}
 	});
 
-	//$("#filename-body").change(uploadXMLFile);
+	// Listen for JSON file upload, then pass to upload/parse file
+	$("#filename-body-json").change(function(e) {
+		$('#spinning-cog-json').removeClass("hidden");
+		var json_q = String(e.target.value);
+		if(json_q.substr(json_q.length - 4) === "json"){
+			uploadJSONFile(e, function(){
+				console.log("finished, now sending to server...");
+				var json_undefined_count = json_total_count - json_defined_counter;
+				var json_percent_complete = ((json_defined_counter / json_total_count)*100).toFixed(0);
+				$('#json-undefined-counter').append(json_defined_counter + "/" + json_total_count + " (" + json_percent_complete + "%) " + "Uploaded");
+				sendActivityToServer();
+			});
+		} else {
+			$('#danger-message-top').removeClass("hidden");
+			$('#danger-message-top').empty();
+			$('#danger-message-top').append("Incorrect file: not a JSON file.");
+		}
+	});
+
+	function uploadJSONFile(e, callback) {
+		var file = e.target.files[0];
+		uploadbox = 'json';
+		var reader = new FileReader();
+		reader.onload = function(event) {
+			var results = JSON.parse(event.target.result);
+			json_total_count = results['event'].length;
+			for(var i = 0; i < results['event'].length; i++){
+				console.log(i);
+				var data = {};
+				data.user_id = user_id;
+				data.activityPillar = "Cognitive Intelligence";
+				data.activityCategory = 'Curiosity';
+				data.activityLabel = "GoogleSearches";
+				data.originalActivityLabel = "GoogleSearches";
+				data.activitySource = "Google";
+				data.originalId = results['event'][i]['query']['id'][0]['timestamp_usec'];
+				var datetype = new Date(results['event'][i]['query']['id'][0]['timestamp_usec'] / 1000);
+				data.originalDate = datetype;
+				data.originalYear = String(datetype).split(" ")[3];
+				data.originalMonth = datetype.getMonth() + 1;
+				data.originalDay = String(datetype).split(" ")[1];
+				data.originalDayOfYear = Math.floor(((datetype) - (new Date(datetype.getFullYear(), 0, 0)))/(1000 * 60 * 60 * 24));
+				data.originalDayOfWeek = datetype.getDay();
+				data.occured = true;
+				data.measurementA = "Days";
+				data.quantityA = null;
+				data.measurementB = "Query";
+				data.quantityB = results['event'][i]['query']['query_text'];
+				data.link = "https://history.google.com/history/";
+				importObject[i] = data;
+				json_defined_counter += 1;
+			}
+			callback();
+		};
+		reader.readAsText(file);
+	}
 
 	function uploadXMLFile(e, callback) {
         var files = e.target.files;
@@ -182,6 +240,7 @@ $(function() {
 						data.originalYear = cellDate.slice(0,4);
 						data.originalMonth = cellDate.slice(4,6);
 						data.originalDay = cellDate.slice(6,8);
+						data.originalDayOfYear = Math.floor(((datetype) - (new Date(datetype.getFullYear(), 0, 0)))/(1000 * 60 * 60 * 24));
 						data.originalDayOfWeek = datetype.getDay();
 						data.occured = true;
 						data.measurementA = "Days";
@@ -228,6 +287,7 @@ $(function() {
 							data.originalYear = date.slice(0,4);
 							data.originalMonth = date.slice(5,7);
 							data.originalDay = date.slice(8,10);
+							data.originalDayOfYear = Math.floor(((datetype) - (new Date(datetype.getFullYear(), 0, 0)))/(1000 * 60 * 60 * 24));
 							data.originalDayOfWeek = datetype.getDay();
 						}
 						data.occured = true;
@@ -262,6 +322,7 @@ $(function() {
 		        var boxcheck = '#complete-checkmark-'+uploadbox;
 		        $('#spinning-cog-csv').addClass("hidden");
 		        $('#spinning-cog-xml').addClass("hidden");
+		        $('#spinning-cog-json').addClass("hidden");
 		        $(boxcheck).removeClass("hidden");
 		        $(box).css('background-color', '#b2dba1');
 		    },

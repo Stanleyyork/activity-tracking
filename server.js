@@ -93,7 +93,7 @@ app.get('/login', function (req, res){
 
 // POST - User Login
 app.post('/login', passport.authenticate('local', {
-  successRedirect : '/settings/datastructure',
+  successRedirect : '/settings',
   failureRedirect : '/login',
   failureFlash : true
 }));
@@ -488,7 +488,7 @@ app.get('/api/user/:id/:activity/byday', function (req, res){
   });
 });
 
-// GET - (API) List of single activities by month
+// GET - (API) List of single activities DAYS IN MONTH COUNT by month
 app.get('/api/user/:id/:activity/bymonth', function (req, res){
   var userId = req.params.id;
   var activity = req.params.activity;
@@ -500,16 +500,55 @@ app.get('/api/user/:id/:activity/bymonth', function (req, res){
             {
               $match: { user_id : userId, activityLabel: activity }
             },
-            { $group: {
-                _id : {originalMonth: "$originalMonth", originalYear: "$originalYear"},
+            {
+              $group: {
+                _id : { originalDayOfYear: "$originalDayOfYear", originalMonth: "$originalMonth", originalYear: "$originalYear", activityLabel: "$activityLabel" },
+                count: {$sum: 1}
+              }
+            },
+            { 
+              $group: {
+                _id : { originalMonth: "$_id.originalMonth", originalYear: "$_id.originalYear"},
+                year : { $first: "$_id.originalYear" },
+                month : { $first: "$_id.originalMonth" },
+                day : { $first: "$_id.originalDay" },
+                count: {$sum: 1}
+              }
+            },
+            { $sort:{year : 1, month: 1, day: 1}}
+            ], function (err, result) {
+              if (err) {
+                  next(err);
+              } else {
+                  res.json(result);
+              }
+            });
+    }
+  });
+});
+
+// GET - (API) List of single activity TOTAL COUNT by month
+app.get('/api/user/:id/:activity/bymonthtotal', function (req, res){
+  var userId = req.params.id;
+  var activity = req.params.activity;
+  User.findOne({_id: userId}, function(err, foundUser){
+    if(err){
+      console.log(err);
+    } else {
+      Activity.aggregate([
+            {
+              $match: { user_id : userId, activityLabel: activity }
+            },
+            {
+              $group: {
+                _id : { originalMonth: "$originalMonth", originalYear: "$originalYear", activityLabel: "$activityLabel" },
                 year : { $first: "$originalYear" },
                 month : { $first: "$originalMonth" },
                 day : { $first: "$originalDay" },
                 count: {$sum: 1}
               }
-
             },
-            { $sort:{year : 1, month: 1, day: 1}}
+             { $sort:{year : 1, month: 1, day: 1}}
             ], function (err, result) {
               if (err) {
                   next(err);
