@@ -1,6 +1,6 @@
 $(function() {
 
-	console.log("index.js working");
+	console.log("dashboard.js working");
 	
 // GLOBAL VARIABLES
  //     var source = $('#index-template').html();

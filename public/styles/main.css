@@ -49,6 +49,7 @@
 body {
 	margin-top: 75px;
 	margin-left: 25px;
+	margin-right: 10px;
 	color: #545454;
 	background-color: #fafafa;
 }
@@ -292,9 +293,8 @@ body {
 
 .thumbnail.stats {
 	margin-left: 15px;
-	width: 800px;
 	height: 250px;
-	margin-top: 20px;
+	margin-top: -15px;
 }
 
 .stats-header {
@@ -303,20 +303,20 @@ body {
 	font-weight: bold;
 	text-align: left;
 	vertical-align: middle;
-	height: 10%;
-	margin: -20px;
+	height: 5%;
 	padding: 0px;
 	border: none;
 	opacity: 0.75;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	display: inline-block;
-	margin-top: -40px;
+	margin-top: -52px;
 	margin-left: -10px;
 }
 
 .stats-header-content{
 	display: inline-block;
+	color: #696969;
 }
 
 .stats-header-content.icon{
@@ -380,14 +380,14 @@ body {
 .border{
 	border-bottom-style: solid;
 	border-bottom-color: #fafafa;
-	margin-top: 3px;
+	margin-top: -19px;
 	margin-left: -20px;
 	margin-right: -20px;
 }
 
 .stats-body {
 	margin-top: 5px;
-	height: 90%;
+	height: 95%;
 	font-size: 16px;
 	vertical-align: middle;
 }
@@ -399,6 +399,7 @@ body {
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;
+    	margin-right: 0px;
     }
     .navbar {
     	height: 40px;
@@ -411,5 +412,8 @@ body {
 	}
 	#account-button-pull {
 		text-align: center;
+	}
+	.thumbnail.stats {
+		margin-left: -6px;
 	}
 }
