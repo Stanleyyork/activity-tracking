@@ -290,6 +290,112 @@ body {
 	width: 250px;
 }
 
+.thumbnail.stats {
+	margin-left: 15px;
+	width: 800px;
+	height: 250px;
+	margin-top: 20px;
+}
+
+.stats-header {
+	color: black;
+	font-size: 15px;
+	font-weight: bold;
+	text-align: left;
+	vertical-align: middle;
+	height: 10%;
+	margin: -20px;
+	padding: 0px;
+	border: none;
+	opacity: 0.75;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	display: inline-block;
+	margin-top: -40px;
+	margin-left: -10px;
+}
+
+.stats-header-content{
+	display: inline-block;
+}
+
+.stats-header-content.icon{
+	width: 40px;
+	text-align: center;
+}
+
+.stats-header-content.pillars.reading{
+	background-color: #0080FF;
+	color: #0080FF;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 15px;
+	margin-top: -47px;
+}
+
+.stats-header-content.pillars.code{
+	background-color: #0080FF;
+	color: #0080FF;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 15px;
+}
+
+.stats-header-content.pillars.physical{
+	background-color: #0db40d;
+	color: #0db40d;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 15px;
+}
+
+.stats-header-content.pillars.habits.a{
+	background-color: #0080FF;
+	color: #0080FF;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: -12px;
+}
+
+.stats-header-content.pillars.habits.b{
+	background-color: #0db40d;
+	color: #0db40d;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: -12px;
+}
+
+.stats-header-content.pillars.habits.c{
+	background-color: #FF7F00;
+	color: #FF7F00;
+	width: 60px;
+	margin-left: 10px;
+	margin-right: 15px;
+}
+
+.stats-header-content.details{
+	margin-right: 10px;
+}
+
+.border{
+	border-bottom-style: solid;
+	border-bottom-color: #fafafa;
+	margin-top: 3px;
+	margin-left: -20px;
+	margin-right: -20px;
+}
+
+.stats-body {
+	margin-top: 5px;
+	height: 90%;
+	font-size: 16px;
+	vertical-align: middle;
+}
+
+.stats-body-content {
+	margin-top: 20px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;

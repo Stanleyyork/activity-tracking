@@ -104,7 +104,7 @@ app.get('/logout', function (req, res) {
   res.redirect('/login');
 });
 
-// GET - Index (Primary Dashboard View)
+// GET - Index (Primary View)
 app.get('/index', isAuthenticated, function (req, res){
   var userId = req.user.id;
   //var userId = "5660a6c810d090e34c47938f"
@@ -229,10 +229,12 @@ app.get('/:username/activity/:activityname', isAuthenticated, function (req, res
 // GET - page for category
 app.get('/:username/category/:categoryname', isAuthenticated, function (req, res){
   var username = req.params.username;
-  User.findOne({username: username}, function(err, foundUser){
-    var categoryName = req.params.categoryname[0].toUpperCase() + req.params.categoryname.slice(1);
-    res.render('category', {user: foundUser, categoryName: categoryName});
-  });
+  var categoryName = req.params.categoryname[0].toUpperCase() + req.params.categoryname.slice(1);
+  User.findOne({username: username})
+    .populate('activities')
+        .exec(function(err, foundUser){
+            res.render('category', {user: foundUser, categoryName: categoryName});
+        });
 });
 
 // POST - Hidden Activities from Edit Profile

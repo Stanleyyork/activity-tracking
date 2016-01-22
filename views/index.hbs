@@ -13,128 +13,121 @@
 	<title>Index</title>
 </head>
 <body>
+
+
+	<div class="current_stats">
+	    <div class="thumbnail stats">
+	    	<div class="stats-header reading">
+	    		<div class="stats-header-content icon reading">
+	    			<span class="glyphicon glyphicon-book"></span>
+	    		</div>
+	    		<div class="stats-header-content pillars reading">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content sources reading">
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    		</div>
+	    		<div class="stats-header-content details reading">
+	    			
+	    		</div>
+	    	</div>
+	    	<div class="border">
+	    	</div>
+	    	<br>
+	    	<div class="stats-body reading">
+	    		<div class="stats-body-content reading">
+
+	    		</div>
+	    	</div>
+	    </div>
+
+	    <div class="thumbnail stats">
+	    	<div class="stats-header code">
+	    		<div class="stats-header-content icon code">
+	    			< / >
+	    		</div>
+	    		<div class="stats-header-content pillars code">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content sources code">
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    		</div>
+	    		<div class="stats-header-content details code">
+	    			
+	    		</div>
+	    	</div>
+	    	<div class="border">
+	    	</div>
+	    	<br>
+	    	<div class="stats-body code">
+	    		<div class="stats-body-content code">
+
+	    		</div>
+	    	</div>
+	    </div>
+
+	    <div class="thumbnail stats">
+	    	<div class="stats-header physical">
+	    		<div class="stats-header-content icon physical">
+	    			<span class="glyphicon glyphicon-heart"></span>
+	    		</div>
+	    		<div class="stats-header-content pillars physical">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content sources physical">
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    		</div>
+	    		<div class="stats-header-content details physical">
+	    			
+	    		</div>
+	    	</div>
+	    	<div class="border">
+	    	</div>
+	    	<br>
+	    	<div class="stats-body physical">
+	    		<div class="stats-body-content physical">
+
+	    		</div>
+	    	</div>
+	    </div>
+
+	    <div class="thumbnail stats">
+	    	<div class="stats-header habits">
+	    		<div class="stats-header-content icon habits">
+	    			<span class="glyphicon glyphicon-calendar"></span>
+	    		</div>
+	    		<div class="stats-header-content pillars habits a">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content pillars habits b">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content pillars habits c">
+	    			Pillar
+	    		</div>
+	    		<div class="stats-header-content sources habits">
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    			<span class="glyphicon glyphicon-adjust"></span>
+	    		</div>
+	    		<div class="stats-header-content details habits">
+	    			
+	    		</div>
+	    	</div>
+	    	<div class="border">
+	    	</div>
+	    	<br>
+	    	<div class="stats-body habits">
+	    		<div class="stats-body-content habits">
+
+	    		</div>
+	    	</div>
+	    </div>
+	    
+    </div>
 	
-	{{> nav}}
-
-	<div class="thumbnail hidden" id="upload-thumbnail">
-		<p id="instructions">To upload your activities, go to the <a href="/settings">settings page</a>.</p>
-
-		<div class="headline" user-id={{user._id}} user-activity-count={{user.activities.length}}>
-	    </div>
-    </div>
-
-    <div class="categories">
-	    <div class="thumbnail index">
-	    	<div class="category-header category-a">
-	    		<div class="catheader a">
-	    			Cognitive Intelligence
-	    		</div>
-	    	</div><br>
-	    	<div class="category-body category-a">
-	    		<div class="catbody a">
-	    			<span class="glyphicon glyphicon-book icon-activity habit-color-blue" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/reading">Reading</a><br>
-	    			
-	    			<span class="glyphicon glyphicon-flash icon-activity habit-color-blue" data-toggle="tooltip" title="Includes Daily Habit"></span></a>
-	    			<a href="/{{user.username}}/category/creativity">Creativity</a><br>
-	    			
-	    			<span class="glyphicon glyphicon-pencil icon-activity"></span>
-	    			<a href="/{{user.username}}/category/code">Code</a><br>
-	    			
-	    			<span class="glyphicon glyphicon-sound-stereo icon-activity"></span>
-	    			<a href="/{{user.username}}/category/writing">Writing</a>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="thumbnail index">
-	    	<div class="category-header category-b">
-	    		<div class="catheader b">
-	    			Physical Health
-	    		</div>
-	    	</div><br>
-	    	<div class="category-body category-b">
-	    		<div class="catbody b">
-	    			<span class="glyphicon glyphicon-apple icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/eating">Eating</a><br>
-
-	    			<span class="glyphicon glyphicon-forward icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/fitness">Fitness</a><br>
-
-	    			<span class="glyphicon glyphicon-bed icon-activity habit-color-green" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/sleep">Sleep</a><br>
-
-	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="thumbnail index">
-	    <div class="category-header category-c">
-	    		<div class="catheader c">
-	    			Pyschological & Emotional
-	    		</div>
-	    	</div><br>
-	    	<div class="category-body category-c">
-	    		<div class="catbody c">
-	    			<span class="glyphicon glyphicon-heart icon-activity habit-color-yellow" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/gratitude">Gratitude</a><br>
-
-	    			<span class="glyphicon glyphicon-cloud icon-activity habit-color-yellow" data-toggle="tooltip" title="Includes Daily Habit"></span>
-	    			<a href="/{{user.username}}/category/snuggle">Snuggle</a><br>
-
-	    			<span class="glyphicon glyphicon-home icon-activity"></span>
-	    			<a href="/{{user.username}}/category/family">Family</a><br>
-
-	    			<span class="glyphicon glyphicon-tent icon-activity"></span>
-	    			<a href="/{{user.username}}/category/outdoors">Outdoors</a>
-	    		</div>
-	    	</div>
-	    	
-	    </div>
-	    <div class="thumbnail index">
-	    	<div class="category-header category-d">
-	    		<div class="catheader d">
-	    			Social
-	    		</div>
-	    	</div><br>
-	    	<div class="category-body category-d">
-	    		<div class="catbody d">
-	    			<span class="glyphicon glyphicon-envelope icon-activity"></span>
-	    			<a href="/{{user.username}}/category/email">Email</a><br>
-
-	    			<span class="glyphicon glyphicon-text-size icon-activity"></span>
-	    			<a href="/{{user.username}}/category/socialmedia">Tweets</a><br>
-	    			
-	    			<span class="glyphicon glyphicon-camera icon-blank"></span><br>
-	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
-	    		</div>
-	    	</div>
-	    </div>
-	    <div class="thumbnail index">
-	    	<div class="category-header category-e">
-	    		<div class="catheader e">
-	    			Travel
-	    		</div>
-	    	</div><br>
-	    	<div class="category-body category-e">
-	    		<div class="catbody e">
-	    			<span class="glyphicon glyphicon-plane icon-activity"></span>
-	    			<a href="/{{user.username}}/category/flights">Flights</a><br>
-	    			<span class="glyphicon glyphicon-road icon-activity"></span>
-	    			<a href="/{{user.username}}/category/auto">Auto</a><br>
-	    			<span class="glyphicon glyphicon-globe icon-activity"></span>
-	    			<a href="/{{user.username}}/category/geography">Geography</a><br>
-	    			
-	    			<span class="glyphicon glyphicon-camera icon-blank"></span>
-	    		</div>
-	    	</div>
-	    </div>
-    </div>
-
-    <div class="thumbnail hidden" id="category-details-drawer">
-    
-    </div>
-
-
 	<!-- plotly -->
 	<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->
