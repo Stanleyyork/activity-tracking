@@ -396,6 +396,17 @@ body {
 	margin-top: 20px;
 }
 
+.total_bookmarks {
+	margin-left: 20px;
+	font-size: 50px;
+}
+
+.total_bookmarks_copy {
+	font-size: 12px;
+	margin-top: -10px;
+	margin-left: 12px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 5px;

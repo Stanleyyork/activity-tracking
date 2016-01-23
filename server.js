@@ -93,7 +93,7 @@ app.get('/login', function (req, res){
 
 // POST - User Login
 app.post('/login', passport.authenticate('local', {
-  successRedirect : '/settings',
+  successRedirect : '/',
   failureRedirect : '/login',
   failureFlash : true
 }));

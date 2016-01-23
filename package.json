@@ -12,6 +12,7 @@
   "dependencies": {
     "body-parser": "^1.14.1",
     "chai": "^3.4.1",
+    "chart.js": "^1.0.2",
     "cookie-parser": "^1.4.0",
     "express": "^4.13.3",
     "express-flash": "0.0.2",
