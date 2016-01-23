@@ -325,9 +325,9 @@ body {
 }
 
 .stats-header-content.pillars.reading{
-	background-color: grey;
+	background-color: #0080FF;
 	text-align: center;
-	color: grey;
+	color: #0080FF;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: 15px;
@@ -341,9 +341,9 @@ body {
 }
 
 .stats-header-content.pillars.code{
-	background-color: grey;
+	background-color: #0080FF;
 	text-align: center;
-	color: grey;
+	color: #0080FF;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: 15px;
@@ -356,9 +356,9 @@ body {
 }
 
 .stats-header-content.pillars.physical{
-	background-color: grey;
+	background-color: #089308;
 	text-align: center;
-	color: grey;
+	color: #089308;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: 15px;
@@ -371,27 +371,27 @@ body {
 }
 
 .stats-header-content.pillars.habits.a{
-	background-color: grey;
+	background-color: #0080FF;
 	text-align: center;
-	color: grey;
+	color: #0080FF;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: -12px;
 }
 
 .stats-header-content.pillars.habits.b{
-	background-color: grey;
+	background-color: #089308;
 	text-align: center;
-	color: grey;
+	color: #089308;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: -12px;
 }
 
 .stats-header-content.pillars.habits.c{
-	background-color: grey;
+	background-color: #FF7F00;
 	text-align: center;
-	color: grey;
+	color: #FF7F00;
 	width: 85px;
 	margin-left: 10px;
 	margin-right: 15px;
@@ -439,8 +439,10 @@ body {
 }
 
 .total_bookmarks {
-	margin-left: 10px;
 	font-size: 65px;
+	color: #656565;
+	opacity: .8;
+	text-align: center;
 }
 
 .total_bookmarks_copy {
@@ -465,9 +467,39 @@ a { color: inherit; }
 	margin-right: 5px;
 }
 
+#myLineChart {
+	margin-top: -60px;
+}
+
 #mySleepPieChart {
-	margin-top: 40px;
-	margin-left: -10px
+	margin-top: 0px;
+	margin-left: -50px;
+}
+
+@media all and (max-width: 991px) { /* screen size until 500px */
+    body {
+    	margin-left: 5px;
+    	margin-right: 0px;
+    }
+	.thumbnail.stats {
+		height: 500px;
+		margin-right: -50px;
+	}
+	.stats-header-content {
+		display: inline-block;
+		margin-top: 6px;
+	}
+	.starred_articles {
+		text-align: center;
+	}
+	.col-sm-3.days_read_this_month {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	#mySleepPieChart {
+		margin-top: 0px;
+		margin-left: 0px;
+	}
 }
 
 @media all and (max-width: 500px) { /* screen size until 500px */
@@ -489,5 +521,21 @@ a { color: inherit; }
 	}
 	.thumbnail.stats {
 		margin-left: -6px;
+		height: 500px;
+	}
+	.stats-header-content {
+		display: inline-block;
+		margin-top: 6px;
+	}
+	.starred_articles {
+		text-align: center;
+	}
+	.col-sm-3.days_read_this_month {
+		margin-top: 10px;
+		margin-bottom: 10px;
+	}
+	#mySleepPieChart {
+		margin-top: 0px;
+		margin-left: 0px;
 	}
 }

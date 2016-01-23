@@ -36,8 +36,8 @@ $(function() {
 		var data = [
 		    {
 		        value: Number(this_month_days_count),
-		        color:"#3299ff",
-		        highlight: "#FF5A5E",
+		        color:"#FF5A5E",
+		        highlight: "#3299ff",
 		        label: "Days read this month"
 		    },
 		    {
@@ -128,7 +128,7 @@ $(function() {
 		var data = [
 		    {
 		        value: Number(sleepDays),
-		        color:"#089308",
+		        color:"#b04cb0",
 		        highlight: "#7ac57a",
 		        label: "Days slept > 7 hours last month"
 		    },
