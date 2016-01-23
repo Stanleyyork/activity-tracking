@@ -105,13 +105,24 @@ app.get('/logout', function (req, res) {
 });
 
 // GET - Index (Primary View)
-app.get('/index', isAuthenticated, function (req, res){
-  var userId = req.user.id;
-  //var userId = "5660a6c810d090e34c47938f"
+app.get('/index', function (req, res){
+  //var userId = req.user.id;
+  var userId = "5660a6c810d090e34c47938f"
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
               res.render('index', {user: singleUser});
+          });
+});
+
+// GET - Index (Dashboard View)
+app.get('/dashboard', function (req, res){
+  //var userId = req.user.id;
+  var userId = "5660a6c810d090e34c47938f"
+  User.findOne({_id: userId})
+      .populate('activities')
+          .exec(function(err, singleUser){
+              res.render('dashboard', {user: singleUser});
           });
 });
 
@@ -318,7 +329,7 @@ app.post('/api/fileupload', isAuthenticated, function (req, res){
 
 
 // GET - (API) Activity Count by Grouping
-// For: Average Per Week Graph
+// For: Average Per Week Graph (by Year)
 app.get('/api/user/:id/activitycountbygroup', function (req,res){
   var userId = req.params.id;
   var hiddenactivities = [];
@@ -474,7 +485,8 @@ app.get('/api/user/:id/:activity/byday', function (req, res){
                 year : { $first: "$originalYear" },
                 month : { $first: "$originalMonth" },
                 day : { $first: "$originalDay" },
-                count: {$sum: 1}
+                count: {$sum: 1},
+                stepCount: {$sum: "$quantityB"}
               }
 
             },
@@ -504,7 +516,7 @@ app.get('/api/user/:id/:activity/bymonth', function (req, res){
             },
             {
               $group: {
-                _id : { originalDayOfYear: "$originalDayOfYear", originalMonth: "$originalMonth", originalYear: "$originalYear", activityLabel: "$activityLabel" },
+                _id : { originalDayOfYear: "$originalDayOfYear", originalMonth: "$originalMonth", originalYear: "$originalYear", activityLabel: "$activityLabel", quantityB: "$quantityB" },
                 count: {$sum: 1}
               }
             },
@@ -514,7 +526,8 @@ app.get('/api/user/:id/:activity/bymonth', function (req, res){
                 year : { $first: "$_id.originalYear" },
                 month : { $first: "$_id.originalMonth" },
                 day : { $first: "$_id.originalDay" },
-                count: {$sum: 1}
+                count: {$sum: 1},
+                stepCount: {$sum: "$quantityB"}
               }
             },
             { $sort:{year : 1, month: 1, day: 1}}
@@ -547,7 +560,8 @@ app.get('/api/user/:id/:activity/bymonthtotal', function (req, res){
                 year : { $first: "$originalYear" },
                 month : { $first: "$originalMonth" },
                 day : { $first: "$originalDay" },
-                count: {$sum: 1}
+                count: {$sum: 1},
+                stepCount: {$sum: "$quantityB"}
               }
             },
              { $sort:{year : 1, month: 1, day: 1}}

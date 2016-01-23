@@ -18,19 +18,20 @@
 <body>
 
 
+	<div class="row" id="username-header" user-id={{user._id}}></div>
 	<div class="current_stats">
 		<div class="col-sm-9">
 		    <div class="thumbnail stats">
 		    	<div class="stats-header reading">
 		    		<div class="stats-header-content icon reading">
-		    			<span class="glyphicon glyphicon-book" data-toggle="tooltip" title="Reading"></span>
+		    			<span class="glyphicon glyphicon-book" data-toggle="tooltip" data-placement="bottom" title="Reading"></span>
 		    		</div>
-		    		<div class="stats-header-content pillars reading">
-		    			Pillar
+		    		<div class="stats-header-content pillars reading" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Cognitive
 		    		</div>
 		    		<div class="stats-header-content sources reading">
-		    			<span class="glyphicon glyphicon-adjust"></span>
-		    			<span class="glyphicon glyphicon-adjust"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: ClareLegere.com"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: Instapaper"></span>
 		    		</div>
 		    		<div class="stats-header-content details reading">
 		    			
@@ -42,12 +43,27 @@
 		    	<div class="stats-body reading">
 		    		<div class="stats-body-content reading">
 		    			<div class="col-xs-3 total_bookmarks_col">
+		    				
 							<div class="total_bookmarks"></div>
-							<div class="total_bookmarks_copy">stores read since 2010</div>
+							<div class="total_bookmarks_copy">stories read since 2010, averaging 34 per week, and the equivalent of </div>
 						</div>
 						<div class="col-xs-3 days_read_this_month">
-						<canvas id="myChart" width="125" height="125"></canvas>
-							<div id="this_month_days_count_chart"></div>
+							<canvas id="myPieChart" width="200" height="125">
+								<div id="this_month_days_count_chart"></div>
+							</canvas>
+						</div>
+						<div class="col-xs-6 starred_articles">
+							
+							<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span><div class="starred_articles" id="starred_articles-1"></div>
+							<br>
+
+							<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span><div class="starred_articles" id="starred_articles-2"></div>
+							<br>
+
+							<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span><div class="starred_articles" id="starred_articles-3"></div>
+							<br><br>
+							<div class="reading_streak"></div>
+
 						</div>
 		    		</div>
 		    	</div>
@@ -58,14 +74,14 @@
 		    <div class="thumbnail stats">
 		    	<div class="stats-header code">
 		    		<div class="stats-header-content icon code">
-		    			<div class="hello" data-toggle="tooltip" title="Software Development">< / ></div>
+		    			<div class="hello" data-toggle="tooltip" data-placement="bottom" title="Software Development">< / ></div>
 		    		</div>
-		    		<div class="stats-header-content pillars code">
-		    			Pillar
+		    		<div class="stats-header-content pillars code" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Cognitive
 		    		</div>
 		    		<div class="stats-header-content sources code">
-		    			<span class="glyphicon glyphicon-adjust"></span>
-		    			<span class="glyphicon glyphicon-adjust"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: GitHub"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: RescueTime"></span>
 		    		</div>
 		    		<div class="stats-header-content details code">
 		    			
@@ -86,17 +102,28 @@
 		    <div class="thumbnail stats">
 		    	<div class="stats-header physical">
 		    		<div class="stats-header-content icon physical">
-		    			<span class="glyphicon glyphicon-heart" data-toggle="tooltip" title="Physical Fitness"></span>
+		    			<span class="glyphicon glyphicon-heart" data-toggle="tooltip" data-placement="bottom" title="Physical Fitness"></span>
 		    		</div>
-		    		<div class="stats-header-content pillars physical">
-		    			Pillar
+		    		<div class="stats-header-content pillars physical" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Physical
 		    		</div>
 		    		<div class="stats-header-content sources physical">
-		    			<span class="glyphicon glyphicon-adjust"></span>
-		    			<span class="glyphicon glyphicon-adjust"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: Apple Health"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: Coach.me"></span>
 		    		</div>
 		    		<div class="stats-header-content details physical">
-		    			
+		    		<div class="container">
+		    			<div class="col-xs-7">
+			    			<canvas id="myLineChart" width="550" height="200">
+								<div id="StepCountChart"></div>
+							</canvas>
+						</div>
+						<div class="col-xs-3">
+							<canvas id="mySleepPieChart" width="275" height="150">
+								<div id="this_month_sleep_days_count_chart"></div>
+							</canvas>
+						</div>
+					</div>
 		    		</div>
 		    	</div>
 		    	<div class="border">
@@ -104,7 +131,7 @@
 		    	<br>
 		    	<div class="stats-body physical">
 		    		<div class="stats-body-content physical">
-
+						
 		    		</div>
 		    	</div>
 		    </div>
@@ -114,19 +141,19 @@
 		    <div class="thumbnail stats">
 		    	<div class="stats-header habits">
 		    		<div class="stats-header-content icon habits">
-		    			<span class="glyphicon glyphicon-calendar" data-toggle="tooltip" title="Daily Habits"></span>
+		    			<span class="glyphicon glyphicon-calendar" data-toggle="tooltip" data-placement="bottom" title="Daily Habits"></span>
 		    		</div>
-		    		<div class="stats-header-content pillars habits a">
-		    			Pillar
+		    		<div class="stats-header-content pillars habits a" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Cognitive
 		    		</div>
-		    		<div class="stats-header-content pillars habits b">
-		    			Pillar
+		    		<div class="stats-header-content pillars habits b" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Physical
 		    		</div>
-		    		<div class="stats-header-content pillars habits c">
-		    			Pillar
+		    		<div class="stats-header-content pillars habits c" data-toggle="tooltip" data-placement="bottom" title="Life Pillars: Cognitive Intelligence, Physical Health, Psychological & Emotional, Social, Travel">
+		    			Psychology
 		    		</div>
 		    		<div class="stats-header-content sources habits">
-		    			<span class="glyphicon glyphicon-adjust"></span>
+		    			<span class="glyphicon glyphicon-adjust" data-toggle="tooltip" data-placement="bottom" title="Data Source: Coach.me"></span>
 		    		</div>
 		    		<div class="stats-header-content details habits">
 		    			
@@ -144,7 +171,7 @@
 	    </div>
 	    
     </div>
-	
+
 	<!-- plotly -->
 	<script type="text/javascript" src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<!-- jquery -->

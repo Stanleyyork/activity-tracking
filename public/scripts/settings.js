@@ -246,7 +246,7 @@ $(function() {
 						data.measurementA = "Days";
 						data.quantityA = null;
 						data.measurementB = cellUnit;
-						data.quantityB = cellValue;
+						data.quantityB = parseInt(cellValue);
 						data.link = "http://www.apple.com/ios/health";
 						importObject[i] = data;
 					}
