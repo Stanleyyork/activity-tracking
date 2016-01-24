@@ -552,7 +552,7 @@ app.get('/api/user/:id/:activity/bymonthtotal', function (req, res){
     } else {
       Activity.aggregate([
             {
-              $match: { user_id : userId, activityLabel: activity }
+              $match: { $or: [{user_id : userId, activityLabel: activity, originalYear: '2015'},{user_id : userId, activityLabel: activity, originalYear: '2016'}] }
             },
             {
               $group: {

@@ -306,6 +306,10 @@ body {
 	padding-left: 60px;
 }
 
+.glyphicon.icon {
+	color: #078c07;
+}
+
 #github-logo {
 	margin-left: -3px;
 }
@@ -396,10 +400,6 @@ a { color: inherit; }
 
 #myPieChart {
 	margin-top: 10px;
-}
-
-#myLineChart {
-	margin-top: -60px;
 }
 
 #mySleepPieChart {
