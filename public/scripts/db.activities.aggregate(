@@ -1,0 +1,11 @@
+db.activities.aggregate(
+   [
+     {
+       $group:
+         {
+           _id: "$item",
+           average: { $avg: "$quantityB" }
+         }
+     }
+   ]
+)

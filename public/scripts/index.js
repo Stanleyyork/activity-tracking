@@ -36,8 +36,8 @@ $(function() {
 		var data = [
 		    {
 		        value: Number(this_month_days_count),
-		        color:"#FF5A5E",
-		        highlight: "#3299ff",
+		        color:"#3299ff",
+		        highlight: "#ef3f6e",
 		        label: "Days read this month"
 		    },
 		    {
@@ -80,9 +80,9 @@ $(function() {
 		    datasets: [
 		        {
 		            label: "Step Count",
-		            fillColor: "#e6f4e6",
-		            strokeColor: "#089308",
-		            pointColor: "#089308",
+		            fillColor: "#3299ff",
+		            strokeColor: "#3299ff",
+		            pointColor: "#ef3f6e",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
 		            pointHighlightStroke: "rgba(220,220,220,1)",
@@ -99,7 +99,7 @@ $(function() {
 		};
 
 		var ctx = $("#myLineChart").get(0).getContext("2d");
-		var myLineChart = new Chart(ctx).Line(data, options);
+		var myLineChart = new Chart(ctx).Bar(data, options);
 		$('#StepCountChart').append(myLineChart);
 	}
 
@@ -128,15 +128,15 @@ $(function() {
 		var data = [
 		    {
 		        value: Number(sleepDays),
-		        color:"#b04cb0",
-		        highlight: "#7ac57a",
-		        label: "Days slept > 7 hours last month"
+		        color:"#fbc83e",
+		        highlight: "#ef3f6e",
+		        label: "> 7 hours"
 		    },
 		    {
 		        value: (31-Number(sleepDays)),
 		        color: "rgba(220,220,220,1)",
 		        highlight: "#5AD3D1",
-		        label: "Days slept < 7 hours last month"
+		        label: "< 7 hours"
 		    }
 		];
 
