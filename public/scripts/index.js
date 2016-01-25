@@ -13,7 +13,7 @@ $(function() {
 
 	// COGNITIVE INTELLIGENCE - READING
 	function clareLegereData(){
-		$.get('http://www.clarelegere.com/api/summary', function(data){
+		$.get('https://www.clarelegere.com/api/summary', function(data){
 			var total_bookmarks = data.total_bookmarks;
 			var streak = data.consecutive_days_read;
 			var this_month_article_count = data.this_month_article_count;
