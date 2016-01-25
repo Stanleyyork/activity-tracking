@@ -12,7 +12,8 @@ var express = require('express'),
     session = require('express-session'),
     flash = require('express-flash'),
     passport = require('passport'),
-    LocalStrategy = require('passport-local').Strategy;
+    LocalStrategy = require('passport-local').Strategy,
+    http = require("http");
 
 mongoose.connect(
   process.env.MONGOLAB_URI ||
