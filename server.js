@@ -13,6 +13,7 @@ var express = require('express'),
     flash = require('express-flash'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
+    https = require('https'),
     http = require("http");
 
 mongoose.connect(
@@ -87,6 +88,12 @@ app.get('/', function (req, res) {
 //   res.render('postregister');
 // });
 
+app.get('/api/cl', function (req, res){
+  http.get('http://clarelegere.com/api/summary', function(data){
+    res.json(data);
+  });
+});
+
 // GET - User Login
 app.get('/login', function (req, res){
     res.render('login', { errorMessage: req.flash('error') });
@@ -107,8 +114,8 @@ app.get('/logout', function (req, res) {
 
 // GET - Index (Primary View)
 app.get('/index', function (req, res){
-  var userId = req.user.id;
-  //var userId = "5660a6c810d090e34c47938f"
+  //var userId = req.user.id;
+  var userId = "5660a6c810d090e34c47938f"
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
@@ -118,8 +125,8 @@ app.get('/index', function (req, res){
 
 // GET - Index (Dashboard View)
 app.get('/dashboard', function (req, res){
-  var userId = req.user.id;
-  //var userId = "5660a6c810d090e34c47938f"
+  //var userId = req.user.id;
+  var userId = "5660a6c810d090e34c47938f"
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){

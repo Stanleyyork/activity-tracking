@@ -13,7 +13,7 @@ $(function() {
 
 	// COGNITIVE INTELLIGENCE - READING
 	function clareLegereData(){
-		$.get('http://www.clarelegere.com/api/summary', function(data){
+		$.get('https://www.clarelegere.com/api/summary', function(data){
 			console.log("CL");
 			console.log(data);
 			var total_bookmarks = data.total_bookmarks;
@@ -59,8 +59,6 @@ $(function() {
 	function getStepCountData() {
 		$.get('/api/user/'+user_id+'/StepCount/bymonthtotal', function(data){
 			formatStepCountData(data, function(stepCountArray_x, stepCountArray_y){
-				console.log("inside abc");
-				console.log(stepCountArray_x);
 				graphStepCountData(stepCountArray_x, stepCountArray_y);
 			});
 		});
@@ -70,8 +68,6 @@ $(function() {
 		var stepCountArray_x = [];
 		var stepCountArray_y = [];
 		for(var i = 0; i < data.length; i++){
-			console.log("stepcount iteration");
-			console.log(data[i]);
 			stepCountArray_y.push(data[i]['year'] + "/" + data[i]['month']);
 			stepCountArray_x.push(data[i]['stepCount']);
 		}
@@ -112,8 +108,6 @@ $(function() {
 	// PHYSICAL HEALTH - SLEEP
 	function getSleepCountData() {
 		$.get('/api/user/'+user_id+'/Sleep%20at%20least%207%20hours/bymonth', function(data){
-			console.log("sleep data:");
-			console.log(data);
 			formatSleepCountData(data, function(sleepDays){
 				graphDaysSlept7HoursPieChart(sleepDays);
 			});
@@ -132,8 +126,6 @@ $(function() {
 	}
 
 	function graphDaysSlept7HoursPieChart(sleepDays) {
-		console.log("sleep graph:");
-		console.log(sleepDays);
 		var data = [
 		    {
 		        value: Number(sleepDays),
