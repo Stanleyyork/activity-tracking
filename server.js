@@ -89,9 +89,7 @@ app.get('/', function (req, res) {
 // });
 
 app.get('/api/cl', function (req, res){
-  http.get('http://clarelegere.com/api/summary', function(data){
-    res.json(data);
-  });
+  
 });
 
 // GET - User Login
@@ -400,7 +398,7 @@ app.get('/api/user/:id/streaks', function (req, res){
              },
          },
          { $sort:{
-              streakInDays : 1
+              streakInDays : -1
              }
          }
        ], function (err, result) {
@@ -548,6 +546,48 @@ app.get('/api/user/:id/:activity/bymonth', function (req, res){
             });
     }
   });
+});
+
+// GET - (API) List of all activities count (day) last month
+app.get('/api/user/:id/alldailyhabits', function (req, res){
+  var userId = req.params.id;
+    var hiddenactivities = [];
+    User.findOne({_id: userId}, function(err, foundUser){
+      if(err){
+        console.log(err);
+      } else {
+        hiddenactivities = foundUser.hiddenActivities;
+        Activity.aggregate([
+              { 
+                  $match : { 
+                    user_id : userId,
+                    activityHabit: true,
+                    originalYear: '2015',
+                    originalMonth: '12',
+                    activityLabel: {$nin: hiddenactivities }
+                  }
+              },
+              {
+                  $group: {
+                      _id : { originalDate: "$originalDate", originalYear: "$originalYear", activityLabel: "$activityLabel" }
+                  }
+              },
+              {
+                  $group: {
+                      _id : { originalYear: {originalYear: "$_id.originalYear"}, activityLabel: "$_id.activityLabel" },
+                      count: {$sum: 1}
+                  }
+              }
+          ], function (err, result) {
+              if (err) {
+                  next(err);
+              } else {
+                  res.json(result);
+              }
+          });
+      }
+  });
+
 });
 
 // GET - (API) List of single activity TOTAL COUNT by month

@@ -5,6 +5,8 @@ $(function() {
 	clareLegereData();
 	getStepCountData();
 	getSleepCountData();
+	getDailyHabitsData();
+	getDailyHabitsStreakData();
 
  	// Tooltip (to show daily habits)
  	$('[data-toggle="tooltip"]').tooltip();
@@ -100,9 +102,9 @@ $(function() {
 			showScale: false
 		};
 
-		var ctx = $("#myLineChart").get(0).getContext("2d");
-		var myLineChart = new Chart(ctx).Bar(data, options);
-		$('#StepCountChart').append(myLineChart);
+		var ctx = $("#myStepLineChart").get(0).getContext("2d");
+		var myStepLineChart = new Chart(ctx).Bar(data, options);
+		$('#StepCountChart').append(myStepLineChart);
 	}
 
 	// PHYSICAL HEALTH - SLEEP
@@ -117,8 +119,6 @@ $(function() {
 	function formatSleepCountData(data, callback) {
 		for(var i = 0; i < data.length; i++){
 			if(data[i]['month'] === '12' && data[i]['year'] === '2015'){
-				console.log("sleep iteration:");
-				console.log(data[i]);
 				var sleepDays = data[i]['count'];
 			}
 		}
@@ -144,6 +144,66 @@ $(function() {
 		var ctx = $("#mySleepPieChart").get(0).getContext("2d");
 		var mySleepPieChart = new Chart(ctx).Doughnut(data);
 		$('#this_month_sleep_days_count_chart').append(mySleepPieChart);
+	}
+
+	// DAILY HABITS - STREAKS
+	function getDailyHabitsStreakData() {
+		$.get('/api/user/'+user_id+'/streaks', function(data){
+			console.log(data);
+			for(var i = 0; i<7; i++){
+				$('#streaks-list').append(data[i]._id + ": " + data[i].streakInDays + "<br>");
+			}
+		});
+	}
+
+	// DAILY HABITS - LAST MONTH
+	function getDailyHabitsData() {
+		$.get('/api/user/'+user_id+'/alldailyhabits', function(data){
+			formatDailyHabitsData(data, function(habitArray, habitDaysArray){
+				graphDailyHabitsChart(habitArray, habitDaysArray);
+			});
+		});
+	}
+
+	function formatDailyHabitsData(data, callback) {
+		habitArray = [];
+		habitDaysArray = [];
+		for(var i = 0; i < data.length; i++){
+			habitArray.push(data[i]._id.activityLabel);
+			habitDaysArray.push(data[i].count);
+		}
+		callback(habitArray, habitDaysArray);
+	}
+
+	function graphDailyHabitsChart(habitArray, habitDaysArray) {
+		
+		var data = {
+		    labels: habitArray,
+		    datasets: [
+		        {
+		            label: "Step Count",
+		            fillColor: "#add6ff",
+		            strokeColor: "#3299ff",
+		            pointColor: "#e5e5e5",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(220,220,220,1)",
+		            data: habitDaysArray
+		        }
+		    ]
+		};
+
+		var options = {
+			scaleShowGridLines : false,
+			scaleShowHorizontalLines: false,
+			scaleShowVerticalLines: false,
+			scaleShowLabels: true,
+			showScale: true
+		};
+
+		var ctx = $("#myDailyHabitsLineChart").get(0).getContext("2d");
+		var myDailyHabitsLineChart = new Chart(ctx).Radar(data, options);
+		$('#DailyHabitsChart').append(myDailyHabitsLineChart);
 	}
 
 });
