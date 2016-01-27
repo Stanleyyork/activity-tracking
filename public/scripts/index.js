@@ -31,7 +31,7 @@ $(function() {
 			$('#starred_articles-2').append("<a href='"+starred_bookmarks[1]['url']+"' target='_blank'>"+starred_bookmarks[1]['title']+"</a>");
 			$('#starred_articles-3').append("<a href='"+starred_bookmarks[2]['url']+"' target='_blank'>"+starred_bookmarks[2]['title']+"</a>");
 			if(streak > 0){
-				$('.reading_streak').append("Stanley has read " + this_month_article_count + " stories this month and is on a <a href='http://clarelegere.com/profiles/1/dailychallenge' target='_blank'>" + streak + "-day</a> reading streak.");
+				$('.reading_streak').append("Stanley has read " + this_month_article_count + " stories this month and is on a <a href='http://clarelegere.com/profiles/1/dailychallenge' id='streak_url' target='_blank'>" + streak + "-day</a> reading streak.");
 			}
 		});
 	}
@@ -149,11 +149,50 @@ $(function() {
 	// DAILY HABITS - STREAKS
 	function getDailyHabitsStreakData() {
 		$.get('/api/user/'+user_id+'/streaks', function(data){
-			console.log(data);
-			for(var i = 0; i<7; i++){
-				$('#streaks-list').append(data[i]._id + ": " + data[i].streakInDays + "<br>");
-			}
+			formatStreakData(data, function(streakActivityData, streakCountData){
+				graphStreakData(streakActivityData, streakCountData)
+			});
 		});
+	}
+
+	function formatStreakData(data, callback) {
+		streakActivityData = [];
+		streakCountData = [];
+		for(var i = 0; i < data.length; i++){
+			streakCountData.push(data[i].streakInDays);
+			streakActivityData.push(data[i]._id);
+		}
+		callback(streakActivityData, streakCountData);
+	}
+
+	function graphStreakData(streakActivityData, streakCountData) {
+		
+		var data = {
+		    labels: streakActivityData,
+		    datasets: [
+		        {
+		            label: "Step Count",
+		            fillColor: "#fbc83e",
+		            strokeColor: "#fbc83e",
+		            pointColor: "#ef3f6e",
+		            pointStrokeColor: "#fff",
+		            pointHighlightFill: "#fff",
+		            pointHighlightStroke: "rgba(220,220,220,1)",
+		            data: streakCountData
+		        }
+		    ]
+		};
+
+		var options = {
+			scaleShowGridLines : false,
+			scaleShowHorizontalLines: false,
+			scaleShowVerticalLines: false,
+			showScale: true
+		};
+
+		var ctx = $("#myStreakLineChart").get(0).getContext("2d");
+		var myStreakLineChart = new Chart(ctx).Bar(data, options);
+		$('#streakChart').append(myStreakLineChart);
 	}
 
 	// DAILY HABITS - LAST MONTH

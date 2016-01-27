@@ -373,20 +373,39 @@ body {
 
 .total_bookmarks {
 	font-size: 65px;
-	color: #656565;
+	margin-top: 20px;
 	opacity: .8;
 	text-align: center;
 }
 
 .total_bookmarks_copy {
 	font-size: 12px;
+	font-weight: bold;
 	text-align: center;
+}
+
+.col-md-3.days_read_this_month {
+	margin-top: 25px;
+}
+
+.all_starred_artiles {
+	margin-top: 25px;
 }
 
 .starred_articles {
 	font-size: 14px;
+	font-weight: bold;
 	display: inline-block;
 	margin-top: 5px
+}
+
+.reading_streak {
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#streak_url {
+	color: #fbc83e;
 }
 
 a { color: inherit; }
@@ -410,12 +429,14 @@ a { color: inherit; }
 }
 
 #average_step_copy {
-	font-size: 12px;
+	font-size: 14px;
+	font-weight: bold;
 	text-align: center;
 }
 
 #nights_slept_copy {
-	font-size: 12px;
+	font-size: 14px;
+	font-weight: bold;
 	text-align: center;
 	margin-left: -25px;
 }
@@ -425,7 +446,21 @@ a { color: inherit; }
 }
 
 #streaks-list {
-	font-size: 16px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	margin-left: -25px;
+}
+
+#myStreakLineChart {
+	transform: rotate(90deg);
+	margin-top: -90px;
+}
+
+#daily-habits-copy {
+	text-align: center;
+	font-size: 14px;
+	font-weight: bold;
 }
 
 @media all and (max-width: 500px) { /* screen size until 500px */
