@@ -319,7 +319,6 @@ app.delete('/api/user/:id/activity/', isAuthenticated, function (req, res){
 
 // POST - (API) Retrieve and save all data
 app.post('/api/fileupload', isAuthenticated, function (req, res){
-  console.log("inside /api/fileupload");
   var obj = req.body;
   var arr = Object.keys(obj).map(function(k) { return obj[k]; });
   var user_id = arr[0].user_id;
@@ -562,8 +561,8 @@ app.get('/api/user/:id/alldailyhabits', function (req, res){
                   $match : { 
                     user_id : userId,
                     activityHabit: true,
-                    originalYear: '2015',
-                    originalMonth: '12',
+                    originalYear: '2016',
+                    originalMonth: '01',
                     activityLabel: {$nin: hiddenactivities }
                   }
               },
