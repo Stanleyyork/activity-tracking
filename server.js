@@ -14,7 +14,8 @@ var express = require('express'),
     passport = require('passport'),
     LocalStrategy = require('passport-local').Strategy,
     https = require('https'),
-    http = require("http");
+    http = require("http"),
+    GitHubApi = require("github");
 
 mongoose.connect(
   process.env.MONGOLAB_URI ||
@@ -55,6 +56,46 @@ function isStanley(req, res, next) {
     res.redirect('/login');
 }
 
+// APIS - Github
+app.get('/github', function (req, res){
+  var github = new GitHubApi({
+    // required 
+    version: "3.0.0",
+    // optional 
+    debug: true,
+    protocol: "https",
+    host: "api.github.com", // should be api.github.com for GitHub 
+    pathPrefix: "", // for some GHEs; none for GitHub 
+    timeout: 5000,
+    headers: {
+        "user-agent": "stanleyyork" // GitHub is happy with a unique user agent 
+    }
+  });
+  github.authenticate({
+    type: "oauth",
+    key: "2b404b8894e815725c17",
+    secret: "f2d591de467e0dc0e666b6afc66cd36804d78dd9"
+  });
+  github.repos.getFromUser({
+    type: 'all',
+    per_page: 100,
+    user: "stanleyyork"
+  }, function(err, res) {
+    console.log(res.length);
+      for(var i = 0; i < res.length; i++){
+        
+          // github.repos.getStatsCommitActivity({
+          //   repo: res[i].full_name.split("/")[1],
+          //   user: "stanleyyork"
+          // }, function(err, res) {
+          //   console.log("=====");
+          //   console.log(res);
+          // });
+      }
+  });
+});
+
+
 // ROUTES
 
 // GET - Home
@@ -87,10 +128,6 @@ app.get('/', function (req, res) {
 // app.get('/postregister', function (req, res){
 //   res.render('postregister');
 // });
-
-app.get('/api/cl', function (req, res){
-  
-});
 
 // GET - User Login
 app.get('/login', function (req, res){
@@ -692,6 +729,7 @@ app.get('/:username/activity/:activityname', function (req, res){
     res.render('activity', {user: foundUser, activityName: activityName});
   });
 });
+
 
 // SERVER PORT
 app.listen(process.env.PORT || 3000, function(){
