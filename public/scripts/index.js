@@ -11,13 +11,12 @@ $(function() {
  	// Tooltip (to show daily habits)
  	$('[data-toggle="tooltip"]').tooltip();
 
+ 	$('#nav-title').addClass('hidden');
 
 
 	// COGNITIVE INTELLIGENCE - READING
 	function clareLegereData(){
 		$.get('https://stormy-ridge-5308.herokuapp.com/api/summary', function(data){
-			console.log("CL");
-			console.log(data);
 			var total_bookmarks = data.total_bookmarks;
 			var streak = data.consecutive_days_read;
 			var this_month_article_count = data.this_month_article_count;

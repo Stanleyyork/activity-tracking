@@ -27,7 +27,7 @@
 }
 
 #account-button {
-	margin-top: 10px;
+	margin-top: 20px;
 }
 
 .dropdown-menu {
@@ -291,7 +291,18 @@ body {
 	width: 250px;
 }
 
+#index-header {
+	margin-left: 35px;
 
+}
+
+#header-hello {
+	font-size: 70px;
+}
+
+#header-copy {
+	font-size: 40px;
+}
 
 .container.index {
 	margin-left: -25px;
@@ -308,6 +319,7 @@ body {
 
 .glyphicon.icon {
 	color: #078c07;
+	opacity: .5;
 }
 
 #github-logo {
@@ -372,9 +384,8 @@ body {
 }
 
 .total_bookmarks {
-	font-size: 65px;
+	font-size: 55px;
 	margin-top: 20px;
-	opacity: .8;
 	text-align: center;
 }
 
@@ -396,7 +407,11 @@ body {
 	font-size: 14px;
 	font-weight: bold;
 	display: inline-block;
-	margin-top: 5px
+	margin-top: 5px;
+}
+
+.glyphicon.glyphicon-star {
+	opacity: .6;
 }
 
 .reading_streak {
@@ -406,6 +421,7 @@ body {
 
 #streak_url {
 	color: #fbc83e;
+	opacity: .6;
 }
 
 a { color: inherit; }
@@ -421,11 +437,17 @@ a { color: inherit; }
 
 #myPieChart {
 	margin-top: 10px;
+	opacity: .6;
 }
 
 #mySleepPieChart {
 	margin-top: 20px;
 	margin-left: -50px;
+	opacity: .6;
+}
+
+#myStepLineChart {
+	opacity: .6;
 }
 
 #average_step_copy {
@@ -443,6 +465,7 @@ a { color: inherit; }
 
 #section {
 	margin-bottom: 50px;
+	max-width: 1000px;
 }
 
 #streaks-list {
@@ -455,12 +478,18 @@ a { color: inherit; }
 #myStreakLineChart {
 	transform: rotate(90deg);
 	margin-top: -90px;
+	opacity: .6;
+}
+
+#myDailyHabitsLineChart {
+	opacity: .7;
 }
 
 #daily-habits-copy {
 	text-align: center;
 	font-size: 14px;
 	font-weight: bold;
+	margin-left: 65px;
 }
 
 @media all and (max-width: 500px) { /* screen size until 500px */

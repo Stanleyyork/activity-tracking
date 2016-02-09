@@ -8,9 +8,9 @@ $(function() {
  	var user_id = $('.headline').attr("user-id");
  	var username = $('.headline').attr("user-username");
  	var importObject = {};
- 	var activityArray = {'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
-	var activityCountArray = {'2015': [], '2014': [], '2013': [], '2012': []};
-	var activityAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
+ 	var activityArray = {'2016': [],'2015': [], '2014': [], '2013': [], '2012': [], 'All': []};
+	var activityCountArray = {'2016': [],'2015': [], '2014': [], '2013': [], '2012': []};
+	var activityAverageArray = {'2016': [],'2015': [], '2014': [], '2013': [], '2012': []};
 	var newActivityArray = [];
 	var filterArr = [];
 	var streakArray = [];
@@ -73,7 +73,7 @@ $(function() {
 	function getActivitiesCountByGroup(user_id){
 		$.get('/api/user/' + user_id + '/activitycountbygroup', function(data){
 			loadDataIntoYear(data, function(){
-				loadAveragePerWeekGraph(['2015', '2014', '2013', '2012']);
+				loadAveragePerWeekGraph(['2016', '2015', '2014', '2013', '2012']);
 				loadListOfActivities('#activities-list');
 			});
 		});
@@ -84,7 +84,7 @@ $(function() {
 		search_activity = activity;
 		$.get('/api/user/'+user_id+'/activityperweek/'+activity, function(data){
 			loadDoWDataIntoYear(data, activity, function(){
-				loadDayOfWeekGraph(['2015', '2014', '2013', '2012'], activity);
+				loadDayOfWeekGraph(['2016', '2015', '2014', '2013', '2012'], activity);
 			});
 		});
 	}
@@ -114,7 +114,11 @@ $(function() {
 	// Parse total activity count data into year arrays
 	function loadDataIntoYear(data, callback){
 		for(var i = 0; i < data.length; i++){
-			if(data[i]._id.originalYear.originalYear === '2015'){
+			if(data[i]._id.originalYear.originalYear === '2016'){
+				activityArray['2016'].push(data[i]._id.activityLabel);
+				activityCountArray['2016'].push(data[i].count);
+				activityAverageArray['2016'].push(data[i].count/5);
+			} else if(data[i]._id.originalYear.originalYear === '2015'){
 				activityArray['2015'].push(data[i]._id.activityLabel);
 				activityCountArray['2015'].push(data[i].count);
 				activityAverageArray['2015'].push(data[i].count/52);
@@ -133,16 +137,19 @@ $(function() {
 			}
 			activityArray['All'].push(data[i]._id.activityLabel);
 		}
-		paginationLoad();
+		//paginationLoad();
 		callback();
 	}
 
 	// Parse day of week count data into year arrays
 	function loadDoWDataIntoYear(data, activity, callback){
-		var activityDoWArray = {'2015': [], '2014': [], '2013': [], '2012': []};
-		var activityDoWAverageArray = {'2015': [], '2014': [], '2013': [], '2012': []};
+		var activityDoWArray = {'2016': [], '2015': [], '2014': [], '2013': [], '2012': []};
+		var activityDoWAverageArray = {'2016': [], '2015': [], '2014': [], '2013': [], '2012': []};
 		for(var i = 0; i < data.length; i++){
-			if(data[i]._id.originalYear === '2015'){
+			 if(data[i]._id.originalYear === '2016'){
+				activityDoWArray['2016'].push(data[i]._id.dayOfWeek);
+				activityDoWAverageArray['2016'].push((data[i].count/52)*100);
+			} else if(data[i]._id.originalYear === '2015'){
 				activityDoWArray['2015'].push(data[i]._id.dayOfWeek);
 				activityDoWAverageArray['2015'].push((data[i].count/52)*100);
 			} else if(data[i]._id.originalYear === '2014') {
@@ -212,7 +219,7 @@ $(function() {
 	// Load list of years and activities to navbar
  	function loadListOfActivitiesNav(){
  		//var arr = $.unique(newActivityArray);
- 		var arr = ['2012', '2013', '2014', '2015'];
+ 		var arr = ['2012', '2013', '2014', '2015', '2016'];
 	 	if($('#filter-tags > span')[0] === undefined){
 			for(var x = 0; x<arr.length; x++){
 				$("#filter-tags").append('<span class="label label-default" id="habit-'+arr[x]+'">'+arr[x]+'</span>'+'  ');
@@ -310,6 +317,13 @@ $(function() {
 		var activityDoWArray = doWActivityData[0];
 		var activityDoWAverageArray = doWActivityData[1];
 
+		var trace0 = {
+		  x: activityDoWArray['2016'],
+		  y: activityDoWAverageArray['2016'],
+		  name: '2016',
+		  type: 'bar',
+		  marker: {color: 'rgb(11,81,146)'}
+		};
 		var trace1 = {
 		  x: activityDoWArray['2015'],
 		  y: activityDoWAverageArray['2015'],
@@ -352,9 +366,12 @@ $(function() {
 		if(arr.indexOf('2015') !== -1){
 			DayOfWeekChart_data.push(trace1);
 		}
+		if(arr.indexOf('2016') !== -1){
+			DayOfWeekChart_data.push(trace0);
+		}
 
 		if(activityArray['All'].indexOf(activity) !== -1){
-			var title = "Probability of Achieving '"+activity+"' Habit on a Specific Day of the Week"
+			var title = "Probability of Achieving '"+activity+"' Habit on a Specific Day of the Week";
 		} else {
 			var title = "That habit does not exist";
 		}
@@ -386,6 +403,13 @@ $(function() {
 	}
 
 	function loadAveragePerWeekGraph(arr){
+		var trace0 = {
+		  x: activityArray['2016'],
+		  y: activityAverageArray['2016'],
+		  name: '2016',
+		  type: 'bar',
+		  marker: {color: 'rgb(11,81,146)'}
+		};
 		var trace1 = {
 		  x: activityArray['2015'],
 		  y: activityAverageArray['2015'],
@@ -427,6 +451,9 @@ $(function() {
 		}
 		if(arr.indexOf('2015') !== -1){
 			AverageWeekBarChart_data.push(trace1);
+		}
+		if(arr.indexOf('2016') !== -1){
+			AverageWeekBarChart_data.push(trace0);
 		}
 
 		var layout = {barmode: 'group', bargroupgap: 0.00, width: 1000, height: 500,

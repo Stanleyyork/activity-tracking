@@ -99,9 +99,9 @@ app.get('/github', function (req, res){
 // ROUTES
 
 // GET - Home
-app.get('/', function (req, res) {
-    res.redirect('/index');
-});
+// app.get('/', function (req, res) {
+//     res.redirect('/index');
+// });
 
 // GET - Register
 // app.get('/register', function (req, res) {
@@ -148,9 +148,10 @@ app.get('/logout', function (req, res) {
 });
 
 // GET - Index (Primary View)
-app.get('/index', function (req, res){
+app.get('/', function (req, res){
   //var userId = req.user.id;
-  var userId = "5660a6c810d090e34c47938f"
+  var userId = "5660c53843c9bd110091c39a"; //Production
+  //var userId = "5660a6c810d090e34c47938f"; //Development
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
@@ -161,7 +162,8 @@ app.get('/index', function (req, res){
 // GET - Index (Dashboard View)
 app.get('/dashboard', function (req, res){
   //var userId = req.user.id;
-  var userId = "5660a6c810d090e34c47938f"
+  var userId = "5660c53843c9bd110091c39a"; //Production
+  //var userId = "5660a6c810d090e34c47938f"; //Development
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
@@ -170,8 +172,10 @@ app.get('/dashboard', function (req, res){
 });
 
 // GET - Activity: Habits
-app.get('/habits', isAuthenticated, function (req, res){
-  var userId = req.user.id;
+app.get('/habits', function (req, res){
+  //var userId = req.user.id;
+  var userId = "5660c53843c9bd110091c39a"; //Production
+  //var userId = "5660a6c810d090e34c47938f"; //Development
   User.findOne({_id: userId})
       .populate('activities')
           .exec(function(err, singleUser){
