@@ -58,17 +58,18 @@ function isStanley(req, res, next) {
 
 // APIS - Github
 app.get('/github', function (req, res){
+  //var userId = "5660c53843c9bd110091c39a"; //Production
+  var userId = "5660a6c810d090e34c47938f"; //Development
+  var allData = [];
   var github = new GitHubApi({
-    // required 
     version: "3.0.0",
-    // optional 
     debug: true,
     protocol: "https",
-    host: "api.github.com", // should be api.github.com for GitHub 
-    pathPrefix: "", // for some GHEs; none for GitHub 
+    host: "api.github.com",
+    pathPrefix: "",
     timeout: 5000,
     headers: {
-        "user-agent": "stanleyyork" // GitHub is happy with a unique user agent 
+        "user-agent": "stanleyyork"
     }
   });
   github.authenticate({
@@ -77,21 +78,89 @@ app.get('/github', function (req, res){
     secret: "f2d591de467e0dc0e666b6afc66cd36804d78dd9"
   });
   github.repos.getFromUser({
-    type: 'all',
+    type: 'owner',
     per_page: 100,
     user: "stanleyyork"
-  }, function(err, res) {
-    console.log(res.length);
-      for(var i = 0; i < res.length; i++){
-        
-          // github.repos.getStatsCommitActivity({
-          //   repo: res[i].full_name.split("/")[1],
-          //   user: "stanleyyork"
-          // }, function(err, res) {
-          //   console.log("=====");
-          //   console.log(res);
-          // });
+  }, function(err, resone) {
+      var z = 0;
+      console.log(resone);
+      for(var i = 0; i < resone.length; i++){
+          github.repos.getStatsCommitActivity({
+            repo: resone[i].full_name.split("/")[1],
+            user: "stanleyyork"
+          }, function(err, restwo) {
+            if(!err){
+              for(var x = 0; x < restwo.length; x++){
+                for(var day = 0; day < 7; day++){
+                  if(restwo[x]['days'][day] !== 0){
+                    var data = {};
+                    data.user_id = userId;
+                    data.activityPillar = "Cognitive Intelligence";
+                    data.activityCategory = 'Code';
+                    data.activityLabel = "GitCommits";
+                    data.originalActivityLabel = "GitCommits";
+                    data.activitySource = "GitHub";
+                    data.originalId = "n/a";
+                    var datetype = new Date(restwo[x]['week'] * 1000);
+                    datetype.setDate(datetype.getDate() + day);
+                    data.originalDate = datetype;
+                    data.originalYear = String(datetype).split(" ")[3];
+                    data.originalMonth = datetype.getMonth() + 1;
+                    data.originalDay = String(datetype).split(" ")[2];
+                    data.originalDayOfYear = Math.floor(((datetype) - (new Date(datetype.getFullYear(), 0, 0)))/(1000 * 60 * 60 * 24));
+                    data.originalDayOfWeek = datetype.getDay();
+                    data.occured = true;
+                    data.measurementA = "Days";
+                    data.quantityA = 1;
+                    data.measurementB = "Commits";
+                    data.quantityB = restwo[x]['days'][day];
+                    data.link = "http://www.github.com/stanleyyork";
+                    allData.push(data);
+                    // Activity.find(data, function(err,foundActivity){
+                    //   if(err){
+                    //     console.log("not found");
+                    //     console.log(err);
+                    //   } else if(Object.keys(foundActivity).length !== 0) {
+                    //     console.log("found!");
+                    //     console.log(foundActivity);
+                    //   } else {
+                    //     newActivity = new Activity(data);
+                    //     newActivity.save(function(err, savedActivity){
+                    //       if(err) {
+                    //         return console.error(err);
+                    //       } else {
+                    //         console.log("Saved!");
+                    //         console.log(savedActivity);
+                    //         User.findOne({_id: userId}, function(err, foundUser){
+                    //           if(err){console.log(err)}
+                    //           else {
+                    //             foundUser.activities.push(savedActivity);
+                    //             foundUser.save();
+                    //           }
+                    //         });
+                    //       }
+                    //     });
+                    //   }
+                    // });
+                  }
+                }
+              }
+            } else {
+              console.log("ERROR");
+            }
+            z += 1;
+          });
       }
+        
+
+  });
+  var arr = Object.keys(allData).map(function(k) { return obj[k]; });
+  Activity.collection.insert(arr, function(err, result){
+    User.findOne({_id: userId}, function(err, foundUser){
+      foundUser.activities = result.ops;
+      foundUser.save();
+      res.json(true);
+    });
   });
 });
 

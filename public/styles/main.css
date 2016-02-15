@@ -351,14 +351,14 @@ body {
 }
 
 .stats-header-content.pillars.physical{
-	background-color: #b7b5b4;
-	color: #b7b5b4;
+	background-color: #e5e3e2;
+	color: #e5e3e2;
 	opacity: .5;
 }
 
 .stats-header-content.pillars.habits {
 	width: 35px;
-	height: 70px;
+	height: 210px;
 }
 
 .stats-header-content.pillars.habits.a{
