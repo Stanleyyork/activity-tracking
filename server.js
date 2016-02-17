@@ -240,6 +240,18 @@ app.get('/dashboard', function (req, res){
           });
 });
 
+// GET - Portfolio
+app.get('/portfolio', function (req, res){
+  //var userId = req.user.id;
+  var userId = "5660c53843c9bd110091c39a"; //Production
+  //var userId = "5660a6c810d090e34c47938f"; //Development
+  User.findOne({_id: userId})
+      .populate('activities')
+          .exec(function(err, singleUser){
+              res.render('portfolio', {user: singleUser});
+          });
+});
+
 // GET - Activity: Habits
 app.get('/habits', function (req, res){
   //var userId = req.user.id;

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- set viewport to device width to make site responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- bootstrap css -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+
+	<meta charset="UTF-8">
+	<title>Portfolio</title>
+</head>
+<body>
+
+	{{> nav}}
+
+
+	<div class="container">
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://clarelegere.com/stanleystevens" target="_blank"><img src="/images/clarelegere.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>Clare Legere</h3>
+				<p><b>Type:</b> Web</p>
+				<p><b>Links:</b> <a href="http://clarelegere.com/stanleystevens" target="_blank">Website</a></p>
+				<p><b>Technologies:</b> Ruby on Rails, Heroku, Postgres, Instapaper API, Watson AI APIs</p>
+				<p><b>Summary:</b> Pulled ~10,000 articles I’ve read in Instapaper using their api to develop ‘reading profile’. Also leveraged other sources and technologies to uncover personal insights, including political lean, big 5 personality traits, keyword, sentiment, and concept analysis all using text of historically read articles.</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://lunacal.herokuapp.com" target="_blank"><img src="/images/lunarcal.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>LunarCal</h3>
+				<p><b>Type:</b> Web</p>
+				<p><b>Links:</b> <a href="http://lunacal.herokuapp.com" target="_blank">Website</a>, <a href="http://github.com/stanleyyork/predictiveCalendar" target="_blank">GitHub</a></p>
+				<p><b>Technologies:</b> Ruby on Rails, Heroku, Postgres, Google Calendar API, oAuth</p>
+				<p><b>Summary:</b> Pulled in Google calendar data to visualize basic stats and analysis of meetings with current plans to predict productivity of future meetings using user-inputted historical ratings and logistic regression model.</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://districtfive.herokuapp.com" target="_blank"><img src="/images/watson.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>Watson</h3>
+				<p><b>Type:</b> Web</p>
+				<p><b>Links:</b> <a href="http://districtfive.herokuapp.com" target="_blank">Website</a>, <a href="http://github.com/stanleyyork/watson" target="_blank">GitHub</a></p>
+				<p><b>Technologies:</b> Ruby on Rails, Heroku, Postgres, Watson AI APIs</p>
+				<p><b>Summary:</b> Co-developed with 3-person team leveraging the IBM Watson AI APIs to mine and visualize personality traits from tweets, and also used this personal data to recommend other content, such as classic books</p>
+				<p><b>Partners:</b> <a href="https://github.com/vframbach" target="_blank">Victoria</a> & <a href="https://github.com/abeytaadam" target="_blank">Adam</a></p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://habit-tracking.herokuapp.com/habits" target="_blank"><img src="/images/speculo.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>Speculo</h3>
+				<p><b>Type:</b> Web</p>
+				<p><b>Links:</b> <a href="http://habit-tracking.herokuapp.com/habits" target="_blank">Website</a>, <a href="http://github.com/stanleyyork/activity-tracking" target="_blank">GitHub</a></p>
+				<p><b>Technologies:</b> Node.js, Heroku, Express, MongoDB</p>
+				<p><b>Summary:</b> Began with data analysis and visualization of daily habits via coach.me data to uncover insights such as sleep & caffeine correlation, then enhanced app by adding other data (i.e. Apple Health, Google Search). Currently using Speculo platform as portfolio site to express aggregate personal data through visualization.</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://github.com/stanleyyork/allsidesWebscrape" target="_blank"><img src="/images/allsides.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>Allsides</h3>
+				<p><b>Type:</b> Web Scrape</p>
+				<p><b>Links:</b> <a href="http://github.com/stanleyyork/allsidesWebscrape" target="_blank">GitHub</a></p>
+				<p><b>Technologies:</b> Javascript, Cheerio, Express</p>
+				<p><b>Summary:</b> Built webscraper to pull articles from the 'left', 'right' and 'center' of various political issues from allsides.com (a site that presents multiple perspectives). Currently, in initial stages of comparing these articles to articles/sites I've already read to get an understanding of my "political lean" bias in what I read.</p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<img src="/images/loop.png" class="img-thumbnail" id="portfolio-image">
+			</div>
+			<div class="col-sm-6">
+				<h3>The Loop</h3>
+				<p><b>Type:</b> Android App</p>
+				<p><b>Links:</b> <a href="https://docs.google.com/presentation/d/1TY5r574wliR4FZkCVn5Hji11Zm434gq578SKd5eX7as/edit#slide=id.g107de3e660_0_46" target="_blank">Sample Code</a>, <a href="/videos/loop_app_android.mov">Initial Build Video</a> (download)</p>
+				<p><b>Technologies:</b> Java, Custom APIs to server, Google Maps</p>
+				<p><b>Summary:</b> Without any previous Java or Android knowledge, developed initial build of Android App, including log-in via API (for server auth), Google Maps integration with current location, websocket build (for various information like GPS), and team leaderboard (using websockets and APIs). Finally able to get professional assistance of Android developer to complete the app.</p>
+				<p><b>Partners:</b> <a href="http://github.com/jordanhamel" target="_blank">Jordan</a>, <a href="https://github.com/gilllevy" target="_blank">Gil</a></p>
+			</div>
+		</div>
+		<hr>
+		<div class="row portfolio">
+			<div class="col-sm-4">
+				<a href="http://github.com/stanleyyork/a_drink_with_chicago_question" target="_blank"><img src="/images/adrinkwith.png" class="img-thumbnail" id="portfolio-image"></a>
+			</div>
+			<div class="col-sm-6">
+				<h3>A Drink With</h3>
+				<p><b>Type:</b> Web Scrape</p>
+				<p><b>Links:</b><a href="http://github.com/stanleyyork/a_drink_with_chicago_question" target="_blank">GitHub</a></p>
+				<p><b>Technologies:</b> Ruby, Nokogiri</p>
+				<p><b>Summary:</b> First webscraper I ever built, which helped me get an understanding of on of my favorite question that "A Drink With" asks in every one of their interviews: "If you could have a drink with anyone who would it be?".</p>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!-- jquery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- handlebars -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/portfolio.js"></script>
+	
+</body>
+</html>

@@ -492,6 +492,10 @@ a { color: inherit; }
 	margin-left: 65px;
 }
 
+#portfolio-image {
+	max-width: 350px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 30px;
