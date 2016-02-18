@@ -498,20 +498,17 @@ a { color: inherit; }
 
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
-    	margin-left: 30px;
+    	margin-left: 10px;
     	margin-right: 0px;
     }
     .navbar {
     	height: 40px;
     }
-    #nav-title {
-        font-size: 0.8em; /* 0.8x default size */
+    #nav-title > a {
+        font-size: 20px; /* 0.8x default size */
     }
     #nav-header {
 		margin-top: 7px;
-	}
-	#account-button-pull {
-		text-align: center;
 	}
 	.starred_articles {
 		text-align: center;
