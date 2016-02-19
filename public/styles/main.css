@@ -30,6 +30,11 @@
 	margin-top: 20px;
 }
 
+#account-button > div > div > div {
+	display: inline-block;
+	white-space: nowrap;
+}
+
 .dropdown-menu {
 	background-color: #fafafa;
     left: auto;
@@ -52,6 +57,15 @@ body {
 	margin-right: 10px;
 	color: #545454;
 	background-color: #fafafa;
+}
+
+.link-logos {
+	display: inline-block;
+	white-space: nowrap;
+}
+
+.link-logo {
+	width: 20px;
 }
 
 .div.hidden {
