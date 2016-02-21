@@ -1,3 +1,14 @@
+#background-image {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  /* Preserve aspet ratio */
+  min-width: 100%;
+  min-height: 100%;
+  -webkit-filter: blur(0px);
+  background-size: cover;
+}
+
 #nav-title {
 	margin-top: 5px;
 	font-weight: bold;
@@ -318,6 +329,16 @@ body {
 	font-size: 40px;
 }
 
+#header-hello-hp {
+	font-size: 70px;
+	color: white;
+}
+
+#header-copy-hp {
+	font-size: 40px;
+	color: white;
+}
+
 .container.index {
 	margin-left: -25px;
 	margin-bottom: 50px;
@@ -411,6 +432,10 @@ body {
 
 .col-md-3.days_read_this_month {
 	margin-top: 25px;
+}
+
+.starred-row {
+	
 }
 
 .all_starred_artiles {

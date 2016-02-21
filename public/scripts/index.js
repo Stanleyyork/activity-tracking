@@ -26,9 +26,9 @@ $(function() {
 			$('.total_bookmarks').append(total_bookmarks.toLocaleString());
 			$('.total_bookmarks_copy').append(total_books + " books");
 			graphDaysReadPieChart(this_month_days_count);
-			$('#starred_articles-1').append("<a href='"+starred_bookmarks[0]['url']+"' target='_blank'>"+starred_bookmarks[0]['title']+"</a>");
-			$('#starred_articles-2').append("<a href='"+starred_bookmarks[1]['url']+"' target='_blank'>"+starred_bookmarks[1]['title']+"</a>");
-			$('#starred_articles-3').append("<a href='"+starred_bookmarks[2]['url']+"' target='_blank'>"+starred_bookmarks[2]['title']+"</a>");
+			$('#starred_articles-1').append("<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span>"+"<a href='"+starred_bookmarks[0]['url']+"' target='_blank'>"+starred_bookmarks[0]['title']+"</a>");
+			$('#starred_articles-2').append("<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span>"+"<a href='"+starred_bookmarks[1]['url']+"' target='_blank'>"+starred_bookmarks[1]['title']+"</a>");
+			$('#starred_articles-3').append("<span class='glyphicon glyphicon-star' data-toggle='tooltip' title='Recently Starred Story'></span>"+"<a href='"+starred_bookmarks[2]['url']+"' target='_blank'>"+starred_bookmarks[2]['title']+"</a>");
 			if(streak > 0){
 				$('.reading_streak').append("Stanley has read " + this_month_article_count + " stories this month and is on a <a href='http://clarelegere.com/profiles/1/dailychallenge' id='streak_url' target='_blank'>" + streak + "-day</a> reading streak.");
 			}
