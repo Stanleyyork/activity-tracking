@@ -537,7 +537,7 @@ a { color: inherit; }
 
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
-    	margin-left: 10px;
+    	margin-left: 0px;
     	margin-right: 0px;
     }
     .navbar {
@@ -554,5 +554,8 @@ a { color: inherit; }
 	}
 	#mySleepPieChart {
 		margin-left: 20px;
+	}
+	#section {
+		margin-left: 15px;
 	}
 }

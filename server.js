@@ -228,18 +228,6 @@ app.get('/', function (req, res){
           });
 });
 
-// GET - Homepage
-app.get('/homepage', function (req, res){
-  //var userId = req.user.id;
-  var userId = "5660c53843c9bd110091c39a"; //Production
-  //var userId = "5660a6c810d090e34c47938f"; //Development
-  User.findOne({_id: userId})
-      .populate('activities')
-          .exec(function(err, singleUser){
-              res.render('homepage', {user: singleUser});
-          });
-});
-
 // GET - Index (Dashboard View)
 app.get('/dashboard', function (req, res){
   //var userId = req.user.id;
