@@ -576,16 +576,24 @@ a { color: inherit; }
 		font-weight: normal;
 	}
 	#myDailyHabitsLineChart {
-		margin-left: -20px;
+		margin-left: -50px;
+	}
+	#myStreakLineChart {
+		margin-left: 20px;
 	}
 	#streaks-list {
 		font-weight: normal;
 	}
 	#daily-habits-copy {
 		font-weight: normal;
+		margin-left: -5px;
 	}
 	#mobile-header {
 		text-align: center;
 		font-weight: bold;
+		font-size: 25px;
+	}
+	#section > div.col-xs-10 > div > div > div {
+		margin-left: 5px;
 	}
 }
