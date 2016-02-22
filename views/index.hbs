@@ -42,7 +42,14 @@
 			</div>
 		</div>
 	</div>
-	<br>
+	<div class="mobile-seperator hidden-sm hidden-md hidden-lg hidden-xl">
+		<hr>
+		<p id="mobile-header">READING</p>
+	</div>
+	<div class="hidden-xs">
+		<br>
+	</div>
+	
 	<div id="username-header" user-id={{user._id}}></div>
 	<div class="container index">
 	<div class="current_stats">
@@ -100,9 +107,13 @@
 		    	</div>
 		    </div>
 		</div>
-
 		
-		<!-- 3: PHYSICAL -->
+		<div class="mobile-seperator hidden-sm hidden-md hidden-lg hidden-xl">
+			<hr>
+			<p id="mobile-header">HEALTH</p>
+		</div>
+		
+		<!-- 2: PHYSICAL -->
 		<div class="row" id="section">
 			<div class="col-xs-1 icons hidden-sm  hidden-xs">
 				<div class="stats-header physical">
@@ -148,7 +159,10 @@
 		    </div>
 		</div>
 
-		
+		<div class="mobile-seperator hidden-sm hidden-md hidden-lg hidden-xl">
+			<hr>
+			<p id="mobile-header">HABITS</p>
+		</div>
 
 		<!-- 3: HABITS -->
 		<div class="row" id="section">

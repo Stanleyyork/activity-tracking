@@ -557,6 +557,35 @@ a { color: inherit; }
 	}
 	#section {
 		margin-left: 50px;
+		font-weight: normal;
 	}
-	
+	.total_bookmarks {
+		font-size: 30px;
+	}
+	.total_bookmarks_copy {
+		font-weight: normal;
+	}
+	.starred_articles {
+		font-weight: normal;
+	}
+	.reading_streak {
+		font-weight: normal;
+	}
+	#nights_slept_copy {
+		margin-left: 10px;
+		font-weight: normal;
+	}
+	#myDailyHabitsLineChart {
+		margin-left: -20px;
+	}
+	#streaks-list {
+		font-weight: normal;
+	}
+	#daily-habits-copy {
+		font-weight: normal;
+	}
+	#mobile-header {
+		text-align: center;
+		font-weight: bold;
+	}
 }
