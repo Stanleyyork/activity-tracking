@@ -79,7 +79,7 @@ $(function() {
 		
 		var data = {
 		    labels: ['Jan 2015 (Step Count)', 'Feb 2015 (Step Count)', 'Mar 2015 (Step Count)', 'Apr 2015 (Step Count)',
-		     'May 2015 (Step Count)', 'Jun 2015 (Step Count)', 'Jul 2015 (Step Count)', 'Aug 2015 (Step Count)', 'Sept 2015 (Step Count)', 'Oct 2015 (Step Count)', 'Nov 2015 (Step Count)', 'Dec 2015 (Step Count)', 'Jan 2016 (Step Count)'],//stepCountArray_y,
+		     'May 2015 (Step Count)', 'Jun 2015 (Step Count)', 'Jul 2015 (Step Count)', 'Aug 2015 (Step Count)', 'Sept 2015 (Step Count)', 'Oct 2015 (Step Count)', 'Nov 2015 (Step Count)', 'Dec 2015 (Step Count)', 'Jan 2016 (Step Count)', 'Feb 2016 (Step Count)'],//stepCountArray_y,
 		    datasets: [
 		        {
 		            label: "Step Count",
