@@ -117,7 +117,7 @@ $(function() {
 
 	function formatSleepCountData(data, callback) {
 		for(var i = 0; i < data.length; i++){
-			if(data[i]['month'] === '01' && data[i]['year'] === '2016'){
+			if(data[i]['month'] === '02' && data[i]['year'] === '2016'){
 				var sleepDays = data[i]['count'];
 			}
 		}
