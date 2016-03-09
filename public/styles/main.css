@@ -91,9 +91,9 @@ body {
 	max-width: 400px;
 }
 
-.today{
-	font-size: 20px;
-}
+/*.habit-title{
+	margin-left: 45px;
+}*/
 
 #daily-dash-glyph {
 	font-size: 22px;
@@ -114,6 +114,10 @@ body {
 
 .glyphicon.glyphicon-ok{
 	color: green;
+	font-size: 65px;
+/*	margin-left: 30px;*/
+	margin-top: 20px;
+	margin-bottom: 40px;
 }
 
 .glyphicon.glyphicon-remove{
@@ -128,6 +132,12 @@ body {
 
 .glyphicon.glyphicon-fire{
 	color: orange;
+}
+
+#longest-streak {
+	font-style: italic;
+	font-weight: bold;
+	margin-left: -90px;
 }
 
 .error {
