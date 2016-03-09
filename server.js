@@ -15,6 +15,7 @@ var express = require('express'),
     LocalStrategy = require('passport-local').Strategy,
     https = require('https'),
     http = require("http"),
+    exec = require("child_process"),
     GitHubApi = require("github");
 
 mongoose.connect(
@@ -238,6 +239,27 @@ app.get('/dashboard', function (req, res){
           .exec(function(err, singleUser){
               res.render('dashboard', {user: singleUser});
           });
+});
+
+// GET - Daily Dash
+app.get('/dailydash', function (req, res){
+  res.render('dailydash');
+});
+
+// GET - Coach.Me API
+app.get('/coachmeapi', function (req, res){
+  var ruby_child = exec.spawn('ruby',['./public/scripts/coach.rb']);  
+  var result = '';
+  ruby_child.stdout.on('data', function(data) {
+    result += data.toString();
+  });
+  ruby_child.on('close', function() {
+    res.json(result);
+  });
+  ruby_child.stderr.on('data', function(data) {
+    console.log("ERROR --- " + data);
+  });
+  
 });
 
 // GET - Portfolio

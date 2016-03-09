@@ -91,6 +91,45 @@ body {
 	max-width: 400px;
 }
 
+.today{
+	font-size: 20px;
+}
+
+#daily-dash-glyph {
+	font-size: 22px;
+}
+
+.glyphicon.glyphicon-ok-circle{
+	color: green;
+}
+
+.glyphicon.glyphicon-remove-circle{
+	color: #c92929;
+	opacity: 0.7;
+}
+
+.glyphicon.glyphicon-question-sign{
+	opacity: 0.2;
+}
+
+.glyphicon.glyphicon-ok{
+	color: green;
+}
+
+.glyphicon.glyphicon-remove{
+	color: #c92929;
+	opacity: 0.7;
+}
+
+#daily-dash-glyph-hidden{
+	color: white;
+	opacity: 0.0;
+}
+
+.glyphicon.glyphicon-fire{
+	color: orange;
+}
+
 .error {
 	color: red;
 }

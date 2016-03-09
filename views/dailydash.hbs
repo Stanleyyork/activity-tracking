@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<!-- set viewport to device width to make site responsive -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- bootstrap css -->
+	<link type="text/css" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+	<!-- custom styles -->
+	<link rel="stylesheet" type="text/css" href="/styles/main.css">
+	<meta charset="UTF-8">
+	<title>DailyDash</title>
+</head>
+<body>
+	
+	<div class="row">
+		<div class="col-sm-3 col-sm-offset-1">
+			<h2>Anaerobic</h2>
+			<p id="anaerobic-count"></p>
+			<p id="anaerobic-count-no"></p>
+			<p class="today" id="anaerobic-today">Today </p>
+		</div>
+		<div class="col-sm-3">
+			<h2>Aerobic</h2>
+			<p id="aerobic-count"></p>
+			<p id="aerobic-count-no"></p>
+			<p class="today"  id="aerobic-today">Today </p>
+		</div>
+		<div class="col-sm-3">
+			<h2>Eat Fruit</h2>
+			<p id="eat-fruit-count"></p>
+			<p id="eat-fruit-count-no"></p>
+			<p class="today"  id="eat-fruit-today">Today </p>
+		</div>
+	</div>
+	<br><br>
+	<div class="row">
+	<div class="col-sm-3">
+	</div>
+		<i><p id="longest-streak"></p></i>
+	</div>
+
+
+	<!-- jquery -->
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- bootstrap js -->
+	<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- handlebars -->
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.3/handlebars.min.js"></script>
+	<!-- index.js -->
+	<script type="text/javascript" src="/scripts/dailydash.js"></script>
+</body>
+</html>
