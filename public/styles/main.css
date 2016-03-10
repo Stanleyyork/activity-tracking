@@ -115,7 +115,6 @@ body {
 .glyphicon.glyphicon-ok{
 	color: green;
 	font-size: 65px;
-/*	margin-left: 30px;*/
 	margin-top: 20px;
 	margin-bottom: 40px;
 }
@@ -123,6 +122,9 @@ body {
 .glyphicon.glyphicon-remove{
 	color: #c92929;
 	opacity: 0.7;
+	font-size: 65px;
+	margin-top: 20px;
+	margin-bottom: 40px;
 }
 
 #daily-dash-glyph-hidden{

@@ -262,6 +262,22 @@ app.get('/coachmeapi', function (req, res){
   
 });
 
+// GET - Coach.Me API 2
+app.get('/coachmeapitwo', function (req, res){
+  var ruby_child = exec.spawn('ruby',['./public/scripts/coachtwo.rb']);  
+  var result = '';
+  ruby_child.stdout.on('data', function(data) {
+    result += data.toString();
+  });
+  ruby_child.on('close', function() {
+    res.json(result);
+  });
+  ruby_child.stderr.on('data', function(data) {
+    console.log("ERROR --- " + data);
+  });
+  
+});
+
 // GET - Portfolio
 app.get('/portfolio', function (req, res){
   //var userId = req.user.id;

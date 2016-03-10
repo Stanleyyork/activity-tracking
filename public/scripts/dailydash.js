@@ -1,14 +1,23 @@
 $(function() {
 
-	console.log("activity.js working");
+	console.log("dailydash.js working");
 	var today = new Date();
 	var today_number = today.getDay();
+	var start_of_week = new Date(new Date().setDate(today.getDate() - today_number + 1));
 	var streak = '';
 	var streakdata = {};
-	var habits = {'Anaerobic':{'checkin_count': 0, 'streak': 0},'Aerobic':{'checkin_count': 0, 'streak': 0},'Eat Fruit':{'checkin_count': 0, 'streak': 0}};
+	var an = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
+	var ae = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
+	var fr = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
+	for(var x = today_number+1; x<8; x++){
+		an[x] = "nil";
+		ae[x] = "nil";
+		fr[x] = "nil";
+	}
 
 	$.get('/coachmeapi', function(data){
-		parseCoachData(JSON.parse(JSON.parse(data)));
+		//parseCoachData(JSON.parse(JSON.parse(data)));
+		parseStreakData(JSON.parse(JSON.parse(data)));
 	});
 
 	function parseStreakData(data){
@@ -18,72 +27,83 @@ $(function() {
 		}
 		$('#longest-streak').append("Longest current streak is " + sortObject(streakdata).pop().shift() + " at " + sortObject(streakdata).pop().pop() + " days");
 	}
-	
 
-	function parseCoachData(data){
-		parseStreakData(data);
-		for(var i = 0; i<data['plans'].length; i++){
-			if(data['plans'][i]['name'] === 'Anaerobic'){
-				var anaerobic_count = data['plans'][i]['stats']['weekly_progress'][4]['checkin_count'];
-				for(var x = 0; x<anaerobic_count; x++){
-					$('#anaerobic-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
+	$.get('/coachmeapitwo', function(data){
+		parseDailyCoachData(JSON.parse(JSON.parse(data)));
+	});
+
+	function parseDailyCoachData(data){
+		for(var i = 0; i<data.activity_items.length; i++){
+			var habit = getHabitBetweenLinkTags(data.activity_items[i].activity_rich_title);
+			if(habit === 'Anaerobic'){
+				var datean = data.activity_items[i].effective_date;
+				var habitan_date = new Date(datean.slice(0,4),datean.slice(5,7)-1,datean.slice(8,10));
+				if(start_of_week <= habitan_date){
+					an[habitan_date.getDay()] = true;
 				}
-				// if(today_number-anaerobic_count === 0){
-				// 	$('#anaerobic-count-no').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph-hidden"></span>');
-				// }
-				for(var x = 0; x<(today_number-anaerobic_count); x++){
-					$('#anaerobic-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
+			} else if (habit === 'Aerobic') {
+				var dateae = data.activity_items[i].effective_date;
+				var habitae_date = new Date(dateae.slice(0,4),dateae.slice(5,7)-1,dateae.slice(8,10));
+				if(start_of_week <= habitae_date){
+					ae[habitae_date.getDay()] = true;
 				}
-				for(var x = 0; x<(7-today_number); x++){
-					$('#anaerobic-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
+			} else if (habit === 'Eat Fruit') {
+				var datefr = data.activity_items[i].effective_date;
+				var habitfr_date = new Date(datefr.slice(0,4),datefr.slice(5,7)-1,datefr.slice(8,10));
+				if(start_of_week <= habitfr_date){
+					fr[habitfr_date.getDay()] = true;
 				}
-				if(data['plans'][i]['stats']['streak'] > 0){
+			}
+		}
+		addIcons();
+	}
+
+	function addIcons(){
+		for(var i = 1; i<8; i++){
+			if(an[i] === true){
+				$('#anaerobic-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#anaerobic-today').append('<span class="glyphicon glyphicon-ok"></span>');
-				} else {
+				}
+			} else if(an[i] === false) {
+				$('#anaerobic-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#anaerobic-today').append('<span class="glyphicon glyphicon-remove"></span>');
 				}
-			} else if(data['plans'][i]['name'] === 'Aerobic') {
-				var aerobic_count = data['plans'][i]['stats']['weekly_progress'][4]['checkin_count'];
-				for(var x = 0; x<aerobic_count; x++){
-					$('#aerobic-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
-				}
-				// if(today_number-aerobic_count === 0){
-				// 	$('#aerobic-count-no').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph-hidden"></span>');
-				// }
-				for(var x = 0; x<(today_number-aerobic_count); x++){
-					$('#aerobic-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
-				}
-				for(var x = 0; x<(7-today_number); x++){
-					$('#aerobic-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
-				}
-				if(data['plans'][i]['stats']['streak'] > 0){
+			} else {
+				$('#anaerobic-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
+			}
+			if(ae[i] === true){
+				$('#aerobic-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#aerobic-today').append('<span class="glyphicon glyphicon-ok"></span>');
-				} else {
+				}
+			} else if(ae[i] === false) {
+				$('#aerobic-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#aerobic-today').append('<span class="glyphicon glyphicon-remove"></span>');
 				}
-			} else if(data['plans'][i]['name'] === 'Eat Fruit') {
-				var eat_fruit_count = data['plans'][i]['stats']['weekly_progress'][4]['checkin_count'];
-				for(var x = 0; x<eat_fruit_count; x++){
-					$('#eat-fruit-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
-				}
-				// if(today_number-eat_fruit_count === 0){
-				// 	$('#eat-fruit-count-no').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph-hidden"></span>');
-				// }
-				for(var x = 0; x<(today_number-eat_fruit_count); x++){
-					$('#eat-fruit-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
-				}
-				for(var x = 0; x<(7-today_number); x++){
-					$('#eat-fruit-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
-				}
-				if(data['plans'][i]['stats']['streak'] > 0){
+			} else {
+				$('#aerobic-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
+			}
+			if(fr[i] === true){
+				$('#eat-fruit-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#eat-fruit-today').append('<span class="glyphicon glyphicon-ok"></span>');
-				} else {
+				}
+			} else if(fr[i] === false) {
+				$('#eat-fruit-count').append('<span class="glyphicon glyphicon-remove-circle" id="daily-dash-glyph"></span>');
+				if(today_number === i){
 					$('#eat-fruit-today').append('<span class="glyphicon glyphicon-remove"></span>');
 				}
 			} else {
-
+				$('#eat-fruit-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
 			}
 		}
+	}
+
+	function getHabitBetweenLinkTags(linkText) {
+	    return linkText.match(/<a [^>]+>([^<]+)<\/a>/)[1];
 	}
 
 	function sortObject(obj){
