@@ -104,7 +104,7 @@ body {
 }
 
 #today-date {
-	font-size: 30px;
+	font-size: 20px;
 }
 
 .glyphicon.glyphicon-ok-circle{
@@ -146,8 +146,8 @@ body {
 
 #longest-streak {
 	font-style: italic;
-	font-weight: bold;
-	margin-left: -90px;
+	margin-left: -65px;
+	font-size: 12px;
 }
 
 .error {
