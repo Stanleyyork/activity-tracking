@@ -6,6 +6,7 @@ $(function() {
 	var start_of_week = new Date(new Date().setDate(today.getDate() - today_number + 1));
 	var streak = '';
 	var streakdata = {};
+	var gratitudes = [];
 	var an = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var ae = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var fr = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
@@ -24,19 +25,6 @@ $(function() {
 
 	$('#today-time').append(formatAMPM(today));
 	$('#today-date').append(monthNames[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear());
-
-	$.get('/coachmeapi', function(data){
-		//parseCoachData(JSON.parse(JSON.parse(data)));
-		parseStreakData(JSON.parse(JSON.parse(data)));
-	});
-
-	function parseStreakData(data){
-		$('#longest-streak').append('<span class="glyphicon glyphicon-fire"></span>' + " ");
-		for(var i = 0; i<data['plans'].length; i++){
-			streakdata[data['plans'][i]['name']] = data['plans'][i]['stats']['streak'];
-		}
-		$('#longest-streak').append("Longest current streak is " + sortObject(streakdata).pop().shift() + " at " + sortObject(streakdata).pop().pop() + " days");
-	}
 
 	$.get('/coachmeapitwo', function(data){
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
@@ -63,12 +51,15 @@ $(function() {
 				if(start_of_week <= habitfr_date){
 					fr[habitfr_date.getDay()] = true;
 				}
+			} else if (habit === "Express gratitude") {
+				gratitudes.push(data.activity_items[i].note);
 			}
 		}
 		addIcons();
 	}
 
 	function addIcons(){
+		$('#gratitude').append(gratitudes[0]);
 		for(var i = 1; i<8; i++){
 			if(an[i] === true){
 				$('#anaerobic-count').append('<span class="glyphicon glyphicon-ok-circle" id="daily-dash-glyph"></span>');

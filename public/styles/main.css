@@ -144,10 +144,9 @@ body {
 	color: orange;
 }
 
-#longest-streak {
+#gratitude {
 	font-style: italic;
-	margin-left: -65px;
-	font-size: 12px;
+	font-size: 18px;
 }
 
 .error {
