@@ -15,6 +15,16 @@ $(function() {
 		fr[x] = "nil";
 	}
 
+	var monthNames = [
+	  "January", "February", "March",
+	  "April", "May", "June", "July",
+	  "August", "September", "October",
+	  "November", "December"
+	];
+
+	$('#today-time').append(formatAMPM(today));
+	$('#today-date').append(monthNames[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear());
+
 	$.get('/coachmeapi', function(data){
 		//parseCoachData(JSON.parse(JSON.parse(data)));
 		parseStreakData(JSON.parse(JSON.parse(data)));
@@ -100,6 +110,17 @@ $(function() {
 				$('#eat-fruit-count').append('<span class="glyphicon glyphicon-question-sign" id="daily-dash-glyph"></span>');
 			}
 		}
+	}
+
+	function formatAMPM(date) {
+	  var hours = date.getHours();
+	  var minutes = date.getMinutes();
+	  var ampm = hours >= 12 ? 'pm' : 'am';
+	  hours = hours % 12;
+	  hours = hours ? hours : 12; // the hour '0' should be '12'
+	  minutes = minutes < 10 ? '0'+minutes : minutes;
+	  var strTime = hours + ':' + minutes + ' ' + ampm;
+	  return strTime;
 	}
 
 	function getHabitBetweenLinkTags(linkText) {

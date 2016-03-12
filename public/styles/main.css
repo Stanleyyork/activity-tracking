@@ -96,7 +96,15 @@ body {
 }*/
 
 #daily-dash-glyph {
-	font-size: 22px;
+	font-size: 20px;
+}
+
+#today-time {
+	font-size: 60px;
+}
+
+#today-date {
+	font-size: 30px;
 }
 
 .glyphicon.glyphicon-ok-circle{

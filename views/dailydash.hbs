@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+	<meta http-equiv="refresh" content="60; URL=http://localhost:3000/dailydash">
 	<!-- set viewport to device width to make site responsive -->
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -13,7 +15,13 @@
 	<title>DailyDash</title>
 </head>
 <body>
-	
+
+	<div class="row">
+	<center>
+		<p id="longest-streak"></p>
+	</center>
+	</div>
+	<br><br>
 	<div class="row">
 	<center>
 		<div class="col-sm-3 col-sm-offset-1">
@@ -36,11 +44,15 @@
 		</div>
 	</center>
 	</div>
-	<br><br>
+	<br><br><br>
+	
 	<div class="row">
+	<div class="col-sm-3 col-sm-offset-4">
 	<center>
-		<p id="longest-streak"></p>
+		<p id="today-time"></p>
+		<p id="today-date"></p>
 	</center>
+	</div>
 	</div>
 
 
