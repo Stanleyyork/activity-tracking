@@ -734,7 +734,7 @@ app.get('/api/user/:id/alldailyhabits', function (req, res){
                     user_id : userId,
                     activityHabit: true,
                     originalYear: '2016',
-                    originalMonth: '02',
+                    originalMonth: '04',
                     activityLabel: {$nin: hiddenactivities }
                   }
               },
