@@ -14,11 +14,7 @@ $(function() {
  	$('#nav-title').addClass('hidden');
 
  	// Current Month
- 	var monthNames = ["January", "February", "March", "April", "May", "June",
-	  "July", "August", "September", "October", "November", "December"
-	];
 	var previousMonth = (new Date()).getMonth().toString();
-	$('#previousMonth').text(monthNames[previousMonth]);
 
 
 	// COGNITIVE INTELLIGENCE - READING
