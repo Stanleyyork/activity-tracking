@@ -117,12 +117,12 @@ $(function() {
 		var start = new Date(now.getFullYear(), 0, 0);
 		var diff = now - start;
 		var oneDay = 1000 * 60 * 60 * 24;
-		var day = Math.floor(diff / oneDay);
+		var days = Math.floor(diff / oneDay);
 		for(var i = 0; i < data.length; i++){
 			if(data[i]._id.originalYear.originalYear === '2016'){
 				activityArray['2016'].push(data[i]._id.activityLabel);
 				activityCountArray['2016'].push(data[i].count);
-				activityAverageArray['2016'].push(data[i].count/day);
+				activityAverageArray['2016'].push(data[i].count/(days/7));
 			} else if(data[i]._id.originalYear.originalYear === '2015'){
 				activityArray['2015'].push(data[i]._id.activityLabel);
 				activityCountArray['2015'].push(data[i].count);
