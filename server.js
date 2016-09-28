@@ -728,13 +728,14 @@ app.get('/api/user/:id/alldailyhabits', function (req, res){
         console.log(err);
       } else {
         hiddenactivities = foundUser.hiddenActivities;
+        var previousMonth = "0" + (new Date()).getMonth().toString();
         Activity.aggregate([
               { 
                   $match : { 
                     user_id : userId,
                     activityHabit: true,
                     originalYear: '2016',
-                    originalMonth: '04',
+                    originalMonth: previousMonth,
                     activityLabel: {$nin: hiddenactivities }
                   }
               },

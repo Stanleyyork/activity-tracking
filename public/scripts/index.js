@@ -13,6 +13,13 @@ $(function() {
 
  	$('#nav-title').addClass('hidden');
 
+ 	// Current Month
+ 	var monthNames = ["January", "February", "March", "April", "May", "June",
+	  "July", "August", "September", "October", "November", "December"
+	];
+	var previousMonth = (new Date()).getMonth().toString();
+	$('#previousMonth').text(monthNames[previousMonth]);
+
 
 	// COGNITIVE INTELLIGENCE - READING
 	function clareLegereData(){
@@ -116,8 +123,9 @@ $(function() {
 	}
 
 	function formatSleepCountData(data, callback) {
+		var stringMonth = "0" + previousMonth
 		for(var i = 0; i < data.length; i++){
-			if(data[i]['month'] === '04' && data[i]['year'] === '2016'){
+			if(data[i]['month'] === stringMonth && data[i]['year'] === '2016'){
 				var sleepDays = data[i]['count'];
 			}
 		}
