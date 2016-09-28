@@ -26,8 +26,8 @@ mongoose.connect(
 app.set('view engine', 'hbs');
 hbs.registerPartials(__dirname + '/views/partials');
 app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: 1024 * 1024 * 100 * 100 }));
-app.use(bodyParser.json({extended: true, parameterLimit: 100000, limit: 1024 * 1024 * 100 * 100 }));
+app.use(bodyParser.urlencoded({ extended: true, parameterLimit: 100000, limit: 1024 * 1024 * 100 }));
+app.use(bodyParser.json({extended: true, parameterLimit: 100000, limit: 1024 * 1024 * 100 }));
 app.use(cookieParser());
 app.use(session({
   secret: 'supersecretkey',
