@@ -292,14 +292,15 @@ app.get('/portfolio', function (req, res){
 
 // GET - Photography
 app.get('/photography', function (req, res){
+  res.redirect('http://www.instagram.com/stanleyyork');
   //var userId = req.user.id;
-  var userId = "5660c53843c9bd110091c39a"; //Production
+  // var userId = "5660c53843c9bd110091c39a"; //Production
   //var userId = "5660a6c810d090e34c47938f"; //Development
-  User.findOne({_id: userId})
-      .populate('activities')
-          .exec(function(err, singleUser){
-              res.render('photography', {user: singleUser});
-          });
+  // User.findOne({_id: userId})
+  //     .populate('activities')
+  //         .exec(function(err, singleUser){
+  //             res.render('photography', {user: singleUser});
+  //         });
 });
 
 // GET - Activity: Habits
