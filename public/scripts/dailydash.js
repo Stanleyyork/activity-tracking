@@ -33,18 +33,18 @@ $(function() {
 	function parseDailyCoachData(data){
 		for(var i = 0; i<data.activity_items.length; i++){
 			var habit = getHabitBetweenLinkTags(data.activity_items[i].activity_rich_title);
-			if(habit === 'Anaerobic'){
+			if(habit === 'Sleep at least 7 hours'){
 				var datean = data.activity_items[i].effective_date;
 				var habitan_date = new Date(datean.slice(0,4),datean.slice(5,7)-1,datean.slice(8,10));
 				if(start_of_week <= habitan_date){
 					an[habitan_date.getDay()] = true;
 				}
-			} else if (habit === 'Aerobic') {
-				var dateae = data.activity_items[i].effective_date;
-				var habitae_date = new Date(dateae.slice(0,4),dateae.slice(5,7)-1,dateae.slice(8,10));
-				if(start_of_week <= habitae_date){
-					ae[habitae_date.getDay()] = true;
-				}
+			// } else if (habit === 'Aerobic') {
+			// 	var dateae = data.activity_items[i].effective_date;
+			// 	var habitae_date = new Date(dateae.slice(0,4),dateae.slice(5,7)-1,dateae.slice(8,10));
+			// 	if(start_of_week <= habitae_date){
+			// 		ae[habitae_date.getDay()] = true;
+			// 	}
 			} else if (habit === 'Eat Fruit') {
 				var datefr = data.activity_items[i].effective_date;
 				var habitfr_date = new Date(datefr.slice(0,4),datefr.slice(5,7)-1,datefr.slice(8,10));
@@ -53,6 +53,11 @@ $(function() {
 				}
 			} else if (habit === "Express gratitude") {
 				gratitudes.push(data.activity_items[i].note);
+				var dateae = data.activity_items[i].effective_date;
+				var habitae_date = new Date(dateae.slice(0,4),dateae.slice(5,7)-1,dateae.slice(8,10));
+				if(start_of_week <= habitae_date){
+					ae[habitae_date.getDay()] = true;
+				}
 			}
 		}
 		addIcons();
