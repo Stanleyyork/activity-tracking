@@ -30,6 +30,10 @@ $(function() {
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
+	$.get('/expenses_month', function(data){
+		console.log(data);
+	});
+
 	function parseDailyCoachData(data){
 		for(var i = 0; i<data.activity_items.length; i++){
 			var habit = getHabitBetweenLinkTags(data.activity_items[i].activity_rich_title);
