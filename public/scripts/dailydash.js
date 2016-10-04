@@ -11,6 +11,8 @@ $(function() {
 	var an = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var ae = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var fr = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
+	var x_data = [];
+	var y_data = [];
 	for(var x = today_number+1; x<8; x++){
 		an[x] = "nil";
 		ae[x] = "nil";
@@ -33,6 +35,9 @@ $(function() {
 
 	$.get('/expenses/weekly', function(data){
 		console.log(JSON.parse(data));
+		parseWeeklyExpensesData(data, function(){
+			WeeklyExpensesGraph(x_data, y_data);
+		});
 	});
 
 	$.get('/expenses/monthly', function(data){
@@ -142,6 +147,34 @@ $(function() {
 	      return a[1]-b[1];
 	    });
 	    return sortable;
+	}
+
+	function parseWeeklyExpensesData(data, callback){
+		console.log("--");
+		console.log(data.split('||'));
+		for(var i = 1; i<9; i++){
+			x_data.push(data.split('||')[i].split(',')[0]);
+			y_data.push(data.split('||')[i].split(',')[1]);
+		}
+		callback();
+	}
+
+	function WeeklyExpensesGraph(x_data, y_data){
+		// console.log(x_data);
+		// console.log(y_data);
+		var WeeklyExpenses_ChartData = {
+		  x: x_data,
+		  y: y_data,
+		  type: 'bar',
+		  marker: {color: 'rgb(11,81,146)'}
+		};
+
+		var layout = {barmode: 'group', bargroupgap: 0.00, width: 1000, height: 500,
+					  yaxis: {range: [0, 7], title: 'Days'},
+					  title: '', titlefont: {size: 18}
+					 };
+
+		Plotly.newPlot('WeeklyExpenses', WeeklyExpenses_ChartData, layout);
 	}
 
 });
