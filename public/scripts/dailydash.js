@@ -31,6 +31,10 @@ $(function() {
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
+	$.get('https://docs.google.com/spreadsheets/d/1EBMH3iW6LaEg_N9cvjjAU2uzi2-tD7pEojsQQ_ftEik/pub?gid=1575038387&single=true&output=csv', function(data){
+		console.log(data);
+	});
+
 	function parseDailyCoachData(data){
 		for(var i = 0; i<data.activity_items.length; i++){
 			var habit = getHabitBetweenLinkTags(data.activity_items[i].activity_rich_title);
