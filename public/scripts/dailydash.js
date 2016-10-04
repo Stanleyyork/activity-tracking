@@ -3,8 +3,8 @@ $(function() {
 	console.log("dailydash.js working");
 	var today = new Date();
 	var today_number = today.getDay();
-	var start = (new Date().setDate(today.getDate() - today_number + 1));
-	var start_of_week = new Date(start.setHours(0,0,0,0));
+	var start = new Date().setDate(today.getDate() - today_number + 1);
+	var start_of_week = new Date(new Date(start).setHours(0,0,0,0));
 	var streak = '';
 	var streakdata = {};
 	var gratitudes = [];
