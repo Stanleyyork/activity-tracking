@@ -49,12 +49,8 @@ $(function() {
 			} else if (habit === 'Eat Fruit') {
 				var datefr = data.activity_items[i].effective_date;
 				var habitfr_date = new Date(datefr.slice(0,4),datefr.slice(5,7)-1,datefr.slice(8,10));
-				console.log("effective date: ");
-				console.log(habitfr_date);
-				console.log(habitfr_date.getDay());
-				console.log("start of week date: ");
-				console.log(start_of_week);
 				if(start_of_week <= habitfr_date){
+					console.log(habitfr_date);
 					fr[habitfr_date.getDay()] = true;
 				}
 			} else if (habit === "Express gratitude") {
@@ -66,6 +62,7 @@ $(function() {
 				}
 			}
 		}
+		console.log(fr);
 		addIcons();
 	}
 
