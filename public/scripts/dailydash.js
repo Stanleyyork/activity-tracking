@@ -32,11 +32,11 @@ $(function() {
 	});
 
 	$.get('/expenses/weekly', function(data){
-		console.log(data);
+		console.log(JSON.parse(data));
 	});
 
 	$.get('/expenses/monthly', function(data){
-		console.log(data);
+		console.log(JSON.parse(data));
 	});
 
 	function parseDailyCoachData(data){
