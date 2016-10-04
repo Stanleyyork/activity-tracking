@@ -33,16 +33,16 @@ $(function() {
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
-	$.get('/expenses/weekly', function(data){
-		console.log(JSON.parse(data));
-		parseWeeklyExpensesData(data, function(){
-			WeeklyExpensesGraph(x_data, y_data);
-		});
-	});
+	// $.get('/expenses/weekly', function(data){
+	// 	console.log(JSON.parse(data));
+	// 	parseWeeklyExpensesData(data, function(){
+	// 		WeeklyExpensesGraph(x_data, y_data);
+	// 	});
+	// });
 
-	$.get('/expenses/monthly', function(data){
-		console.log(JSON.parse(data));
-	});
+	// $.get('/expenses/monthly', function(data){
+	// 	console.log(JSON.parse(data));
+	// });
 
 	function parseDailyCoachData(data){
 		for(var i = 0; i<data.activity_items.length; i++){
