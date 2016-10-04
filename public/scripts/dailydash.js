@@ -28,7 +28,6 @@ $(function() {
 	$('#today-date').append(monthNames[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear());
 
 	$.get('/coachmeapitwo', function(data){
-		console.log(data);
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
