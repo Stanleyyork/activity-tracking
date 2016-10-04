@@ -31,6 +31,10 @@ $(function() {
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
+	$.get('/expenses/weekly', function(data){
+		console.log(data);
+	});
+
 	$.get('/expenses/monthly', function(data){
 		console.log(data);
 	});
