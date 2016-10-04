@@ -247,8 +247,24 @@ app.get('/dailydash', function (req, res){
 });
 
 // GET - Google Sheets - Weekly Expenses
-app.get('/expenses/monthly', function (req, res){
+app.get('/expenses/weekly', function (req, res){
   var ruby_child = exec.spawn('ruby',['./public/scripts/expenses_weekly.rb']);  
+  var result = '';
+  ruby_child.stdout.on('data', function(data) {
+    result += data.toString();
+  });
+  ruby_child.on('close', function() {
+    res.json(result);
+  });
+  ruby_child.stderr.on('data', function(data) {
+    console.log("ERROR --- " + data);
+  });
+  
+});
+
+// GET - Google Sheets - Monthly Expenses
+app.get('/expenses/monthly', function (req, res){
+  var ruby_child = exec.spawn('ruby',['./public/scripts/expenses_monthly.rb']);  
   var result = '';
   ruby_child.stdout.on('data', function(data) {
     result += data.toString();
