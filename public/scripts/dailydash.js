@@ -6,9 +6,9 @@ $(function() {
       var onejan = new Date(this.getFullYear(),0,1);
       var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
       var dayOfYear = ((today - onejan +1)/86400000);
-      return Math.ceil(dayOfYear/7)
+      return Math.ceil(dayOfYear/7);
     };
-    
+
 	var today = new Date();
 	var weekNumber = today.getWeek();
 	var today_number = today.getDay();
@@ -175,7 +175,7 @@ $(function() {
 		  type: 'bar'
 		}];
 
-		var layout = {bargroupgap: 0.00, width: 900, height: 400, 
+		var layout = {bargroupgap: 0.00, width: 800, height: 400, 
 					  xaxis: {showgrid: false, showline: false},
 					  paper_bgcolor: 'rgb(250,250,250)',
 					  plot_bgcolor: 'rgb(250,250,250)'};
