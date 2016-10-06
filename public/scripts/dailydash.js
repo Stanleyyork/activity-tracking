@@ -33,12 +33,11 @@ $(function() {
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));
 	});
 
-	// $.get('/expenses/weekly', function(data){
-	// 	console.log(JSON.parse(data));
-	// 	parseWeeklyExpensesData(data, function(){
-	// 		WeeklyExpensesGraph(x_data, y_data);
-	// 	});
-	// });
+	$.get('/expenses/weekly', function(data){
+		parseWeeklyExpensesData(data, function(){
+			WeeklyExpensesGraph(x_data, y_data);
+		});
+	});
 
 	// $.get('/expenses/monthly', function(data){
 	// 	console.log(JSON.parse(data));
@@ -150,29 +149,26 @@ $(function() {
 	}
 
 	function parseWeeklyExpensesData(data, callback){
-		console.log("--");
-		console.log(data.split('||'));
-		for(var i = 1; i<9; i++){
-			x_data.push(data.split('||')[i].split(',')[0]);
-			y_data.push(data.split('||')[i].split(',')[1]);
+		var arr = JSON.parse(data).split('||');
+		for(var i = 1; i<arr.length; i++){
+			var arr2 = arr[i].split(',');
+			x_data.push(String(arr2[0].substring(2,arr2[0].length)));
+			y_data.push(arr2[1]);
 		}
 		callback();
 	}
 
 	function WeeklyExpensesGraph(x_data, y_data){
-		// console.log(x_data);
-		// console.log(y_data);
-		var WeeklyExpenses_ChartData = {
+		var WeeklyExpenses_ChartData = [{
 		  x: x_data,
 		  y: y_data,
-		  type: 'bar',
-		  marker: {color: 'rgb(11,81,146)'}
-		};
+		  type: 'bar'
+		}];
 
-		var layout = {barmode: 'group', bargroupgap: 0.00, width: 1000, height: 500,
-					  yaxis: {range: [0, 7], title: 'Days'},
-					  title: '', titlefont: {size: 18}
-					 };
+		var layout = {bargroupgap: 0.00, width: 900, height: 400, 
+					  xaxis: {showgrid: false, showline: false},
+					  paper_bgcolor: 'rgb(250,250,250)',
+					  plot_bgcolor: 'rgb(250,250,250)'};
 
 		Plotly.newPlot('WeeklyExpenses', WeeklyExpenses_ChartData, layout);
 	}
