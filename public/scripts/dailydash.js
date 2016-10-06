@@ -2,15 +2,7 @@ $(function() {
 
 	console.log("dailydash.js working");
 
-	Date.prototype.getWeek = function() {
-      var onejan = new Date(this.getFullYear(),0,1);
-      var today = new Date(this.getFullYear(),this.getMonth(),this.getDate());
-      var dayOfYear = ((today - onejan +1)/86400000);
-      return Math.ceil(dayOfYear/7);
-    };
-
 	var today = new Date();
-	var weekNumber = today.getWeek();
 	var today_number = today.getDay();
 	var start = new Date().setDate(today.getDate() - today_number + 1);
 	var start_of_week = new Date(new Date(start).setHours(0,0,0,0));
@@ -37,7 +29,6 @@ $(function() {
 
 	$('#today-time').append(formatAMPM(today));
 	$('#today-date').append(monthNames[today.getMonth()] + " " + today.getDate() + ", " + today.getFullYear());
-	$('#graph-title').append("(currently week " + weekNumber + ")");
 
 	$.get('/coachmeapitwo', function(data){
 		parseDailyCoachData(JSON.parse(JSON.parse(data)));

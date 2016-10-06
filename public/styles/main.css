@@ -591,6 +591,10 @@ a { color: inherit; }
 	max-width: 350px;
 }
 
+#weekly-expenses-title {
+	margin-left: 50px;
+}
+
 @media all and (max-width: 500px) { /* screen size until 500px */
     body {
     	margin-left: 0px;
