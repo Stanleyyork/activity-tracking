@@ -160,7 +160,7 @@ $(function() {
 
 	function parseWeeklyExpensesData(data, callback){
 		var arr = JSON.parse(data).split('||');
-		for(var i = 1; i<arr.length; i++){
+		for(var i = (arr.length - 8); i<arr.length; i++){
 			var arr2 = arr[i].split(',');
 			x_data.push(String(arr2[0].substring(2,arr2[0].length)));
 			y_data.push(arr2[1]);
@@ -175,7 +175,7 @@ $(function() {
 		  type: 'bar'
 		}];
 
-		var layout = {bargroupgap: 0.00, width: 800, height: 400, 
+		var layout = {bargroupgap: 0.00, width: 775, height: 400, 
 					  xaxis: {showgrid: false, showline: false},
 					  paper_bgcolor: 'rgb(250,250,250)',
 					  plot_bgcolor: 'rgb(250,250,250)'};
