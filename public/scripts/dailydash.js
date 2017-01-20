@@ -10,11 +10,14 @@ $(function() {
 	var streakdata = {};
 	var gratitudes = [];
 	var colors = [];
+	var forecastColors = '';
+	var actualForecast = 0;
 	var an = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var ae = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var fr = {1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false};
 	var x_data = [];
 	var y_data = [];
+	var y_dataForecast = [0,0,0]
 	for(var x = today_number+1; x<8; x++){
 		an[x] = "nil";
 		ae[x] = "nil";
@@ -41,9 +44,13 @@ $(function() {
 	// 	});
 	// });
 
-		$.get('/expenses/monthly', function(data){
+	$.get('/expenses/monthly', function(data){
 		parseMonthlyExpensesData(data, function(){
-			MonthlyExpensesGraph(x_data, y_data);
+			$.get('/expenses/monthlyforecasts', function(data){
+				parseMonthlyForecastExpensesData(data, function(){
+					MonthlyExpensesGraph(x_data, y_data);
+				});
+			});
 		});
 	});
 
@@ -205,16 +212,41 @@ $(function() {
 		callback();
 	}
 
+	function parseMonthlyForecastExpensesData(data, callback){
+		var red = 'rgba(222,45,38,0.8)'
+		var green = 'rgb(34,139,34)'
+		var arr = JSON.parse(data).split('||').filter(Boolean);
+		actualForecast = (Number(arr[0].split(',')[2]) + Number(y_data[3]) )
+		if(actualForecast > 5000){
+			forecastColors = 'rgb(228,86,81)'
+		} else {
+			forecastColors = 'rgb(89,175,89)'
+		}
+		y_dataForecast.push(Number(arr[0].split(',')[2]))
+		callback();
+	}
+
 	function MonthlyExpensesGraph(x_data, y_data){
 		
-		var MonthlyExpenses_ChartData = [{
+		var actualExpenses = {
 		  x: x_data,
 		  y: y_data,
 		  type: 'bar',
+		  name: 'actual',
 		  marker:{
 			color: colors
 		  }
-		}];
+		};
+		var forecastedExpenses = {
+		  x: x_data,
+		  y: y_dataForecast,
+		  type: 'bar',
+		  name: 'forecast',
+		  marker:{
+			color: ['grey', 'grey', 'grey', forecastColors]
+		  }
+		};
+		var MonthlyExpenses_ChartData = [actualExpenses, forecastedExpenses]
 
 		var annotationContent = [];
 
@@ -230,7 +262,11 @@ $(function() {
 		  annotationContent.push(result);
 		}
 
-		var layout = {bargroupgap: 0.10, width: 775, height: 400, 
+		annotationContent.push({x:x_data[3], y: actualForecast, text: actualForecast,
+								xanchor: 'center', yanchor: 'bottom', showarrow: false})
+
+		var layout = {bargroupgap: 0.10, width: 775, height: 400,
+					  barmode: 'stack', showlegend: false,
 					  xaxis: {showgrid: false, showline: false},
 					  paper_bgcolor: 'rgb(250,250,250)',
 					  plot_bgcolor: 'rgb(250,250,250)',
