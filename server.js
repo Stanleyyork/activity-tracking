@@ -278,6 +278,22 @@ app.get('/expenses/monthly', function (req, res){
   
 });
 
+// GET - Google Sheets - Monthly Forecasts Expenses
+app.get('/expenses/monthlyforecasts', function (req, res){
+  var ruby_child = exec.spawn('ruby',['./public/scripts/expenses_monthly_forecasts.rb']); 
+  var result = '';
+  ruby_child.stdout.on('data', function(data) {
+    result += data.toString();
+  });
+  ruby_child.on('close', function() {
+    res.json(result);
+  });
+  ruby_child.stderr.on('data', function(data) {
+    console.log("ERROR --- " + data);
+  });
+  
+});
+
 // GET - Coach.Me API
 app.get('/coachmeapi', function (req, res){
   var ruby_child = exec.spawn('ruby',['./public/scripts/coach.rb']);  
